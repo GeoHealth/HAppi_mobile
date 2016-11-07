@@ -13,7 +13,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{724BA436-1E29-4684-A3AC-17DAEF869FB7}"
 	ProjectSection(SolutionItems) = preProject
 		.travis.yml = .travis.yml
-		DockerfileSharedCode = DockerfileSharedCode
+		Dockerfile = Dockerfile
 		LICENSE.txt = LICENSE.txt
 	EndProjectSection
 EndProject
