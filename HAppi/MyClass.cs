@@ -5,6 +5,12 @@ namespace HAppi
 	{
 		public MyClass()
 		{
+            
 		}
-	}
+
+        public static int TestMe()
+        {
+            return 1;
+        }
+    }
 }
