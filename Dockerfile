@@ -16,4 +16,5 @@ COPY . /usr/src/sharedcode
 WORKDIR /usr/src/sharedcode
 
 # Compile source code
-RUN xbuild HAppi.ClassLibrary.UnitTests/HAppi.ClassLibrary.UnitTests.csproj
+RUN nuget restore && \
+    xbuild HAppi.ClassLibrary.UnitTests/HAppi.ClassLibrary.UnitTests.csproj
