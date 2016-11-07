@@ -15,5 +15,11 @@ namespace HAppi.ClassLibrary.UnitTests
         {
             Assert.AreEqual(1, MyClass.TestMe());
         }
+
+        [Test]
+        public static void ShouldFail()
+        {
+            Assert.True(false);
+        }
     }
 }
