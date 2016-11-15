@@ -1,14 +1,8 @@
-﻿using System;
-namespace HAppi
+﻿namespace HAppi
 {
 	public class MyClass
 	{
-		public MyClass()
-		{
-            
-		}
-
-        public static int TestMe()
+	    public static int TestMe()
         {
             return 1;
         }
