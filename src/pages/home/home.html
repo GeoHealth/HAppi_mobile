@@ -8,7 +8,13 @@
   <h2>Symptoms</h2>
   <ion-list>
     <ion-item *ngFor="let symptom of symptoms">
-      <button ion-button full round>{{symptom}}</button>
+      <button ion-button full round (click)="registerSymptom(symtom)">{{symptom.label}}</button>
     </ion-item>
   </ion-list>
+
+  <button ion-button (click)="addSymptom()" full color="default" icon-left>
+    <ion-icon name="add"></ion-icon>
+     Add symptom
+   </button>
+
 </ion-content>

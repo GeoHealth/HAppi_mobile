@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
 
 @Component({
   selector: 'page-home',
@@ -9,12 +9,34 @@ export class HomePage {
 
   symptoms : any;
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, private alertCtrl: AlertController) {
     this.symptoms = [
-      'Headache',
-      'Fever',
-      'Diarrhea'
+      {label: 'Headache'},
+      {label: 'Fever'},
+      {label: 'Diarrhea'}
     ];
+  }
+
+  addSymptom(){
+    let prompt = this.alertCtrl.create({
+      title: 'Add symptom',
+      inputs: [{
+        name: 'label'
+      }],
+      buttons: [
+        {
+          text: 'Cancel'
+        },
+        {
+          text: 'Add',
+          handler: data => {
+            this.symptoms.push(data);
+          }
+        }
+      ]
+    });
+
+    prompt.present();
   }
 
 }
