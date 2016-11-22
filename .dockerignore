@@ -1,7 +1,0 @@
-# useless folders for docker image
-.git/
-.vs/
-
-# Remove unused projects
-Droid/
-iOS/
