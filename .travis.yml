@@ -1,9 +1,8 @@
 language: node_js
 node_js:
-- '4.1'
+  - '4.1'
+
 addons:
-  code_climate:
-    repo_token: 78d677a8de903d0772b30ad40f07d64bffe48bff1eab930b34c941c2d61046c7
   apt:
     sources:
       - ubuntu-toolchain-r-test
@@ -11,28 +10,38 @@ addons:
       - g++-4.8
 sudo: required
 services:
-before_install:
-- npm update -g npm
-- npm --version
-- export CHROME_BIN=chromium-browser
-- export DISPLAY=:99.0
-- sh -e /etc/init.d/xvfb start
-install:
-- npm install
-- npm install --save-dev ionic
-before_script:
-script: npm run-script test-travis
-notifications:
-  email: true
-after_failure: cat /home/travis/build/udayakanth1122/ionic2-karma-jasmine-travis-seed/npm-debug.log
+
 branches:
   only:
   - master
+
 env:
   - CXX=g++-4.8
+
+before_install:
+  - npm update -g npm
+  - npm --version
+  - export CHROME_BIN=chromium-browser
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+
+install:
+  - npm install
+  - npm install --save-dev ionic
+  - npm install -g codeclimate-test-reporter
+
+before_script:
+
+script:
+  - npm run-script test-travis
+
+after_success:
+  - codeclimate-test-reporter < coverage\coverage.lcov
+
 cache:
   bundler: true
   directories:
   - node_modules # NPM packages
-after_success:
-  - codeclimate-test-reporter < lcov.info
+
+notifications:
+  email: true
