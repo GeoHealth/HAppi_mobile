@@ -1,6 +1,12 @@
 language: node_js
 node_js:
 - '4.1'
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
 sudo: required
 services:
 before_install:
@@ -13,13 +19,15 @@ install:
 - npm install
 - npm install --save-dev ionic
 before_script:
-script: npm test-travis
+script: npm run-script test-travis
 notifications:
   email: true
 after_failure: cat /home/travis/build/udayakanth1122/ionic2-karma-jasmine-travis-seed/npm-debug.log
 branches:
   only:
   - master
+env:
+  - CXX=g++-4.8
 after_success:
   # push compiled TS to test folder in git for reference in coveralls
   - .travis/push_built_tests.sh
