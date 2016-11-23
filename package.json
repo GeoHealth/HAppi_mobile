@@ -6,7 +6,8 @@
   "scripts": {
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
-     "test": "ng test"
+     "test": "ng test",
+     "test-travis" :"ng test --single-run"
   },
   "dependencies": {
     "@angular/common": "2.1.1",
