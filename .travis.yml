@@ -7,6 +7,8 @@ addons:
       - ubuntu-toolchain-r-test
     packages:
       - g++-4.8
+  code_climate:
+    repo_token: 78d677a8de903d0772b30ad40f07d64bffe48bff1eab930b34c941c2d61046c7
 sudo: required
 services:
 before_install:
@@ -28,9 +30,3 @@ branches:
   - master
 env:
   - CXX=g++-4.8
-after_success:
-  # push compiled TS to test folder in git for reference in coveralls
-  - .travis/push_built_tests.sh
-  # Send coverage info off to cloud ppl
-  - cat coverage/lcov.info | node_modules/.bin/coveralls
-  - cat coverage/lcov.info | ./node_modules/.bin/codecov
