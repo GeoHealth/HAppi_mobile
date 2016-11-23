@@ -22,7 +22,7 @@ install:
 - npm install --save-dev ionic
 - npm install -g cordova
 before_script:
-script: npm test
+script: npm test-travis
 notifications:
   email: true
 after_failure: cat /home/travis/build/udayakanth1122/ionic2-karma-jasmine-travis-seed/npm-debug.log
