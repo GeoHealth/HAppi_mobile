@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController } from 'ionic-angular';
-import {Storage} from '../../app/provider/sqlstorage'
+import {SymptomsStorage} from '../../app/provider/symptoms_storage'
 
 @Component({
   selector: 'page-home',
@@ -9,10 +9,10 @@ import {Storage} from '../../app/provider/sqlstorage'
 export class HomePage {
 
   symptoms : any;
-  private storage: Storage;
+  private storage: SymptomsStorage;
 
   constructor(public navCtrl: NavController, private alertCtrl: AlertController) {
-    this.storage = new Storage();
+    this.storage = new SymptomsStorage();
 
     this.symptoms = [
       {label: 'Headache'},
