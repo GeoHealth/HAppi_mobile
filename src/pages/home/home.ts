@@ -8,17 +8,10 @@ import {SymptomsStorage} from '../../app/provider/symptoms_storage'
 })
 export class HomePage {
 
-  symptoms : any;
   private storage: SymptomsStorage;
 
   constructor(public navCtrl: NavController, private alertCtrl: AlertController) {
     this.storage = new SymptomsStorage();
-
-    this.symptoms = [
-      {label: 'Headache'},
-      {label: 'Fever'},
-      {label: 'Diarrhea'}
-    ];
   }
 
   addSymptom(){
@@ -34,7 +27,6 @@ export class HomePage {
         {
           text: 'Add',
           handler: data => {
-            this.symptoms.push(data);
             this.storage.add(data);
           }
         }
