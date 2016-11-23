@@ -1,12 +1,11 @@
 {
-  "name": "HAppi mobile",
-  "author": "Geohealth crew",
-  "homepage": "https://github.com/GeoHealth/HAppi_mobile",
+  "name": "ionic-hello-world",
+  "author": "Ionic Framework",
+  "homepage": "http://ionicframework.com/",
   "private": true,
   "scripts": {
     "ionic:build": "ionic-app-scripts build",
-    "ionic:serve": "ionic-app-scripts serve",
-    "test": "karma start karma.conf.js"
+    "ionic:serve": "ionic-app-scripts serve"
   },
   "dependencies": {
     "@angular/common": "2.1.1",
@@ -29,17 +28,7 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "0.0.45",
-    "karma": "^1.3.0",
-    "karma-chrome-launcher": "^2.0.0",
-    "karma-jasmine": "^1.0.2",
-    "typescript": "2.0.6",
-    "jasmine-core": "^2.5.2",
-    "run-sequence": "1.2.2",
-    "karma-browserify": "5.1.0",
-    "browserify": "13.0.0",
-    "browserify-istanbul": "2.0.0",
-    "tsify": "2.0.3",
-    "isparta": "4.0.0"
+    "typescript": "2.0.6"
   },
   "cordovaPlugins": [
     "cordova-plugin-whitelist",
