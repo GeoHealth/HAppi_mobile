@@ -27,7 +27,7 @@ before_install:
 
 install:
   - npm install
-  - npm install --save-dev ionic
+  # - npm install --save-dev ionic
   - npm install -g codeclimate-test-reporter
 
 before_script:
@@ -36,7 +36,7 @@ script:
   - npm run-script test-travis
 
 after_success:
-  - codeclimate-test-reporter < coverage\coverage.lcov
+  - codeclimate-test-reporter < coverage/coverage.lcov
 
 cache:
   bundler: true
