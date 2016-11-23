@@ -1,13 +1,6 @@
 language: node_js
 node_js:
-- '4.0'
 - '4.1'
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - g++-4.8
 sudo: required
 services:
 before_install:
@@ -18,9 +11,7 @@ before_install:
 - sh -e /etc/init.d/xvfb start
 install:
 - npm install
-- npm install ionic-app-lib
 - npm install --save-dev ionic
-- npm install -g cordova
 before_script:
 script: npm test-travis
 notifications:
@@ -29,17 +20,9 @@ after_failure: cat /home/travis/build/udayakanth1122/ionic2-karma-jasmine-travis
 branches:
   only:
   - master
-env:
-  matrix:
-  - CXX=g++-4.8
 after_success:
   # push compiled TS to test folder in git for reference in coveralls
   - .travis/push_built_tests.sh
   # Send coverage info off to cloud ppl
   - cat coverage/lcov.info | node_modules/.bin/coveralls
   - cat coverage/lcov.info | ./node_modules/.bin/codecov
-
-deploy:
-  provider: script
-  script: .travis/deploy.sh
-  skip_cleanup: true
