@@ -2,13 +2,13 @@ language: node_js
 node_js:
 - '4.1'
 addons:
-    code_climate:
-        repo_token: 78d677a8de903d0772b30ad40f07d64bffe48bff1eab930b34c941c2d61046c7
   apt:
     sources:
       - ubuntu-toolchain-r-test
     packages:
       - g++-4.8
+  code_climate:
+    repo_token: 78d677a8de903d0772b30ad40f07d64bffe48bff1eab930b34c941c2d61046c7
 sudo: required
 services:
 before_install:
