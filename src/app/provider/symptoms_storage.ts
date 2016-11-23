@@ -1,8 +1,7 @@
-import localForage from "localforage";
-
 declare var require: any;
-
 var loki = require('lokijs');
+var localForage = require('localforage');
+
 var store = localForage.createInstance({
   name: 'symptom happi'
 })

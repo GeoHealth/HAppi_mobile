@@ -1,13 +1,13 @@
 {
-  "name": "ionic-hello-world",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "name": "HAppi-mobile",
+  "author": "Geohealth Crew",
+  "homepage": "https://github.com/GeoHealth/HAppi_mobile",
   "private": true,
   "scripts": {
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
-     "test": "ng test",
-     "test-travis" :"ng test --single-run"
+     "test": "ng test --code-coverage",
+     "test-travis" :"ng test --single-run --code-coverage"
   },
   "dependencies": {
     "@angular/common": "2.1.1",
