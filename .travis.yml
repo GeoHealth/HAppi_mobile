@@ -36,6 +36,7 @@ script:
   - npm run-script test-travis
 
 after_success:
+  - sed -i 's/^SF:.*\/\(src.*\)/SF:\1/g' coverage\coverage.lcov #use relative paths
   - codeclimate-test-reporter < coverage/coverage.lcov
 
 cache:
