@@ -37,9 +37,7 @@ script:
   - npm run-script test-travis
 
 after_success:
-  - cat coverage/coverage.lcov
   - sed -i 's/^SF:.*\/\(src.*\)/SF:\1/g' coverage/coverage.lcov #use relative paths
-  - cat coverage/coverage.lcov
   - codeclimate-test-reporter < coverage/coverage.lcov
   - codecov -f coverage/coverage.lcov # trying codecov
 
