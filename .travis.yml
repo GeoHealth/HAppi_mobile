@@ -29,6 +29,7 @@ install:
   - npm install
   # - npm install --save-dev ionic
   - npm install -g codeclimate-test-reporter
+  - npm install -g codecov
 
 before_script:
 
@@ -40,6 +41,7 @@ after_success:
   - sed -i 's/^SF:.*\/\(src.*\)/SF:\1/g' coverage/coverage.lcov #use relative paths
   - cat coverage/coverage.lcov
   - codeclimate-test-reporter < coverage/coverage.lcov
+  - codecov -f coverage/coverage.lcov # trying codecov
 
 cache:
   bundler: true
