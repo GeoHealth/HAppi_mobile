@@ -15,11 +15,6 @@ module.exports = function (config) {
     files: [
       { pattern: './src/tests/test.ts', watched: false }
     ],
-    exclude: [
-      './src/tests/test.ts',
-      './src/tests/mocks.ts',
-      './src/tests/polyfills.ts'
-    ],
     preprocessors: {
       './src/tests/test.ts': ['angular-cli']
     },
