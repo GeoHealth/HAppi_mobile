@@ -8,7 +8,7 @@ import {SymptomsStorage} from '../../app/provider/symptoms_storage'
 })
 export class HomePage {
 
-  private storage: SymptomsStorage;
+  storage: SymptomsStorage;
 
   constructor(public navCtrl: NavController, private alertCtrl: AlertController) {
     this.storage = new SymptomsStorage();
