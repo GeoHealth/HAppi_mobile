@@ -2,20 +2,27 @@ declare var require: any;
 var loki = require('lokijs');
 var localForage = require('localforage');
 
-var store = localForage.createInstance({
-  name: 'symptom happi'
-})
-store.setDriver([localForage.INDEXEDDB, localForage.WEBSQL, localForage.LOCALSTORAGE]);
-
-
 export class SymptomsStorage {
-  db: any;
+  private inMemoryDB: any;
+  private store: any;
   symptoms: any;
 
   constructor() {
-    this.db = new loki('symptoms');
-    this.symptoms = this.db.addCollection('symptoms');
+    this.initStore();
+    this.initInMemoryDB();
     this.importAll();
+  }
+
+  private initStore(){
+    this.store = localForage.createInstance({
+      name: 'symptom happi'
+    })
+    this.store.setDriver([localForage.INDEXEDDB, localForage.WEBSQL, localForage.LOCALSTORAGE]);
+  }
+
+  private initInMemoryDB(){
+    this.inMemoryDB = new loki('symptoms');
+    this.symptoms = this.inMemoryDB.addCollection('symptoms');
   }
 
   add(symptom) {
@@ -24,7 +31,7 @@ export class SymptomsStorage {
   }
 
   saveAll() {
-    store.setItem('storeKey', JSON.stringify(this.db)).then(function (value) {
+    this.store.setItem('storeKey', JSON.stringify(this.inMemoryDB)).then(function (value) {
       console.log('database successfully saved');
     }).catch(function(err) {
       console.log('error while saving: ' + err);
@@ -33,10 +40,10 @@ export class SymptomsStorage {
 
   importAll() {
     var self = this;
-    store.getItem('storeKey').then(function(value) {
+    this.store.getItem('storeKey').then(function(value) {
       console.log('the full database has been retrieved');
-      self.db.loadJSON(value);
-      self.symptoms = self.db.getCollection('symptoms');        // slight hack! we're manually reconnecting the collection variable :-)
+      self.inMemoryDB.loadJSON(value);
+      self.symptoms = self.inMemoryDB.getCollection('symptoms');        // slight hack! we're manually reconnecting the collection variable :-)
     }).catch(function(err) {
       console.log('error importing database: ' + err);
     });
