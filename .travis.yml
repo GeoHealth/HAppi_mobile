@@ -1,50 +1,40 @@
 language: node_js
 node_js:
-  - '4.1'
-
+- '4.1'
 addons:
   apt:
     sources:
-      - ubuntu-toolchain-r-test
+    - ubuntu-toolchain-r-test
     packages:
-      - g++-4.8
+    - g++-4.8
 sudo: required
-services:
-
+services: 
 branches:
   only:
   - master
-
 env:
-  - CXX=g++-4.8
-
+- CXX=g++-4.8
 before_install:
-  - npm update -g npm
-  - npm --version
-  - export CHROME_BIN=chromium-browser
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
-
+- npm update -g npm
+- npm --version
+- export CHROME_BIN=chromium-browser
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
 install:
-  - npm install
-  # - npm install --save-dev ionic
-  - npm install -g codeclimate-test-reporter
-  - npm install -g codecov
-
-before_script:
-
+- npm install
+- npm install -g codeclimate-test-reporter
+- npm install -g codecov
+before_script: 
 script:
-  - npm run-script test-travis
-
+- npm run-script test-travis
 after_success:
-  - sed -i 's/^SF:.*\/\(src.*\)/SF:\1/g' coverage/coverage.lcov #use relative paths
-  - codeclimate-test-reporter < coverage/coverage.lcov
-  - codecov -f coverage/coverage.lcov # trying codecov
-
+- sed -i 's/^SF:.*\/\(src.*\)/SF:\1/g' coverage/coverage.lcov
+- codeclimate-test-reporter < coverage/coverage.lcov
+- codecov -f coverage/coverage.lcov
 cache:
   bundler: true
   directories:
-  - node_modules # NPM packages
-
+  - node_modules
 notifications:
-  email: true
+  slack:
+    secure: T/NGjC2dK+6+WmAQArhiyZKW5nq7LBimmD6vBy0zI++nkswGuZjt6zlJGu3XwJMq0T2xGshMuQpBPWNzuNfz0Oe5tnfQyeCOcbtfhXzY/QKyjm0xrDm06mPP3iJY3kIXtU3lq4KZ+6CkTncfw/M3ebetNeuO9VgO0SOACzCAXH0vjVQwYKkXr2xWGE13NLBcmbzUR0nLXJJtwhqBiy3XcOPVU2S5HYmGd7xxhHzY1hdtDu31XVibE0+JHWRCC6jNjI9gKOyZluAxEUYzQ0jolGKUe1pV7M30AJtcSOoFFHhHXYbRu2SIltj+mYMebvd1LGzLxDZOpNj2rIYWyOnGX2hhuw2NZn/SwQflm7j0vBMrlodaooB8D2WHOiZpMjWyKEN4A2fF+mU+LghuMNcjPtI3MqEDudOqqOJ3BaijF82RP7R4s9ap8sWytg5AvvEGt/KoEmwA3yiW6H/9wdasaOjwUHBOh9ME6mmb3SPS78QmInVU8ntv2Z4U5JgpYGR4ngMpmTJA1vjLUa1/qI5g75PMaoDwhAhsrNbbobCuUA+Onaibm3/H7JL4nKBDbWm/ZWR9YuiRDfzkNgoOTGrq+xeGqea07qLrXVlnsVvAed9C5QlWZw32LZGicfkCcYU4y9ptE6bdAah8AQiiPIIIkNeixV1uvkuCDaGyNe0iaDE=
