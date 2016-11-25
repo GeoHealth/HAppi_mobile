@@ -8,7 +8,7 @@ addons:
     packages:
     - g++-4.8
 sudo: required
-services: 
+services:
 branches:
   only:
   - master
@@ -23,14 +23,12 @@ before_install:
 install:
 - npm install
 - npm install -g codeclimate-test-reporter
-- npm install -g codecov
-before_script: 
+before_script:
 script:
 - npm run-script test-travis
 after_success:
 - sed -i 's/^SF:.*\/\(src.*\)/SF:\1/g' coverage/coverage.lcov
 - codeclimate-test-reporter < coverage/coverage.lcov
-- codecov -f coverage/coverage.lcov
 cache:
   bundler: true
   directories:
