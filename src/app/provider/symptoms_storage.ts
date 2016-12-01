@@ -1,9 +1,11 @@
 import {Symptom} from '../../models/symptom'
+import {Injectable} from '@angular/core'
 
 declare var require: any;
 var loki = require('lokijs');
 var localForage = require('localforage');
 
+@Injectable()
 export class SymptomsStorage {
   private inMemoryDB: any;
   store: any;

@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core'
-import {Symptom} from '../../models/symptom'
 import {Occurence} from '../../models/occurence'
 
 declare var require: any;

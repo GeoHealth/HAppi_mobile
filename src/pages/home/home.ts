@@ -15,8 +15,8 @@ export class HomePage {
   symptom_storage: SymptomsStorage;
   occurences_storage: OccurenceStorage;
 
-  constructor(public navCtrl: NavController,private alertCtrl: AlertController, occurence_storage: OccurenceStorage) {
-    this.symptom_storage = new SymptomsStorage();
+  constructor(public navCtrl: NavController,private alertCtrl: AlertController, occurence_storage: OccurenceStorage, symptoms_storage: SymptomsStorage) {
+    this.symptom_storage = symptoms_storage;
     this.occurences_storage = occurence_storage;
   };
 
