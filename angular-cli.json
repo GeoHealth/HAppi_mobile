@@ -1,7 +1,7 @@
 {
   "project": {
-    "version": "1.0.0-beta.16",
-    "name": "clicker"
+    "version": "1.0.0",
+    "name": "HAppi"
   },
   "apps": [
     {
