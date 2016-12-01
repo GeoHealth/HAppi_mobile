@@ -1,4 +1,3 @@
-
 // IONIC:
 
 export class ConfigMock {
