@@ -24,13 +24,13 @@ export class FormMock {
 export class NavMock {
 
   public pop(): any {
-    return new Promise(function(resolve: Function): void {
+    return new Promise((resolve: Function): void => {
       resolve();
     });
   }
 
   public push(): any {
-    return new Promise(function(resolve: Function): void {
+    return new Promise((resolve: Function): void => {
       resolve();
     });
   }

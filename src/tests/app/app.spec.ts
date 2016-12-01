@@ -7,8 +7,8 @@ let instance: HAppiApp = null;
 describe('HAppiApp', () => {
 
   beforeEach(() => {
-    instance = new HAppiApp((<any> new PlatformMock));
-    instance['nav'] = (<any>new NavMock());
+    instance = new HAppiApp((new PlatformMock() as any));
+    instance['nav'] = (new NavMock() as any);
   });
 
   // it('initialises with two possible pages', () => {
