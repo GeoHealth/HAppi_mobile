@@ -1,4 +1,4 @@
-import {Category} from './caterogy'
+import {Category} from './category'
 
 export class Symptom {
 
