@@ -1,7 +1,7 @@
-import {} from 'jasmine'
+import {} from 'jasmine';
 import { OccurenceStorage }          from '../../../app/provider/occurence_storage';
-import {Symptom} from '../../../models/symptom'
-import {Occurence} from '../../../models/occurence'
+import {Symptom} from '../../../models/symptom';
+import {Occurence} from '../../../models/occurence';
 
 describe('Occurence storage', () => {
   let occurenceStorage: OccurenceStorage;
@@ -10,56 +10,56 @@ describe('Occurence storage', () => {
   beforeEach(() => {
     occurenceStorage = new OccurenceStorage();
 
-    spyOn(occurenceStorage.store, 'getItem').and.callFake(function (key) {
-      return new Promise(function(resolve, reject) {
+    spyOn(occurenceStorage.store, 'getItem').and.callFake((key) => {
+      return new Promise((resolve, reject) => {
         resolve(keyValueStore[key]);
       });
     });
-    spyOn(occurenceStorage.store, 'setItem').and.callFake(function (key, value) {
-      return new Promise(function(resolve, reject) {
+    spyOn(occurenceStorage.store, 'setItem').and.callFake((key, value) => {
+      return new Promise((resolve, reject) => {
         resolve('');
       });
     });
-    spyOn(occurenceStorage.store, 'clear').and.callFake(function () {
+    spyOn(occurenceStorage.store, 'clear').and.callFake(() => {
       keyValueStore = {};
     });
   });
 
-  function buildSymptom1() : Symptom{
+  function buildSymptom1(): Symptom{
     return new Symptom("Abdominal Pain");
   }
 
-  function buildSymptom2() : Symptom{
+  function buildSymptom2(): Symptom{
     return new Symptom("Abnormal Facial Expressions");
   }
 
-  function buildOccurence1() : Occurence{
+  function buildOccurence1(): Occurence{
     return new Occurence(buildSymptom1(), new Date().toISOString());
   }
 
-  function buildOccurence2() : Occurence{
+  function buildOccurence2(): Occurence{
     return new Occurence(buildSymptom2(), new Date().toISOString());
   }
 
-  let addOccurence = function(newOccurence){
+  let addOccurence = (newOccurence) => {
     occurenceStorage.add(newOccurence);
   };
 
-  let addFewOccurence = function(){
+  let addFewOccurence = () => {
     addOccurence(buildOccurence1());
     addOccurence(buildOccurence2());
   };
 
-  it('should start with an empty database', () =>{
+  it('should start with an empty database', () => {
     expect(occurenceStorage.size()).toEqual(0);
   });
 
-  it('should store an occurence correclty', () =>{
+  it('should store an occurence correclty', () => {
     addOccurence(buildOccurence1());
     expect(occurenceStorage.size()).toEqual(1);
   });
 
-  it('should read an occurence correctly', () =>{
+  it('should read an occurence correctly', () => {
     let occurence1: Occurence = buildOccurence1();
     addOccurence(occurence1);
     let occurence: Occurence = occurenceStorage.findById(occurence1.occurence_id);
