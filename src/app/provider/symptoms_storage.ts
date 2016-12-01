@@ -57,7 +57,7 @@ export class SymptomsStorage {
     }
   }
 
-  all() : Symptom[] {
+  all(): Symptom[] {
     return this.symptoms.data as Symptom[];
   }
 

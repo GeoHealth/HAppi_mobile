@@ -3,3 +3,11 @@
     <ion-title>Occurence</ion-title>
   </ion-navbar>
 </ion-header>
+<ion-list inset>
+    <ion-item *ngFor="let occurence of occurences_storage.all()">
+      <ion-label>
+      {{ occurence.symptom.name }}
+    </ion-label>
+    <ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="occurence.date"></ion-datetime>
+  </ion-item>
+</ion-list>

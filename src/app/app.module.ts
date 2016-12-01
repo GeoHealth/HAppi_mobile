@@ -4,14 +4,14 @@ import { HAppiApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import {OccurenceStorage} from './provider/occurence_storage'
 import {SymptomsStorage} from './provider/symptoms_storage'
-import { Occurence } from '../pages/occurence/occurence';
+import { OccurencePage } from '../pages/occurence/occurence';
 import { TabsPage } from '../pages/tabs/tabs';
 
 @NgModule({
   declarations: [
     HAppiApp,
     HomePage,
-    Occurence,
+    OccurencePage,
     TabsPage
   ],
   imports: [
@@ -21,7 +21,7 @@ import { TabsPage } from '../pages/tabs/tabs';
   entryComponents: [
     HAppiApp,
     HomePage,
-    Occurence,
+    OccurencePage,
     TabsPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, OccurenceStorage, SymptomsStorage]

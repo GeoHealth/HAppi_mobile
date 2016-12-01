@@ -76,4 +76,8 @@ export class OccurenceStorage {
     return this.occurences.find({occurence_id: searchId})[0];
   };
 
+  all(): Occurence[] {
+    return this.occurences.data as Occurence[];
+  }
+
 }
