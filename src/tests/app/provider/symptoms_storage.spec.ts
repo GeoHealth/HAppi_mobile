@@ -66,6 +66,6 @@ describe('Symptoms storage', () => {
     let symptoms = symptomsStorage.all();
     expect(symptoms.length).toEqual(2);
     expect(symptoms[0].name).toEqual(symptom_name);
-  })
+  });
 
 });
