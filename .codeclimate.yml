@@ -15,6 +15,9 @@ engines:
       - .ts
   fixme:
     enabled: true
+  stylelint:
+    enabled: true
+    channel: "beta"
 ratings:
   paths:
   - "**.inc"
@@ -25,4 +28,8 @@ ratings:
   - "**.py"
   - "**.rb"
   - "**.ts"
+  - "**.css"
+  - "**.less"
+  - "**.scss"
+  - "**.sss"
 exclude_paths: []
