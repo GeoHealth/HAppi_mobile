@@ -3,6 +3,7 @@ import { AlertController } from 'ionic-angular';
 import {SymptomsStorage} from '../../app/provider/symptoms_storage'
 import {OccurenceStorage} from '../../app/provider/occurence_storage'
 import {Symptom} from '../../models/symptom'
+import { NavController } from 'ionic-angular';
 import {Occurence} from '../../models/occurence'
 
 @Component({
@@ -14,7 +15,7 @@ export class HomePage {
   symptom_storage: SymptomsStorage;
   occurences_storage: OccurenceStorage;
 
-  constructor(private alertCtrl: AlertController, occurence_storage: OccurenceStorage) {
+  constructor(public navCtrl: NavController,private alertCtrl: AlertController, occurence_storage: OccurenceStorage) {
     this.symptom_storage = new SymptomsStorage();
     this.occurences_storage = occurence_storage;
   };
