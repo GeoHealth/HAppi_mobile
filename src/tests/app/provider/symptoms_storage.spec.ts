@@ -26,13 +26,16 @@ describe('Symptoms storage', () => {
 
   let symptom_name = "Abdominal Pain";
 
-  let addSymptom = () => {
-    let symptom = new Symptom(symptom_name);
+  let buildSymptom1 = () => {
+    return new Symptom(symptom_name);
+  };
+
+  let addSymptom = (symptom: Symptom) => {
     symptomsStorage.add(symptom);
   };
 
   let addFewSymptoms = () => {
-    addSymptom();
+    addSymptom(buildSymptom1());
     let symptom = new Symptom("Abnormal Facial Expressions");
     symptomsStorage.add(symptom);
   };
@@ -42,12 +45,12 @@ describe('Symptoms storage', () => {
   });
 
   it('should store and read a symptom correclty', () => {
-    addSymptom();
+    addSymptom(buildSymptom1());
     expect(symptomsStorage.findByName(symptom_name)[0].name).toEqual(symptom_name);
   });
 
   it('should be contain one element', () => {
-    addSymptom();
+    addSymptom(buildSymptom1());
     expect(symptomsStorage.size()).toEqual(1);
   });
 

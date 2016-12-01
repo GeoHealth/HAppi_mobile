@@ -1,4 +1,4 @@
-import {Symptom} from './symptom'
+import {Symptom} from './symptom';
 
 export class Occurence {
   occurence_id: string;

@@ -1,9 +1,9 @@
-import {Symptom} from '../../models/symptom'
-import {Injectable} from '@angular/core'
+import {Symptom} from '../../models/symptom';
+import {Injectable} from '@angular/core';
 
-declare var require: any;
-var loki = require('lokijs');
-var localForage = require('localforage');
+declare let require: any;
+let loki = require('lokijs');
+let localForage = require('localforage');
 
 @Injectable()
 export class SymptomsStorage {
@@ -20,7 +20,7 @@ export class SymptomsStorage {
   private initStore(){
     this.store = localForage.createInstance({
       name: 'symptom happi'
-    })
+    });
     this.store.setDriver([localForage.INDEXEDDB, localForage.WEBSQL, localForage.LOCALSTORAGE]);
   }
 
@@ -30,25 +30,25 @@ export class SymptomsStorage {
   }
 
   private importAll() {
-    var self = this;
-    this.store.getItem('storeKey').then(function(value) {
+    let self = this;
+    this.store.getItem('storeKey').then((value) => {
       console.log('the full database has been retrieved');
       self.inMemoryDB.loadJSON(value);
       self.symptoms = self.inMemoryDB.getCollection('symptoms');        // slight hack! we're manually reconnecting the collection variable :-)
-    }).catch(function(err) {
+    }).catch((err) => {
       console.log('error importing database: ' + err);
     });
   }
 
   private saveAll() {
-    this.store.setItem('storeKey', JSON.stringify(this.inMemoryDB)).then(function (value) {
+    this.store.setItem('storeKey', JSON.stringify(this.inMemoryDB)).then((value) => {
       console.log('database successfully saved');
-    }).catch(function(err) {
+    }).catch((err) => {
       console.log('error while saving: ' + err);
     });
   }
 
-  add(symptom : Symptom) {
+  add(symptom: Symptom) {
     if (symptom instanceof Symptom) {
       this.symptoms.insert(symptom);
       this.saveAll();
@@ -66,7 +66,7 @@ export class SymptomsStorage {
    * Returns the number of symptoms storred in the database
    *
    **/
-  size() : number {
+  size(): number {
     return this.symptoms.count();
   }
 
@@ -75,7 +75,7 @@ export class SymptomsStorage {
    * Returns all symptoms with the name
    *
    **/
-  findByName(name: string) : Symptom[] {
+  findByName(name: string): Symptom[] {
     return this.symptoms.find({name: name}) as Symptom[];
   }
 

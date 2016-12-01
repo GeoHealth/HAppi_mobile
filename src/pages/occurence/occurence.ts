@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import {OccurenceStorage} from '../../app/provider/occurence_storage'
+import {OccurenceStorage} from '../../app/provider/occurence_storage';
 
 @Component({
   selector: 'page-occurence',
