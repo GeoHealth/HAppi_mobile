@@ -1,21 +1,21 @@
 import { SymptomsStorage }          from '../../../app/provider/symptoms_storage';
-import {Symptom} from '../../../models/symptom'
+import {Symptom} from '../../../models/symptom';
 
 describe('Symptoms storage', () => {
-  var symptomsStorage: SymptomsStorage;
-  var keyValueStore = {};
+  let symptomsStorage: SymptomsStorage;
+  let keyValueStore = {};
 
   beforeEach(() => {
     symptomsStorage = new SymptomsStorage();
 
     spyOn(symptomsStorage.store, 'getItem').and.callFake((key) => {
-      return new Promise(function(resolve, reject) {
+      return new Promise((resolve, reject) => {
         resolve(keyValueStore[key]);
       });
     });
     spyOn(symptomsStorage.store, 'setItem').and.callFake((key, value) => {
       console.log('item set');
-      return new Promise(function(resolve, reject) {
+      return new Promise((resolve, reject) => {
         resolve('');
       });
     });
@@ -26,16 +26,16 @@ describe('Symptoms storage', () => {
 
   let symptom_name = "Abdominal Pain";
 
-  let addSymptom = function() {
+  let addSymptom = () => {
     let symptom = new Symptom(symptom_name);
     symptomsStorage.add(symptom);
-  }
+  };
 
-  let addFewSymptoms = function() {
+  let addFewSymptoms = () => {
     addSymptom();
     let symptom = new Symptom("Abnormal Facial Expressions");
     symptomsStorage.add(symptom);
-  }
+  };
 
   it('should start with an empty database', () => {
     expect(symptomsStorage.size()).toEqual(0);
@@ -53,7 +53,7 @@ describe('Symptoms storage', () => {
 
   it('should throw an exception', () => {
     let symptom = {symptom_id: '', name: 'not symptom', short_description: '', long_description: '', category: null, gender_filter: ''};
-    expect( function(){ symptomsStorage.add(symptom); } ).toThrow(new Error("Wrong type adding to symptoms_storage"));
+    expect(() => { symptomsStorage.add(symptom); } ).toThrow(new Error("Wrong type adding to symptoms_storage"));
   });
 
   it('should read all symptoms', () => {
