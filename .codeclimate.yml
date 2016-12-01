@@ -1,0 +1,36 @@
+---
+engines:
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - javascript
+  eslint:
+    enabled: true
+    config:
+      extensions:
+      - .es6
+      - .js
+      - .jsx
+  fixme:
+    enabled: true
+  stylelint:
+    enabled: true
+    channel: "beta"
+  tslint:
+    enabled: true
+ratings:
+  paths:
+  - "**.inc"
+  - "**.js"
+  - "**.jsx"
+  - "**.module"
+  - "**.php"
+  - "**.py"
+  - "**.rb"
+  - "**.ts"
+  - "**.css"
+  - "**.less"
+  - "**.scss"
+  - "**.sss"
+exclude_paths: []
