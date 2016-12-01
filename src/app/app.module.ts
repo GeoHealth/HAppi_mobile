@@ -1,12 +1,16 @@
-import { NgModule } from '@angular/core';
-import { IonicApp, IonicModule } from 'ionic-angular';
+import { NgModule, ErrorHandler } from '@angular/core';
+import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { HAppiApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { Occurence } from '../pages/occurence/occurence';
+import { TabsPage } from '../pages/tabs/tabs';
 
 @NgModule({
   declarations: [
     HAppiApp,
-    HomePage
+    HomePage,
+    Occurence,
+    TabsPage
   ],
   imports: [
     IonicModule.forRoot(HAppiApp)
@@ -14,8 +18,10 @@ import { HomePage } from '../pages/home/home';
   bootstrap: [IonicApp],
   entryComponents: [
     HAppiApp,
-    HomePage
+    HomePage,
+    Occurence,
+    TabsPage
   ],
-  providers: []
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
 export class AppModule {}

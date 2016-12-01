@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AlertController } from 'ionic-angular';
 import {SymptomsStorage} from '../../app/provider/symptoms_storage'
 import {Symptom} from '../../models/symptom'
+import { NavController } from 'ionic-angular';
 
 @Component({
   selector: 'page-home',
@@ -11,7 +12,7 @@ export class HomePage {
 
   storage: SymptomsStorage;
 
-  constructor(private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController,private alertCtrl: AlertController) {
     this.storage = new SymptomsStorage();
   }
 
