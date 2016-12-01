@@ -10,10 +10,12 @@ export class Symptom {
     gender_filter: string;
 
     constructor( name: string) {
+      this.symptom_id = undefined;
       this.name = name;
+      this.short_description = undefined;
+      this.long_description = undefined;
+      this.category = undefined;
+      this.gender_filter = undefined;
     }
 
-    // get name(): string {
-    //   return this._name;
-    // }
 }

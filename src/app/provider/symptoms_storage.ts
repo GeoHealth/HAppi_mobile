@@ -55,6 +55,10 @@ export class SymptomsStorage {
     }
   }
 
+  all() : Symptom[] {
+    return this.symptoms.data as Symptom[];
+  }
+
   /**
    *
    * Returns the number of symptoms storred in the database
@@ -72,5 +76,6 @@ export class SymptomsStorage {
   findByName(name: string) : Symptom[] {
     return this.symptoms.find({name: name}) as Symptom[];
   }
+
 
 }

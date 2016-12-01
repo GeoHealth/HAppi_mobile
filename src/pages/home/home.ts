@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AlertController } from 'ionic-angular';
 import {SymptomsStorage} from '../../app/provider/symptoms_storage'
+import {Symptom} from '../../models/symptom'
 
 @Component({
   selector: 'page-home',
@@ -18,7 +19,7 @@ export class HomePage {
     let prompt = this.alertCtrl.create({
       title: 'Add symptom',
       inputs: [{
-        name: 'label'
+        name: 'name'
       }],
       buttons: [
         {
@@ -27,7 +28,9 @@ export class HomePage {
         {
           text: 'Add',
           handler: data => {
-            this.storage.add(data);
+            let symptom = new Symptom(data.name);
+            this.storage.add(symptom);
+            console.log(this.storage.all());
           }
         }
       ]

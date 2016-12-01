@@ -32,7 +32,13 @@ describe('Symptoms storage', () => {
   let symptom_name = "Abdominal Pain";
 
   let addSymptom = function() {
-    var symptom = new Symptom(symptom_name);
+    let symptom = new Symptom(symptom_name);
+    symptomsStorage.add(symptom);
+  }
+
+  let addFewSymptoms = function() {
+    addSymptom();
+    let symptom = new Symptom("Abnormal Facial Expressions");
     symptomsStorage.add(symptom);
   }
 
@@ -54,5 +60,12 @@ describe('Symptoms storage', () => {
     let symptom = {symptom_id: '', name: 'not symptom', short_description: '', long_description: '', category: null, gender_filter: ''};
     expect( function(){ symptomsStorage.add(symptom); } ).toThrow(new Error("Wrong type adding to symptoms_storage"));
   });
+
+  it('should read all symptoms', function() {
+    addFewSymptoms();
+    let symptoms = symptomsStorage.all();
+    expect(symptoms.length).toEqual(2);
+    expect(symptoms[0].name).toEqual(symptom_name);
+  })
 
 });
