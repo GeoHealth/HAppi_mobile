@@ -1,15 +1,13 @@
-import {} from 'jasmine';
-import { ComponentFixture, async, inject } from '@angular/core/testing';
-import { TestUtils }               from '../../test';
+import {} from 'jasmine'
 import { OccurenceStorage }          from '../../../app/provider/occurence_storage';
 import {Symptom} from '../../../models/symptom'
 import {Occurence} from '../../../models/occurence'
 
 describe('Occurence storage', () => {
-  var occurenceStorage: OccurenceStorage;
-  var keyValueStore = {};
+  let occurenceStorage: OccurenceStorage;
+  let keyValueStore = {};
 
-  beforeEach(function() {
+  beforeEach(() => {
     occurenceStorage = new OccurenceStorage();
 
     spyOn(occurenceStorage.store, 'getItem').and.callFake(function (key) {
@@ -39,16 +37,16 @@ describe('Occurence storage', () => {
     occurenceStorage.add(newOccurence);
   };
 
-  it('should start with an empty database', function(){
+  it('should start with an empty database', () =>{
     expect(occurenceStorage.size()).toEqual(0);
   });
 
-  it('should store an occurence correclty', function(){
+  it('should store an occurence correclty', () =>{
     addOccurence(buildOccurence1());
     expect(occurenceStorage.size()).toEqual(1);
   });
 
-  it('should read an occurence correctly', function(){
+  it('should read an occurence correctly', () =>{
     let occurence1: Occurence = buildOccurence1();
     addOccurence(occurence1);
     let occurence: Occurence = occurenceStorage.findById(occurence1.occurence_id);

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { HAppiApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import {OccurenceStorage} from './provider/occurence_storage'
 
 @NgModule({
   declarations: [
@@ -16,6 +17,6 @@ import { HomePage } from '../pages/home/home';
     HAppiApp,
     HomePage
   ],
-  providers: []
+  providers: [OccurenceStorage]
 })
 export class AppModule {}

@@ -1,3 +1,4 @@
+import {Injectable} from '@angular/core'
 import {Symptom} from '../../models/symptom'
 import {Occurence} from '../../models/occurence'
 
@@ -5,6 +6,7 @@ declare var require: any;
 var loki = require('lokijs');
 var localForage = require('localforage');
 
+@Injectable()
 export class OccurenceStorage {
   private inMemoryDB: any;
   store: any;
