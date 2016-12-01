@@ -7,8 +7,8 @@
 <ion-content padding>
   <h2>Symptoms</h2>
   <ion-list>
-    <ion-item *ngFor="let symptom of storage.all()">
-      <button ion-button full round (click)="registerSymptom(symtom)">{{symptom.name}}</button>
+    <ion-item *ngFor="let symptom of symptom_storage.all()">
+      <button ion-button full round (click)="createOccurence(symptom)">{{symptom.name}}</button>
     </ion-item>
   </ion-list>
 
