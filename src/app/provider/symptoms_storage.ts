@@ -1,11 +1,13 @@
+import {Symptom} from '../../models/symptom'
+
 declare var require: any;
 var loki = require('lokijs');
 var localForage = require('localforage');
 
 export class SymptomsStorage {
   private inMemoryDB: any;
-  private store: any;
-  symptoms: any;
+  store: any;
+  private symptoms: any;
 
   constructor() {
     this.initStore();
@@ -25,20 +27,7 @@ export class SymptomsStorage {
     this.symptoms = this.inMemoryDB.addCollection('symptoms');
   }
 
-  add(symptom) {
-    this.symptoms.insert(symptom);
-    this.saveAll();
-  }
-
-  saveAll() {
-    this.store.setItem('storeKey', JSON.stringify(this.inMemoryDB)).then(function (value) {
-      console.log('database successfully saved');
-    }).catch(function(err) {
-      console.log('error while saving: ' + err);
-    });
-  }
-
-  importAll() {
+  private importAll() {
     var self = this;
     this.store.getItem('storeKey').then(function(value) {
       console.log('the full database has been retrieved');
@@ -49,5 +38,39 @@ export class SymptomsStorage {
     });
   }
 
+  private saveAll() {
+    this.store.setItem('storeKey', JSON.stringify(this.inMemoryDB)).then(function (value) {
+      console.log('database successfully saved');
+    }).catch(function(err) {
+      console.log('error while saving: ' + err);
+    });
+  }
+
+  add(symptom : Symptom) {
+    if (symptom instanceof Symptom) {
+      this.symptoms.insert(symptom);
+      this.saveAll();
+    } else {
+      throw new TypeError("Wrong type adding to symptoms_storage");
+    }
+  }
+
+  /**
+   *
+   * Returns the number of symptoms storred in the database
+   *
+   **/
+  size() : number {
+    return this.symptoms.count();
+  }
+
+  /**
+   *
+   * Returns all symptoms with the name
+   *
+   **/
+  findByName(name: string) : Symptom[] {
+    return this.symptoms.find({name: name}) as Symptom[];
+  }
 
 }

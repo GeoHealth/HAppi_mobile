@@ -2,12 +2,12 @@ import {} from 'jasmine';
 import { ComponentFixture, async, inject } from '@angular/core/testing';
 import { TestUtils }               from '../../test';
 import { SymptomsStorage }          from '../../../app/provider/symptoms_storage';
-
+import {Symptom} from '../../../models/symptom'
 // let fixture: ComponentFixture<SymptomsStorage> = null;
 // let instance: any = null;
 
 describe('Symptoms storage', () => {
-  var symptomsStorage: any;
+  var symptomsStorage: SymptomsStorage;
   var keyValueStore = {};
 
   beforeEach(function() {
@@ -29,9 +29,30 @@ describe('Symptoms storage', () => {
     });
   });
 
-  it('should store a symptom correclty', function(){
-    var symptom = {label: 'test'};
+  let symptom_name = "Abdominal Pain";
+
+  let addSymptom = function() {
+    var symptom = new Symptom(symptom_name);
     symptomsStorage.add(symptom);
-    expect(symptomsStorage.symptoms.data[0].label).toEqual('test');
+  }
+
+  it('should start with an empty database', function(){
+    expect(symptomsStorage.size()).toEqual(0);
   });
+
+  it('should store and read a symptom correclty', function(){
+    addSymptom();
+    expect(symptomsStorage.findByName(symptom_name)[0].name).toEqual(symptom_name);
+  });
+
+  it('should be contain one element', function(){
+    addSymptom();
+    expect(symptomsStorage.size()).toEqual(1);
+  });
+
+  it('should throw an exception', function() {
+    let symptom = {symptom_id: '', name: 'not symptom', short_description: '', long_description: '', category: null, gender_filter: ''};
+    expect( function(){ symptomsStorage.add(symptom); } ).toThrow(new Error("Wrong type adding to symptoms_storage"));
+  });
+
 });
