@@ -1,3 +1,4 @@
 extends: "stylelint-config-standard"
 rules:
   max-empty-lines: 5
+  selector-type-no-unknown: false
