@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core'
-import {Occurence} from '../../models/occurence'
+import {Injectable} from '@angular/core';
+import {Occurence} from '../../models/occurence';
 
-declare var require: any;
-var loki = require('lokijs');
-var localForage = require('localforage');
+declare let require: any;
+let loki = require('lokijs');
+let localForage = require('localforage');
 
 @Injectable()
 export class OccurenceStorage {
@@ -20,7 +20,7 @@ export class OccurenceStorage {
   private initStore(){
     this.store = localForage.createInstance({
       name: 'symptom occurence happi'
-    })
+    });
     this.store.setDriver([localForage.INDEXEDDB, localForage.WEBSQL, localForage.LOCALSTORAGE]);
   };
 
@@ -30,27 +30,27 @@ export class OccurenceStorage {
   };
 
   private importAll() {
-    var self = this;
-    this.store.getItem('occurences').then(function(value) {
+    let self = this;
+    this.store.getItem('occurences').then((value) => {
       console.log('the full occurences database has been retrieved');
       self.inMemoryDB.loadJSON(value);
       self.occurences = self.inMemoryDB.getCollection('occurences');        // slight hack! we're manually reconnecting the collection variable :-)
-    }).catch(function(err) {
+    }).catch((err) => {
       console.log('error importing database: ' + err);
     });
   };
 
   private saveAll() {
-    this.store.setItem('occurences', JSON.stringify(this.inMemoryDB)).then(function (value) {
+    this.store.setItem('occurences', JSON.stringify(this.inMemoryDB)).then((value) => {
       console.log('database occurences successfully saved');
-    }).catch(function(err) {
+    }).catch((err) => {
       console.log('error while saving: ' + err);
     });
   };
 
   /**
-   * Add the given occurence to the database
-   */
+    * Add the given occurence to the database
+    */
   add(occurence: Occurence) {
     if (occurence instanceof Occurence) {
       this.occurences.insert(occurence);
@@ -61,17 +61,15 @@ export class OccurenceStorage {
   };
 
   /**
-   *
-   * Returns the number of occurences storred in the database
-   *
-   **/
+    * Returns the number of occurences storred in the database
+    */
   size(): number {
     return this.occurences.count();
   };
 
   /**
-   * Find and return the occurence matching the given id
-   */
+    * Find and return the occurence matching the given id
+    */
   findById(searchId): Occurence {
     return this.occurences.find({occurence_id: searchId})[0];
   };
