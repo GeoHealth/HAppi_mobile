@@ -7,8 +7,7 @@ addons:
     - ubuntu-toolchain-r-test
     packages:
     - g++-4.8
-dist: trusty
-sudo: false
+sudo: required
 services:
 branches:
   only:
