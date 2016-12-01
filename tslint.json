@@ -30,7 +30,6 @@
     "no-use-before-declare": true,
     "no-var-keyword": true,
     "triple-equals": [true, "allow-undefined-check", "allow-null-check"],
-    "cyclomatic-complexity": [true, 20],
     "eofline": true,
     "no-trailing-whitespace": true,
     "align": [true, "parameters", "arguments", "statements"],
@@ -40,7 +39,6 @@
     "jsdoc-format": true,
     "new-parens": true,
     "no-angle-bracket-type-assertion": true,
-    "no-parameter-properties": true,
     "semicolon": [true, "always", "ignore-interfaces", "ignore-bound-class-methods"],
     "whitespace": [true, "check-branch", "check-decl", "check-operator", "check-separator", "check-typecast"]
   },
