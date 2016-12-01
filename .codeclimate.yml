@@ -18,6 +18,8 @@ engines:
   stylelint:
     enabled: true
     channel: "beta"
+  tslint:
+    enabled: true
 ratings:
   paths:
   - "**.inc"
