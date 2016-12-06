@@ -1,11 +1,10 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Home</ion-title>
+    <ion-title>Symptoms</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h2>Symptoms</h2>
   <ion-list>
     <ion-item *ngFor="let symptom of symptom_storage.all()">
       <button ion-button full round (click)="createOccurence(symptom)" (press)="openLongPressMenu(symptom)">{{symptom.name}}</button>
