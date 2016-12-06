@@ -9,8 +9,8 @@
       {{ occurence.symptom.name }}
     </ion-label>
     <ion-label>
-      {{occurence.gps_location.latitude}} - {{occurence.gps_location.longitude}} 
+      {{occurence.gps_location.latitude}} - {{occurence.gps_location.longitude}}
     </ion-label>
-    <ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="occurence.date"></ion-datetime>
+    <ion-datetime displayFormat="MMM DD, YYYY HH:mm" disabled="true" [(ngModel)]="occurence.date"></ion-datetime>
   </ion-item>
 </ion-list>
