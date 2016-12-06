@@ -5,8 +5,8 @@ import {OccurenceStorage} from '../../app/provider/occurence_storage';
 import {Symptom} from '../../models/symptom';
 import { NavController } from 'ionic-angular';
 import {Occurence} from '../../models/occurence';
-import {log} from "util";
 import { Geolocation } from 'ionic-native';
+import {GPSCoordinates} from "../../models/coordinate";
 
 
 @Component({
@@ -55,7 +55,7 @@ export class HomePage {
     createOccurence(symptom: Symptom){
       let newOccurence;
       Geolocation.getCurrentPosition().then((gps_location) => {
-        newOccurence = new Occurence(symptom, new Date().toISOString(), gps_location.coords);
+        newOccurence = new Occurence(symptom, new Date().toISOString(), new GPSCoordinates(gps_location.coords));
         this.occurences_storage.add(newOccurence);
       }).catch((error) => {
         newOccurence = new Occurence(symptom, new Date().toISOString(), null);
