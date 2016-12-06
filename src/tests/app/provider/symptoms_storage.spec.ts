@@ -66,4 +66,18 @@ describe('Symptoms storage', () => {
     expect(symptoms[0].name).toEqual(symptom_name);
   });
 
+  it('should delete a symptom correclty', () => {
+    let symptoms = symptomsStorage.all();
+    expect(symptoms.length).toEqual(0);
+
+    addFewSymptoms();
+    symptoms = symptomsStorage.all();
+    expect(symptoms.length).toEqual(2);
+    expect(symptoms[0].name).toEqual(symptom_name);
+
+    symptomsStorage.remove(symptoms[0]);
+    expect(symptoms.length).toEqual(1);
+    expect(symptoms[0].name).not.toEqual(symptom_name);
+  });
+
 });

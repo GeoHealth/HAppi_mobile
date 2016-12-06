@@ -83,7 +83,7 @@ export class HomePage {
 
   private deleteSymptom(symptom: Symptom) {
     this.symptom_storage.remove(symptom);
-    //TODO Should we delete all occurrence of this symptoms ? 
+    //TODO Should we delete all occurrence of this symptoms ?
   }
 
 }
