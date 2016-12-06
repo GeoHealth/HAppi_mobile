@@ -6,7 +6,7 @@ let loki = require('lokijs');
 let localForage = require('localforage');
 
 @Injectable()
-export class SymptomsStorage {
+export class SymptomsStorage {
   private inMemoryDB: any;
   store: any;
   private symptoms: any;
@@ -17,14 +17,14 @@ export class SymptomsStorage {
     this.importAll();
   }
 
-  private initStore(){
+  private initStore() {
     this.store = localForage.createInstance({
       name: 'symptom happi'
     });
     this.store.setDriver([localForage.INDEXEDDB, localForage.WEBSQL, localForage.LOCALSTORAGE]);
   }
 
-  private initInMemoryDB(){
+  private initInMemoryDB() {
     this.inMemoryDB = new loki('symptoms');
     this.symptoms = this.inMemoryDB.addCollection('symptoms');
   }
@@ -80,4 +80,8 @@ export class SymptomsStorage {
   }
 
 
+  remove(symptom: Symptom) {
+    this.symptoms.remove(symptom);
+    this.saveAll();
+  }
 }
