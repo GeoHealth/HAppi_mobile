@@ -6,6 +6,8 @@ import {Symptom} from '../../models/symptom';
 import { NavController } from 'ionic-angular';
 import {Occurence} from '../../models/occurence';
 import {log} from "util";
+import { Geolocation } from 'ionic-native';
+
 
 @Component({
   selector: 'page-home',
@@ -19,71 +21,78 @@ export class HomePage {
   private platform: Platform;
 
   constructor(public navCtrl: NavController, private alertCtrl: AlertController, occurence_storage: OccurenceStorage, symptoms_storage: SymptomsStorage,
-              actionSheetCtrl: ActionSheetController, platform: Platform) {
-    this.symptom_storage = symptoms_storage;
-    this.occurences_storage = occurence_storage;
-    this.actionSheetCtrl = actionSheetCtrl;
-    this.platform = platform;
-  };
+    actionSheetCtrl: ActionSheetController, platform: Platform) {
+      this.symptom_storage = symptoms_storage;
+      this.occurences_storage = occurence_storage;
+      this.actionSheetCtrl = actionSheetCtrl;
+      this.platform = platform;
+    };
 
-  addSymptom(){
-    let prompt = this.alertCtrl.create({
-      title: 'Add symptom',
-      inputs: [{
-        name: 'name'
-      }],
-      buttons: [
-        {
-          text: 'Cancel'
-        },
-        {
-          text: 'Add',
-          handler: (data) => {
-            let symptom = new Symptom(data.name);
-            this.symptom_storage.add(symptom);
-            console.log(this.symptom_storage.all());
+    addSymptom(){
+      let prompt = this.alertCtrl.create({
+        title: 'Add symptom',
+        inputs: [{
+          name: 'name'
+        }],
+        buttons: [
+          {
+            text: 'Cancel'
+          },
+          {
+            text: 'Add',
+            handler: (data) => {
+              let symptom = new Symptom(data.name);
+              this.symptom_storage.add(symptom);
+              console.log(this.symptom_storage.all());
+            }
           }
-        }
-      ]
-    });
+        ]
+      });
 
-    prompt.present();
-  };
+      prompt.present();
+    };
 
-  createOccurence(symptom: Symptom){
-    let newOccurence = new Occurence(symptom, new Date().toISOString());
-    this.occurences_storage.add(newOccurence);
-  };
+    createOccurence(symptom: Symptom){
+      let newOccurence;
+      Geolocation.getCurrentPosition().then((gps_location) => {
+        newOccurence = new Occurence(symptom, new Date().toISOString(), gps_location.coords);
+        this.occurences_storage.add(newOccurence);
+      }).catch((error) => {
+        newOccurence = new Occurence(symptom, new Date().toISOString(), null);
+        this.occurences_storage.add(newOccurence);
+        console.log('Error getting location', error);
+      });
+    };
 
-  openLongPressMenu(symptom: Symptom) {
-    let actionSheet = this.actionSheetCtrl.create({
-      title: 'Symptom',
-      cssClass: 'long-press-symptom-menu',
-      buttons: [
-        {
-          text: 'Delete',
-          role: 'destructive',
-          icon: !this.platform.is('ios') ? 'trash' : null,
-          handler: () => {
-            console.log('Delete symptom clicked');
-            console.log(symptom.name);
-            this.deleteSymptom(symptom);
+    openLongPressMenu(symptom: Symptom) {
+      let actionSheet = this.actionSheetCtrl.create({
+        title: 'Symptom',
+        cssClass: 'long-press-symptom-menu',
+        buttons: [
+          {
+            text: 'Delete',
+            role: 'destructive',
+            icon: !this.platform.is('ios') ? 'trash' : null,
+            handler: () => {
+              console.log('Delete symptom clicked');
+              console.log(symptom.name);
+              this.deleteSymptom(symptom);
+            }
+          }, {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel clicked');
+            }
           }
-        }, {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        }
-      ]
-    });
-    actionSheet.present();
+        ]
+      });
+      actionSheet.present();
+    }
+
+    private deleteSymptom(symptom: Symptom) {
+      this.symptom_storage.remove(symptom);
+      //TODO Should we delete all occurrence of this symptoms ?
+    }
+
   }
-
-  private deleteSymptom(symptom: Symptom) {
-    this.symptom_storage.remove(symptom);
-    //TODO Should we delete all occurrence of this symptoms ?
-  }
-
-}

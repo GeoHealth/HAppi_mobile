@@ -34,11 +34,11 @@ describe('Occurence storage', () => {
   }
 
   function buildOccurence1(): Occurence{
-    return new Occurence(buildSymptom1(), new Date().toISOString());
+    return new Occurence(buildSymptom1(), new Date().toISOString(), null);
   }
 
   function buildOccurence2(): Occurence{
-    return new Occurence(buildSymptom2(), new Date().toISOString());
+    return new Occurence(buildSymptom2(), new Date().toISOString(), null);
   }
 
   let addOccurence = (newOccurence) => {
