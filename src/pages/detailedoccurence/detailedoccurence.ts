@@ -7,13 +7,14 @@ import {Symptom} from "../../models/symptom";
   selector: 'page-detailed-occurence',
   templateUrl: 'detailedoccurence.html'
 })
-export class DetailedOccurencePage {
+export class DetailedOccurrencePage {
 
   private symptom: Symptom;
+  private occurences_storage: OccurenceStorage;
 
-  constructor(private navParams: NavParams) {
+  constructor(private navParams: NavParams, occurence_storage: OccurenceStorage) {
     this.symptom = navParams.get("symptom");
-    console.log(this.symptom);
+    this.occurences_storage = occurence_storage;
   }
 
   save() {

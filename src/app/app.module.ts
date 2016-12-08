@@ -6,7 +6,7 @@ import {OccurenceStorage} from './provider/occurence_storage';
 import {SymptomsStorage} from './provider/symptoms_storage';
 import { OccurencePage } from '../pages/occurence/occurence';
 import { TabsPage } from '../pages/tabs/tabs';
-import {DetailedOccurencePage} from "../pages/detailedoccurence/detailedoccurence";
+import {DetailedOccurrencePage} from "../pages/detailedoccurence/detailedoccurence";
 
 @NgModule({
   declarations: [
@@ -14,7 +14,7 @@ import {DetailedOccurencePage} from "../pages/detailedoccurence/detailedoccurenc
     HomePage,
     OccurencePage,
     TabsPage,
-    DetailedOccurencePage
+    DetailedOccurrencePage
   ],
   imports: [
     IonicModule.forRoot(HAppiApp)
@@ -25,7 +25,7 @@ import {DetailedOccurencePage} from "../pages/detailedoccurence/detailedoccurenc
     HomePage,
     OccurencePage,
     TabsPage,
-    DetailedOccurencePage
+    DetailedOccurrencePage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, OccurenceStorage, SymptomsStorage]
 

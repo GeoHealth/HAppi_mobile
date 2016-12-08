@@ -7,7 +7,7 @@ import { NavController } from 'ionic-angular';
 import {Occurence} from '../../models/occurence';
 import { Geolocation } from 'ionic-native';
 import {GPSCoordinates} from "../../models/coordinate";
-import {DetailedOccurencePage} from "../detailedoccurence/detailedoccurence";
+import {DetailedOccurrencePage} from "../detailedoccurence/detailedoccurence";
 
 
 @Component({
@@ -70,7 +70,7 @@ export class HomePage {
     };
 
   createDetailedOccurence(symptom: Symptom){
-    this.navCtrl.push(DetailedOccurencePage, {
+    this.navCtrl.push(DetailedOccurrencePage, {
       symptom: symptom
     });
   };
@@ -103,7 +103,6 @@ export class HomePage {
 
     private deleteSymptom(symptom: Symptom) {
       this.symptom_storage.remove(symptom);
-      //TODO Should we delete all occurrence of this symptoms ?
     }
 
   }
