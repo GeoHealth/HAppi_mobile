@@ -7,7 +7,7 @@ import { NavController } from 'ionic-angular';
 import {Occurence} from '../../models/occurence';
 import { Geolocation } from 'ionic-native';
 import {GPSCoordinates} from "../../models/coordinate";
-import {DetailedOccurence} from "../detailedoccurence/detailedoccurence";
+import {DetailedOccurencePage} from "../detailedoccurence/detailedoccurence";
 
 
 @Component({
@@ -70,7 +70,7 @@ export class HomePage {
     };
 
   createDetailedOccurence(symptom: Symptom){
-    this.navCtrl.push(DetailedOccurence, {
+    this.navCtrl.push(DetailedOccurencePage, {
       symptom: symptom
     });
   };
