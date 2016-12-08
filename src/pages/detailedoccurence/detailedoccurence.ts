@@ -16,4 +16,8 @@ export class DetailedOccurence {
     console.log(this.symptom);
   }
 
+  save() {
+
+  }
+
 }
