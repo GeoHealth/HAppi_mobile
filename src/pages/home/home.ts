@@ -53,14 +53,18 @@ export class HomePage {
     };
 
     createOccurence(symptom: Symptom){
+      let element = document.getElementById(symptom.name) as HTMLInputElement;
+      element.disabled = true;
       let newOccurence;
       Geolocation.getCurrentPosition().then((gps_location) => {
         newOccurence = new Occurence(symptom, new Date().toISOString(), new GPSCoordinates(gps_location.coords));
         this.occurences_storage.add(newOccurence);
+        element.disabled = false;
       }).catch((error) => {
         newOccurence = new Occurence(symptom, new Date().toISOString(), null);
         this.occurences_storage.add(newOccurence);
         console.log('Error getting location', error);
+        element.disabled = false;
       });
     };
 

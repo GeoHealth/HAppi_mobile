@@ -7,7 +7,7 @@
 <ion-content padding>
   <ion-list>
     <ion-item *ngFor="let symptom of symptom_storage.all()">
-      <button ion-button full round (click)="createOccurence(symptom)" (press)="openLongPressMenu(symptom)">{{symptom.name}}</button>
+      <button  id="{{symptom.name}}" ion-button full round (click)="createOccurence(symptom)" (press)="openLongPressMenu(symptom)">{{symptom.name}}</button>
     </ion-item>
   </ion-list>
 
