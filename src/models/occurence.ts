@@ -1,5 +1,4 @@
 import {Symptom} from './symptom';
-import { Geolocation } from 'ionic-native';
 
 
 export class Occurence {
