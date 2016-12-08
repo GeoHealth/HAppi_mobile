@@ -5,13 +5,21 @@
 </ion-header>
 
 <ion-content padding>
-  TODO
+  <ion-list>
+    <ion-item id="date-and-hour">
+      <ion-label>Date and hour</ion-label>
+      <ion-datetime displayFormat="DD/MM/YYYY HH:mm" [(ngModel)]="occurrence.date"></ion-datetime>
+    </ion-item>
+    <ion-item id="comment">
+      <ion-label>Comment</ion-label>
+      <ion-textarea [(ngModel)]="comment" rows="6" placeholder="Describe the context of your symptom..."></ion-textarea>
+    </ion-item>
+  </ion-list>
 
   <button ion-button (click)="save()" full color="default" icon-left>
     <ion-icon name="add"></ion-icon>
     Save occurrence
   </button>
-
 
 
 </ion-content>
