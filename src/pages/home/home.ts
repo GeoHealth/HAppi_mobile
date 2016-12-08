@@ -7,6 +7,7 @@ import { NavController } from 'ionic-angular';
 import {Occurence} from '../../models/occurence';
 import { Geolocation } from 'ionic-native';
 import {GPSCoordinates} from "../../models/coordinate";
+import {DetailedOccurence} from "../detailedoccurence/detailedoccurence";
 
 
 @Component({
@@ -67,6 +68,12 @@ export class HomePage {
         element.disabled = false;
       });
     };
+
+  createDetailedOccurence(symptom: Symptom){
+    this.navCtrl.push(DetailedOccurence, {
+      symptom: symptom
+    });
+  };
 
     openLongPressMenu(symptom: Symptom) {
       let actionSheet = this.actionSheetCtrl.create({
