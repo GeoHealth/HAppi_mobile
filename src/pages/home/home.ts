@@ -8,6 +8,7 @@ import {Occurrence} from '../../models/occurrence';
 import { Geolocation } from 'ionic-native';
 import {GPSCoordinates} from "../../models/coordinate";
 import {DetailedOccurrencePage} from "../detailedoccurrence/detailedoccurrence";
+import {DateProvider} from "../../app/provider/date_provider";
 
 
 @Component({
@@ -58,11 +59,11 @@ export class HomePage {
       element.disabled = true;
       let newOccurrence;
       Geolocation.getCurrentPosition().then((gps_location) => {
-        newOccurrence = new Occurrence(symptom, new Date().toISOString(), new GPSCoordinates(gps_location.coords));
+        newOccurrence = new Occurrence(symptom, DateProvider.getCurrentDateAsString(), new GPSCoordinates(gps_location.coords));
         this.occurrences_storage.add(newOccurrence);
         element.disabled = false;
       }).catch((error) => {
-        newOccurrence = new Occurrence(symptom, new Date().toISOString(), null);
+        newOccurrence = new Occurrence(symptom, DateProvider.getCurrentDateAsString(), null);
         this.occurrences_storage.add(newOccurrence);
         console.log('Error getting location', error);
         element.disabled = false;

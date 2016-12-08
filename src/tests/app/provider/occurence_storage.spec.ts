@@ -2,6 +2,7 @@ import {} from 'jasmine';
 import { OccurrenceStorage }          from '../../../app/provider/occurrence_storage';
 import {Symptom} from '../../../models/symptom';
 import {Occurrence} from '../../../models/occurrence';
+import {DateProvider} from "../../../app/provider/date_provider";
 
 describe('Occurrence storage', () => {
   let occurrenceStorage: OccurrenceStorage;
@@ -34,11 +35,11 @@ describe('Occurrence storage', () => {
   }
 
   function buildOccurrence1(): Occurrence{
-    return new Occurrence(buildSymptom1(), new Date().toISOString(), null);
+    return new Occurrence(buildSymptom1(), DateProvider.getCurrentDateAsString(), null);
   }
 
   function buildOccurrence2(): Occurrence{
-    return new Occurrence(buildSymptom2(), new Date().toISOString(), null);
+    return new Occurrence(buildSymptom2(), DateProvider.getCurrentDateAsString(), null);
   }
 
   let addOccurrence = (newOccurrence) => {
