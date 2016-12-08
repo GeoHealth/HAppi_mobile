@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import {AlertController, ActionSheetController, Platform} from 'ionic-angular';
 import {SymptomsStorage} from '../../app/provider/symptoms_storage';
-import {OccurrenceStorage} from '../../app/provider/occurence_storage';
+import {OccurrenceStorage} from '../../app/provider/occurrence_storage';
 import {Symptom} from '../../models/symptom';
 import { NavController } from 'ionic-angular';
-import {Occurence} from '../../models/occurence';
+import {Occurrence} from '../../models/occurrence';
 import { Geolocation } from 'ionic-native';
 import {GPSCoordinates} from "../../models/coordinate";
-import {DetailedOccurrencePage} from "../detailedoccurence/detailedoccurence";
+import {DetailedOccurrencePage} from "../detailedoccurrence/detailedoccurrence";
 
 
 @Component({
@@ -17,14 +17,14 @@ import {DetailedOccurrencePage} from "../detailedoccurence/detailedoccurence";
 export class HomePage {
 
   symptom_storage: SymptomsStorage;
-  occurences_storage: OccurrenceStorage;
+  occurrences_storage: OccurrenceStorage;
   private actionSheetCtrl: ActionSheetController;
   private platform: Platform;
 
-  constructor(public navCtrl: NavController, private alertCtrl: AlertController, occurence_storage: OccurrenceStorage, symptoms_storage: SymptomsStorage,
+  constructor(public navCtrl: NavController, private alertCtrl: AlertController, occurrence_storage: OccurrenceStorage, symptoms_storage: SymptomsStorage,
               actionSheetCtrl: ActionSheetController, platform: Platform) {
       this.symptom_storage = symptoms_storage;
-      this.occurences_storage = occurence_storage;
+      this.occurrences_storage = occurrence_storage;
       this.actionSheetCtrl = actionSheetCtrl;
       this.platform = platform;
     };
@@ -53,23 +53,23 @@ export class HomePage {
       prompt.present();
     };
 
-    createOccurence(symptom: Symptom){
+    createOccurrence(symptom: Symptom){
       let element = document.getElementById(symptom.name) as HTMLInputElement;
       element.disabled = true;
-      let newOccurence;
+      let newOccurrence;
       Geolocation.getCurrentPosition().then((gps_location) => {
-        newOccurence = new Occurence(symptom, new Date().toISOString(), new GPSCoordinates(gps_location.coords));
-        this.occurences_storage.add(newOccurence);
+        newOccurrence = new Occurrence(symptom, new Date().toISOString(), new GPSCoordinates(gps_location.coords));
+        this.occurrences_storage.add(newOccurrence);
         element.disabled = false;
       }).catch((error) => {
-        newOccurence = new Occurence(symptom, new Date().toISOString(), null);
-        this.occurences_storage.add(newOccurence);
+        newOccurrence = new Occurrence(symptom, new Date().toISOString(), null);
+        this.occurrences_storage.add(newOccurrence);
         console.log('Error getting location', error);
         element.disabled = false;
       });
     };
 
-  createDetailedOccurence(symptom: Symptom){
+  createDetailedOccurrence(symptom: Symptom){
     this.navCtrl.push(DetailedOccurrencePage, {
       symptom: symptom
     });

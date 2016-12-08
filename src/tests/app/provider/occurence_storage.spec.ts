@@ -1,26 +1,26 @@
 import {} from 'jasmine';
-import { OccurrenceStorage }          from '../../../app/provider/occurence_storage';
+import { OccurrenceStorage }          from '../../../app/provider/occurrence_storage';
 import {Symptom} from '../../../models/symptom';
-import {Occurence} from '../../../models/occurence';
+import {Occurrence} from '../../../models/occurrence';
 
-describe('Occurence storage', () => {
-  let occurenceStorage: OccurrenceStorage;
+describe('Occurrence storage', () => {
+  let occurrenceStorage: OccurrenceStorage;
   let keyValueStore = {};
 
   beforeEach(() => {
-    occurenceStorage = new OccurrenceStorage();
+    occurrenceStorage = new OccurrenceStorage();
 
-    spyOn(occurenceStorage.store, 'getItem').and.callFake((key) => {
+    spyOn(occurrenceStorage.store, 'getItem').and.callFake((key) => {
       return new Promise((resolve, reject) => {
         resolve(keyValueStore[key]);
       });
     });
-    spyOn(occurenceStorage.store, 'setItem').and.callFake((key, value) => {
+    spyOn(occurrenceStorage.store, 'setItem').and.callFake((key, value) => {
       return new Promise((resolve, reject) => {
         resolve('');
       });
     });
-    spyOn(occurenceStorage.store, 'clear').and.callFake(() => {
+    spyOn(occurrenceStorage.store, 'clear').and.callFake(() => {
       keyValueStore = {};
     });
   });
@@ -33,47 +33,47 @@ describe('Occurence storage', () => {
     return new Symptom("Abnormal Facial Expressions");
   }
 
-  function buildOccurence1(): Occurence{
-    return new Occurence(buildSymptom1(), new Date().toISOString(), null);
+  function buildOccurrence1(): Occurrence{
+    return new Occurrence(buildSymptom1(), new Date().toISOString(), null);
   }
 
-  function buildOccurence2(): Occurence{
-    return new Occurence(buildSymptom2(), new Date().toISOString(), null);
+  function buildOccurrence2(): Occurrence{
+    return new Occurrence(buildSymptom2(), new Date().toISOString(), null);
   }
 
-  let addOccurence = (newOccurence) => {
-    occurenceStorage.add(newOccurence);
+  let addOccurrence = (newOccurrence) => {
+    occurrenceStorage.add(newOccurrence);
   };
 
-  let addFewOccurence = () => {
-    addOccurence(buildOccurence1());
-    addOccurence(buildOccurence2());
+  let addFewOccurrence = () => {
+    addOccurrence(buildOccurrence1());
+    addOccurrence(buildOccurrence2());
   };
 
   it('should start with an empty database', () => {
-    expect(occurenceStorage.size()).toEqual(0);
+    expect(occurrenceStorage.size()).toEqual(0);
   });
 
-  it('should store an occurence correclty', () => {
-    addOccurence(buildOccurence1());
-    expect(occurenceStorage.size()).toEqual(1);
+  it('should store an occurrence correctly', () => {
+    addOccurrence(buildOccurrence1());
+    expect(occurrenceStorage.size()).toEqual(1);
   });
 
-  it('should read an occurence correctly', () => {
-    let occurence1: Occurence = buildOccurence1();
-    addOccurence(occurence1);
-    let occurence: Occurence = occurenceStorage.findById(occurence1.occurence_id);
-    expect(occurence.occurence_id).toEqual(occurence1.occurence_id);
-    expect(occurence.symptom.name).toEqual(occurence1.symptom.name);
+  it('should read an occurrence correctly', () => {
+    let occurrence1: Occurrence = buildOccurrence1();
+    addOccurrence(occurrence1);
+    let occurrence: Occurrence = occurrenceStorage.findById(occurrence1.occurrence_id);
+    expect(occurrence.occurrence_id).toEqual(occurrence1.occurrence_id);
+    expect(occurrence.symptom.name).toEqual(occurrence1.symptom.name);
   });
 
   it('should read all symptoms', () => {
-    let occurence1: Occurence = buildOccurence1();
-    let occurence2: Occurence = buildOccurence2();
-    addFewOccurence();
-    let occurences = occurenceStorage.all();
-    expect(occurences.length).toEqual(2);
-    expect(occurences[0].symptom.name).toEqual(occurence1.symptom.name);
-    expect(occurences[1].symptom.name).toEqual(occurence2.symptom.name);
+    let occurrence1: Occurrence = buildOccurrence1();
+    let occurernce2: Occurrence = buildOccurrence2();
+    addFewOccurrence();
+    let occurrences = occurrenceStorage.all();
+    expect(occurrences.length).toEqual(2);
+    expect(occurrences[0].symptom.name).toEqual(occurrence1.symptom.name);
+    expect(occurrences[1].symptom.name).toEqual(occurernce2.symptom.name);
   });
 });

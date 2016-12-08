@@ -1,8 +1,8 @@
 import {Symptom} from './symptom';
 
 
-export class Occurence {
-  occurence_id: string;
+export class Occurrence {
+  occurrence_id: string;
   date: string;
   symptom: Symptom;
   gps_location: Coordinates;
