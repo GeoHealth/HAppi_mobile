@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {NavParams} from 'ionic-angular';
-import {OccurenceStorage} from '../../app/provider/occurence_storage';
+import {OccurrenceStorage} from '../../app/provider/occurence_storage';
 import {Symptom} from "../../models/symptom";
 
 @Component({
@@ -10,15 +10,15 @@ import {Symptom} from "../../models/symptom";
 export class DetailedOccurrencePage {
 
   private symptom: Symptom;
-  private occurences_storage: OccurenceStorage;
+  private occurrences_storage: OccurrenceStorage;
 
-  constructor(private navParams: NavParams, occurence_storage: OccurenceStorage) {
+  constructor(private navParams: NavParams, occurence_storage: OccurrenceStorage) {
     this.symptom = navParams.get("symptom");
-    this.occurences_storage = occurence_storage;
+    this.occurrences_storage = occurence_storage;
   }
 
   save() {
-
+    //TODO
   }
 
 }

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {AlertController, ActionSheetController, Platform} from 'ionic-angular';
 import {SymptomsStorage} from '../../app/provider/symptoms_storage';
-import {OccurenceStorage} from '../../app/provider/occurence_storage';
+import {OccurrenceStorage} from '../../app/provider/occurence_storage';
 import {Symptom} from '../../models/symptom';
 import { NavController } from 'ionic-angular';
 import {Occurence} from '../../models/occurence';
@@ -17,12 +17,12 @@ import {DetailedOccurrencePage} from "../detailedoccurence/detailedoccurence";
 export class HomePage {
 
   symptom_storage: SymptomsStorage;
-  occurences_storage: OccurenceStorage;
+  occurences_storage: OccurrenceStorage;
   private actionSheetCtrl: ActionSheetController;
   private platform: Platform;
 
-  constructor(public navCtrl: NavController, private alertCtrl: AlertController, occurence_storage: OccurenceStorage, symptoms_storage: SymptomsStorage,
-    actionSheetCtrl: ActionSheetController, platform: Platform) {
+  constructor(public navCtrl: NavController, private alertCtrl: AlertController, occurence_storage: OccurrenceStorage, symptoms_storage: SymptomsStorage,
+              actionSheetCtrl: ActionSheetController, platform: Platform) {
       this.symptom_storage = symptoms_storage;
       this.occurences_storage = occurence_storage;
       this.actionSheetCtrl = actionSheetCtrl;

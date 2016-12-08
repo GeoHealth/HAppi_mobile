@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import {OccurenceStorage} from '../../app/provider/occurence_storage';
+import {OccurrenceStorage} from '../../app/provider/occurence_storage';
 
 @Component({
   selector: 'page-occurence',
@@ -8,9 +8,9 @@ import {OccurenceStorage} from '../../app/provider/occurence_storage';
 })
 export class OccurencePage {
 
-  occurences_storage: OccurenceStorage;
+  occurences_storage: OccurrenceStorage;
 
-  constructor(public navCtrl: NavController,  occurence_storage: OccurenceStorage) {
+  constructor(public navCtrl: NavController,  occurence_storage: OccurrenceStorage) {
     this.occurences_storage = occurence_storage;
   }
 

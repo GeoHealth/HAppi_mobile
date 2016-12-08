@@ -1,14 +1,14 @@
 import {} from 'jasmine';
-import { OccurenceStorage }          from '../../../app/provider/occurence_storage';
+import { OccurrenceStorage }          from '../../../app/provider/occurence_storage';
 import {Symptom} from '../../../models/symptom';
 import {Occurence} from '../../../models/occurence';
 
 describe('Occurence storage', () => {
-  let occurenceStorage: OccurenceStorage;
+  let occurenceStorage: OccurrenceStorage;
   let keyValueStore = {};
 
   beforeEach(() => {
-    occurenceStorage = new OccurenceStorage();
+    occurenceStorage = new OccurrenceStorage();
 
     spyOn(occurenceStorage.store, 'getItem').and.callFake((key) => {
       return new Promise((resolve, reject) => {

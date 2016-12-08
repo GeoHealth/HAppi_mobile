@@ -6,7 +6,7 @@ let loki = require('lokijs');
 let localForage = require('localforage');
 
 @Injectable()
-export class OccurenceStorage {
+export class OccurrenceStorage {
   private inMemoryDB: any;
   store: any;
   private occurences: any;
