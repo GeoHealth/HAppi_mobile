@@ -19,6 +19,8 @@ export class DetailedOccurrencePage {
   private occurrences_storage: OccurrenceStorage;
   private comment: string;
   private save_btn_id = "save-btn";
+  private loadingLocation: boolean;
+  private locationError: boolean;
 
   constructor(public navCtrl: NavController, private navParams: NavParams, occurrence_storage: OccurrenceStorage) {
     let symptom = navParams.get("symptom") as Symptom;
@@ -40,10 +42,15 @@ export class DetailedOccurrencePage {
   }
 
   private retrieveCurrentLocation() {
+    this.loadingLocation = true;
+    this.locationError = false;
     Geolocation.getCurrentPosition().then((gps_location) => {
       this.occurrence.gps_location = new GPSCoordinates(gps_location.coords);
+      this.loadingLocation = false;
     }).catch((error) => {
       this.occurrence.gps_location = null;
+      this.loadingLocation = false;
+      this.locationError = true;
     });
   }
 }

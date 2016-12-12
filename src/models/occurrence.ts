@@ -8,7 +8,7 @@ export class Occurrence {
   date: string;
   symptom: Symptom;
   gps_location: Coordinates;
-  factors : Factor[];
+  factors: Factor[];
   // photos: Photo[];
 
   constructor(symptom: Symptom, date: string, gps_location: Coordinates, factors: Factor[]) {
@@ -16,7 +16,7 @@ export class Occurrence {
     this.date = date;
     this.gps_location = gps_location;
     this.factors = factors;
-    if(isNullOrUndefined(this.factors)){
+    if (isNullOrUndefined(this.factors)){
       this.factors = [];
     }
   }
