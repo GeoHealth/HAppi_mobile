@@ -59,11 +59,11 @@ export class HomePage {
       element.disabled = true;
       let newOccurrence;
       Geolocation.getCurrentPosition().then((gps_location) => {
-        newOccurrence = new Occurrence(symptom, DateProvider.getCurrentISODateAsString(), new GPSCoordinates(gps_location.coords));
+        newOccurrence = new Occurrence(symptom, DateProvider.getCurrentISODateAsString(), new GPSCoordinates(gps_location.coords), null);
         this.occurrences_storage.add(newOccurrence);
         element.disabled = false;
       }).catch((error) => {
-        newOccurrence = new Occurrence(symptom, DateProvider.getCurrentISODateAsString(), null);
+        newOccurrence = new Occurrence(symptom, DateProvider.getCurrentISODateAsString(), null, null);
         this.occurrences_storage.add(newOccurrence);
         console.log('Error getting location', error);
         element.disabled = false;

@@ -35,11 +35,11 @@ describe('Occurrence storage', () => {
   }
 
   function buildOccurrence1(): Occurrence{
-    return new Occurrence(buildSymptom1(), DateProvider.getCurrentISODateAsString(), null);
+    return new Occurrence(buildSymptom1(), DateProvider.getCurrentISODateAsString(), null, null);
   }
 
   function buildOccurrence2(): Occurrence{
-    return new Occurrence(buildSymptom2(), DateProvider.getCurrentISODateAsString(), null);
+    return new Occurrence(buildSymptom2(), DateProvider.getCurrentISODateAsString(), null, null);
   }
 
   let addOccurrence = (newOccurrence) => {
