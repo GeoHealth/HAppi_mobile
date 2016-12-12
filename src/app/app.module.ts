@@ -2,6 +2,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { HAppiApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { StatisticPage } from '../pages/statistic/statistic';
 import {OccurrenceStorage} from './provider/occurrence_storage';
 import {SymptomsStorage} from './provider/symptoms_storage';
 import { OccurrencePage } from '../pages/occurrence/occurrence';
@@ -13,6 +14,7 @@ import {DetailedOccurrencePage} from "../pages/detailedoccurrence/detailedoccurr
     HAppiApp,
     HomePage,
     OccurrencePage,
+    StatisticPage,
     TabsPage,
     DetailedOccurrencePage
   ],
@@ -24,6 +26,7 @@ import {DetailedOccurrencePage} from "../pages/detailedoccurrence/detailedoccurr
     HAppiApp,
     HomePage,
     OccurrencePage,
+    StatisticPage,
     TabsPage,
     DetailedOccurrencePage
   ],

@@ -29,4 +29,8 @@
         <param name="ios-package" onload="true" value="CDVStatusBar" />
     </feature>
     <plugin name="cordova-plugin-geolocation" spec="~2.4.0" />
+    <plugin name="cordova-plugin-googlemaps" spec="~1.4.0">
+        <variable name="API_KEY_FOR_ANDROID" value="AIzaSyCCeSqCyV0RjzaP-WyqROaT2kDKcNHSlM4" />
+        <variable name="API_KEY_FOR_IOS" value="AIzaSyAQd4CcZ8FNd3ScSuz_9w_Eq5rXKifbAYc" />
+    </plugin>
 </widget>
