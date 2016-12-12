@@ -20,6 +20,7 @@
       <span *ngIf="!loadingLocation && !locationError">Location retrieved</span>
       <span *ngIf="!loadingLocation && locationError">Cannot get location</span>
     </ion-item>
+    <factor-pain-intensity [(ngModel)]="pain" ngDefaultControl></factor-pain-intensity>
   </ion-list>
 
   <button ion-button (click)="save()" full color="default" icon-left id="save-btn">

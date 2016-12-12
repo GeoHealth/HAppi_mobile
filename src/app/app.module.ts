@@ -7,6 +7,7 @@ import {SymptomsStorage} from './provider/symptoms_storage';
 import { OccurrencePage } from '../pages/occurrence/occurrence';
 import { TabsPage } from '../pages/tabs/tabs';
 import {DetailedOccurrencePage} from "../pages/detailedoccurrence/detailedoccurrence";
+import {FactorPainIntensityComponent} from "../pages/detailedoccurrence/factors.components/pain-intensity";
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import {DetailedOccurrencePage} from "../pages/detailedoccurrence/detailedoccurr
     HomePage,
     OccurrencePage,
     TabsPage,
-    DetailedOccurrencePage
+    DetailedOccurrencePage,
+    FactorPainIntensityComponent
   ],
   imports: [
     IonicModule.forRoot(HAppiApp)
