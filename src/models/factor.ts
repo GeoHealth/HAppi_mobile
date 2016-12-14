@@ -1,10 +1,10 @@
 export class Factor {
-  factor_id: string;
+  name: string;
   type: string;
   value: string;
 
-  constructor (id: string, type: string, value: string){
-    this.factor_id = id;
+  constructor (name: string, type: string, value: string){
+    this.name = name;
     this.type = type;
     this.value = value;
   }

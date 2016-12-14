@@ -38,7 +38,7 @@ export class DetailedOccurrencePage {
   }
 
   private addFactorsToOccurrence() {
-    this.occurrence.factors.push(new Factor(null, "comment", this.comment));
+    this.occurrence.factors.push(new Factor("Comment", "comment", this.comment));
   }
 
   private retrieveCurrentLocation() {

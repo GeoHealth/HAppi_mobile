@@ -5,8 +5,8 @@ import {isNullOrUndefined} from "util";
 
 export class Occurrence {
   occurrence_id: string;
-  date: string;
   symptom: Symptom;
+  date: string;
   gps_location: Coordinates;
   factors: Factor[];
   // photos: Photo[];
