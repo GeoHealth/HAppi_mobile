@@ -8,10 +8,10 @@
   <ion-list>
       <ion-item *ngFor="let occurrence of occurrences_storage.all()">
         <ion-label>
-        {{ occurrence.symptom.name }}
+        {{ occurrence.symptom?.name }}
       </ion-label>
       <ion-label>
-        {{occurrence.gps_location.latitude}} - {{occurrence.gps_location.longitude}}
+        {{occurrence.gps_location?.latitude}} - {{occurrence.gps_location?.longitude}}
       </ion-label>
       <ion-datetime displayFormat="MMM DD, YYYY HH:mm" disabled="true" [(ngModel)]="occurrence.date"></ion-datetime>
     </ion-item>

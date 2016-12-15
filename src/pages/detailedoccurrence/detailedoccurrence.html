@@ -14,9 +14,16 @@
       <ion-label>Comment</ion-label>
       <ion-textarea [(ngModel)]="comment" rows="6" placeholder="Describe the context of your symptom..."></ion-textarea>
     </ion-item>
+    <ion-item>
+      Location:
+      <ion-spinner item-right *ngIf="loadingLocation"></ion-spinner>
+      <span *ngIf="!loadingLocation && !locationError">Location retrieved</span>
+      <span *ngIf="!loadingLocation && locationError">Cannot get location</span>
+    </ion-item>
+    <factor-pain-intensity [(ngModel)]="pain" ngDefaultControl></factor-pain-intensity>
   </ion-list>
 
-  <button ion-button (click)="save()" full color="default" icon-left>
+  <button ion-button (click)="save()" full color="default" icon-left id="save-btn">
     <ion-icon name="add"></ion-icon>
     Save occurrence
   </button>
