@@ -55,7 +55,7 @@ describe('Symptoms storage', () => {
   });
 
   it('should throw an exception', () => {
-    let symptom = {symptom_id: '', name: 'not symptom', short_description: '', long_description: '', category: null, gender_filter: ''};
+    let symptom = {id: '', name: 'not symptom', short_description: '', long_description: '', category: null, gender_filter: ''};
     expect(() => { symptomsStorage.add(symptom); } ).toThrow(new Error("Wrong type adding to symptoms_storage"));
   });
 

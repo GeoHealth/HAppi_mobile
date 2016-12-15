@@ -8,6 +8,7 @@ import {Factor} from "../../models/factor";
 import {GPSCoordinates} from "../../models/coordinate";
 import { Geolocation } from 'ionic-native';
 import {DOMHelper} from "../../app/domhelper/domhelper";
+import {FactorInstance} from "../../models/factor_instance";
 
 @Component({
   selector: 'page-detailed-occurrence',
@@ -38,7 +39,7 @@ export class DetailedOccurrencePage {
   }
 
   private addFactorsToOccurrence() {
-    this.occurrence.factors.push(new Factor("Comment", "comment", this.comment));
+    this.occurrence.factors.push(new FactorInstance(new Factor("Comment", "comment"), this.comment));
   }
 
   private retrieveCurrentLocation() {
