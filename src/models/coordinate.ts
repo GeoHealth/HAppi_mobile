@@ -1,7 +1,7 @@
 export class GPSCoordinates {
   accuracy: number;
   altitude: number;
-  altitudeAccuracy: number;
+  altitude_accuracy: number;
   heading: number;
   speed: number;
   latitude: number;
@@ -10,7 +10,7 @@ export class GPSCoordinates {
   constructor(coordinates: Coordinates){
     this.accuracy = coordinates.accuracy;
     this.altitude = coordinates.altitude;
-    this.altitudeAccuracy = coordinates.altitudeAccuracy;
+    this.altitude_accuracy = coordinates.altitudeAccuracy;
     this.heading = coordinates.heading;
     this.speed = coordinates.speed;
     this.latitude = coordinates.latitude;

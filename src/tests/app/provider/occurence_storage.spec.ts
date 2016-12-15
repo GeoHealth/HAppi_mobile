@@ -63,8 +63,8 @@ describe('Occurrence storage', () => {
   it('should read an occurrence correctly', () => {
     let occurrence1: Occurrence = buildOccurrence1();
     addOccurrence(occurrence1);
-    let occurrence: Occurrence = occurrenceStorage.findById(occurrence1.occurrence_id);
-    expect(occurrence.occurrence_id).toEqual(occurrence1.occurrence_id);
+    let occurrence: Occurrence = occurrenceStorage.findById(occurrence1.id);
+    expect(occurrence.id).toEqual(occurrence1.id);
     expect(occurrence.symptom.name).toEqual(occurrence1.symptom.name);
   });
 
