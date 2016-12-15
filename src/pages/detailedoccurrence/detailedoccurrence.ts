@@ -11,9 +11,9 @@ import {DateProvider} from "../../app/provider/date_provider";
 })
 export class DetailedOccurrencePage {
 
-  private occurrence: Occurrence;
-  private occurrences_storage: OccurrenceStorage;
-  private comment: string;
+  occurrence: Occurrence;
+  occurrences_storage: OccurrenceStorage;
+  comment: string;
 
   constructor(private navParams: NavParams, occurrence_storage: OccurrenceStorage) {
     let symptom = navParams.get("symptom") as Symptom;
