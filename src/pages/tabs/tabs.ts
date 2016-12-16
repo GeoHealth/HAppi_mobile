@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import { HomePage } from '../home/home';
-import {StatisticPage} from '../statistic/statistic'
+import {StatisticPage} from '../statistic/statistic';
 import { OccurrencePage } from '../occurrence/occurrence';
 
 @Component({
