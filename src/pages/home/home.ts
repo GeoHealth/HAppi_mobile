@@ -11,6 +11,8 @@ import {DetailedOccurrencePage} from "../detailedoccurrence/detailedoccurrence";
 import {DateProvider} from "../../app/provider/date_provider";
 import {DOMHelper} from "../../app/domhelper/domhelper";
 import {OccurrenceRestService} from "../../app/services/occurrence_rest_service";
+import {SymptomWithFactor} from "../../models/symptom_with_factors";
+import {Factor} from "../../models/factor";
 
 
 @Component({
@@ -47,7 +49,8 @@ export class HomePage {
         {
           text: 'Add',
           handler: (data) => {
-            let symptom = new Symptom(data.name);
+            let symptom = new SymptomWithFactor(data.name);
+            symptom.factors.push(new Factor('pain intensity', 'pain_intensity'));
             this.symptom_storage.add(symptom);
             console.log(this.symptom_storage.all());
           }
@@ -58,7 +61,7 @@ export class HomePage {
     prompt.present();
   };
 
-  createOccurrence(symptom: Symptom) {
+  createOccurrence(symptom: SymptomWithFactor) {
     let element = DOMHelper.disableElementById(symptom.name);
     let newOccurrence;
     let callback_success = (res) => {
@@ -71,7 +74,7 @@ export class HomePage {
       symptom.id = '2';
       newOccurrence = new Occurrence(symptom, DateProvider.getCurrentISODateAsString(), gpsCoordinates, null);
       this.occurrences_storage.add(newOccurrence);
-      this.occurrence_rest_service.addOccurrence(newOccurrence).subscribe(
+      this.occurrence_rest_service.add(newOccurrence).subscribe(
         (res) => {
           callback_success(res);
         },
@@ -85,12 +88,11 @@ export class HomePage {
       let gpsCoordinates = new GPSCoordinates(gps_location.coords);
       callback_after_location.call(this, gpsCoordinates);
     }).catch((err) => {
-      let gpsCoordinates = null;
-      callback_after_location.call(this, gpsCoordinates);
+      callback_after_location.call(this, null);
     });
   };
 
-  createDetailedOccurrence(symptom: Symptom) {
+  createDetailedOccurrence(symptom: SymptomWithFactor) {
     this.navCtrl.push(DetailedOccurrencePage, {
       symptom: symptom
     });

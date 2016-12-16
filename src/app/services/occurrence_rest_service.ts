@@ -12,7 +12,7 @@ export class OccurrenceRestService extends RestService {
     super(http);
   }
 
-  addOccurrence(occurrence: Occurrence): Observable<{}> {
+  add(occurrence: Occurrence): Observable<{}> {
     occurrence.symptom_id = '2';
     let data = JSON.stringify(occurrence);
 

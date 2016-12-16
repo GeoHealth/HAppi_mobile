@@ -5,6 +5,6 @@ export class SymptomWithFactor extends Symptom {
 
   constructor(name: string) {
     super(name);
-    this.factors = undefined;
+    this.factors = [];
   }
 }

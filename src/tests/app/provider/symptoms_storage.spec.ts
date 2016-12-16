@@ -1,5 +1,5 @@
 import {SymptomsStorage}          from '../../../app/provider/symptoms_storage';
-import {Symptom} from '../../../models/symptom';
+import {SymptomWithFactor} from "../../../models/symptom_with_factors";
 
 describe('Symptoms storage', () => {
   let symptomsStorage: SymptomsStorage;
@@ -27,16 +27,16 @@ describe('Symptoms storage', () => {
   let symptom_name = "Abdominal Pain";
 
   let buildSymptom1 = () => {
-    return new Symptom(symptom_name);
+    return new SymptomWithFactor(symptom_name);
   };
 
-  let addSymptom = (symptom: Symptom) => {
+  let addSymptom = (symptom: SymptomWithFactor) => {
     symptomsStorage.add(symptom);
   };
 
   let addFewSymptoms = () => {
     addSymptom(buildSymptom1());
-    let symptom = new Symptom("Abnormal Facial Expressions");
+    let symptom = new SymptomWithFactor("Abnormal Facial Expressions");
     symptomsStorage.add(symptom);
   };
 
@@ -64,7 +64,7 @@ describe('Symptoms storage', () => {
       gender_filter: ''
     };
     expect(() => {
-      symptomsStorage.add(symptom as Symptom);
+      symptomsStorage.add(symptom as SymptomWithFactor);
     }).toThrow(new Error("Wrong type adding to symptoms_storage"));
   });
 

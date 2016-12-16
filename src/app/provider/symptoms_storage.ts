@@ -1,5 +1,6 @@
 import {Symptom} from '../../models/symptom';
 import {Injectable} from '@angular/core';
+import {SymptomWithFactor} from "../../models/symptom_with_factors";
 
 declare let require: any;
 let loki = require('lokijs');
@@ -48,8 +49,8 @@ export class SymptomsStorage {
     });
   }
 
-  add(symptom: Symptom) {
-    if (symptom instanceof Symptom) {
+  add(symptom: SymptomWithFactor) {
+    if (symptom instanceof SymptomWithFactor) {
       this.symptoms.insert(symptom);
       this.saveAll();
     } else {
@@ -57,8 +58,8 @@ export class SymptomsStorage {
     }
   }
 
-  all(): Symptom[] {
-    return this.symptoms.data as Symptom[];
+  all(): SymptomWithFactor[] {
+    return this.symptoms.data as SymptomWithFactor[];
   }
 
   /**
@@ -75,8 +76,8 @@ export class SymptomsStorage {
    * Returns all symptoms with the name
    *
    **/
-  findByName(name: string): Symptom[] {
-    return this.symptoms.find({name: name}) as Symptom[];
+  findByName(name: string): SymptomWithFactor[] {
+    return this.symptoms.find({name: name}) as SymptomWithFactor[];
   }
 
 

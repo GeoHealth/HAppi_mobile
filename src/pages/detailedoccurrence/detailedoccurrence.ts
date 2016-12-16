@@ -1,14 +1,13 @@
 import {Component} from '@angular/core';
 import {NavParams, NavController} from 'ionic-angular';
 import {OccurrenceStorage} from '../../app/provider/occurrence_storage';
-import {Symptom} from "../../models/symptom";
 import {Occurrence} from "../../models/occurrence";
 import {DateProvider} from "../../app/provider/date_provider";
-import {Factor} from "../../models/factor";
 import {GPSCoordinates} from "../../models/coordinate";
 import {Geolocation} from 'ionic-native';
 import {DOMHelper} from "../../app/domhelper/domhelper";
 import {FactorInstance} from "../../models/factor_instance";
+import {SymptomWithFactor} from "../../models/symptom_with_factors";
 
 @Component({
   selector: 'page-detailed-occurrence',
@@ -23,25 +22,26 @@ export class DetailedOccurrencePage {
   save_btn_id = "save-btn";
   loadingLocation: boolean;
   locationError: boolean;
-  pain: number;
 
   constructor(public navCtrl: NavController, private navParams: NavParams, occurrence_storage: OccurrenceStorage) {
-    let symptom = navParams.get("symptom") as Symptom;
+    let symptom = navParams.get("symptom") as SymptomWithFactor;
     this.occurrence = new Occurrence(symptom, DateProvider.getCurrentISODateAsString(), null, null);
     this.occurrences_storage = occurrence_storage;
     this.retrieveCurrentLocation();
+    this.addFactorsToOccurrence();
   }
 
 
   save() {
     DOMHelper.disableElementById(this.save_btn_id);
-    this.addFactorsToOccurrence();
     this.occurrences_storage.add(this.occurrence);
     this.navCtrl.pop();
   }
 
   private addFactorsToOccurrence() {
-    this.occurrence.factors.push(new FactorInstance(new Factor("Comment", "comment"), this.comment));
+    for(let factor of this.occurrence.symptom.factors) {
+      this.occurrence.factors.push(new FactorInstance(factor, this.comment));
+    }
   }
 
   private retrieveCurrentLocation() {

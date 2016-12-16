@@ -1,8 +1,8 @@
 import {} from 'jasmine';
 import {OccurrenceStorage}          from '../../../app/provider/occurrence_storage';
-import {Symptom} from '../../../models/symptom';
 import {Occurrence} from '../../../models/occurrence';
 import {DateProvider} from "../../../app/provider/date_provider";
+import {SymptomWithFactor} from "../../../models/symptom_with_factors";
 
 describe('Occurrence storage', () => {
   let occurrenceStorage: OccurrenceStorage;
@@ -26,12 +26,12 @@ describe('Occurrence storage', () => {
     });
   });
 
-  function buildSymptom1(): Symptom {
-    return new Symptom("Abdominal Pain");
+  function buildSymptom1(): SymptomWithFactor {
+    return new SymptomWithFactor("Abdominal Pain");
   }
 
-  function buildSymptom2(): Symptom {
-    return new Symptom("Abnormal Facial Expressions");
+  function buildSymptom2(): SymptomWithFactor {
+    return new SymptomWithFactor("Abnormal Facial Expressions");
   }
 
   function buildOccurrence1(): Occurrence {
