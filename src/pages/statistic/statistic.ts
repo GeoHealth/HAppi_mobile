@@ -54,7 +54,7 @@ export class StatisticPage {
         let occurrences = this.occurrences_storage.all();
 
         for (let occurence of occurrences) {
-            let location = new GoogleMapsLatLng(occurence.gps_location.latitude, occurence.gps_location.longitude);
+            let location = new GoogleMapsLatLng(occurence.gps_coordinate.latitude, occurence.gps_coordinate.longitude);
 
 
             this.map.on(GoogleMapsEvent.MAP_READY).subscribe(() => {
