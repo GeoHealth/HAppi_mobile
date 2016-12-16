@@ -47,10 +47,10 @@ export class DetailedOccurrencePage {
     this.loadingLocation = true;
     this.locationError = false;
     Geolocation.getCurrentPosition().then((gps_location) => {
-      this.occurrence.gps_location = new GPSCoordinates(gps_location.coords);
+      this.occurrence.gps_coordinate = new GPSCoordinates(gps_location.coords);
       this.loadingLocation = false;
     }).catch((error) => {
-      this.occurrence.gps_location = null;
+      this.occurrence.gps_coordinate = null;
       this.loadingLocation = false;
       this.locationError = true;
     });

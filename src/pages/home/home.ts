@@ -10,6 +10,7 @@ import {GPSCoordinates} from "../../models/coordinate";
 import {DetailedOccurrencePage} from "../detailedoccurrence/detailedoccurrence";
 import {DateProvider} from "../../app/provider/date_provider";
 import {DOMHelper} from "../../app/domhelper/domhelper";
+import {OccurrenceRestService} from "../../app/services/occurrence_rest_service";
 
 
 
@@ -24,13 +25,15 @@ export class HomePage {
   occurrences_storage: OccurrenceStorage;
   private actionSheetCtrl: ActionSheetController;
   private platform: Platform;
+  occurrence_rest_service: OccurrenceRestService;
 
   constructor(public navCtrl: NavController, private alertCtrl: AlertController, occurrence_storage: OccurrenceStorage, symptoms_storage: SymptomsStorage,
-              actionSheetCtrl: ActionSheetController, platform: Platform) {
+              actionSheetCtrl: ActionSheetController, platform: Platform, occurrence_rest_service: OccurrenceRestService) {
       this.symptom_storage = symptoms_storage;
       this.occurrences_storage = occurrence_storage;
       this.actionSheetCtrl = actionSheetCtrl;
       this.platform = platform;
+      this.occurrence_rest_service = occurrence_rest_service;
     };
 
     addSymptom(){
@@ -60,15 +63,23 @@ export class HomePage {
     createOccurrence(symptom: Symptom){
       let element = DOMHelper.disableElementById(symptom.name);
       let newOccurrence;
+      let callback_after_location = (gpsCoordinates) => {
+        symptom.id = '2';
+        newOccurrence = new Occurrence(symptom, DateProvider.getCurrentISODateAsString(), gpsCoordinates, null);
+        this.occurrences_storage.add(newOccurrence);
+        this.occurrence_rest_service.addOccurrence(newOccurrence).subscribe(
+          (res) => {},
+          (error) => {}
+        );
+        element.disabled = false;
+      };
+
       Geolocation.getCurrentPosition().then((gps_location) => {
-        newOccurrence = new Occurrence(symptom, DateProvider.getCurrentISODateAsString(), new GPSCoordinates(gps_location.coords), null);
-        this.occurrences_storage.add(newOccurrence);
-        element.disabled = false;
+        let gpsCoordinates = new GPSCoordinates(gps_location.coords);
+        callback_after_location.call(this, gpsCoordinates);
       }).catch((error) => {
-        newOccurrence = new Occurrence(symptom, DateProvider.getCurrentISODateAsString(), null, null);
-        this.occurrences_storage.add(newOccurrence);
-        console.log('Error getting location', error);
-        element.disabled = false;
+        let gpsCoordinates = null;
+        callback_after_location.call(this, gpsCoordinates);
       });
     };
 

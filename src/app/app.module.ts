@@ -9,6 +9,7 @@ import { OccurrencePage } from '../pages/occurrence/occurrence';
 import { TabsPage } from '../pages/tabs/tabs';
 import {DetailedOccurrencePage} from "../pages/detailedoccurrence/detailedoccurrence";
 import {FactorPainIntensityComponent} from "../pages/detailedoccurrence/factors.components/pain-intensity";
+import {OccurrenceRestService} from "./services/occurrence_rest_service";
 
 @NgModule({
   declarations: [
@@ -32,7 +33,7 @@ import {FactorPainIntensityComponent} from "../pages/detailedoccurrence/factors.
     TabsPage,
     DetailedOccurrencePage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, OccurrenceStorage, SymptomsStorage]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, OccurrenceStorage, SymptomsStorage, OccurrenceRestService]
 
 })
 export class AppModule {}
