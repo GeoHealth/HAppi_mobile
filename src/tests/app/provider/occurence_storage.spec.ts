@@ -1,5 +1,5 @@
 import {} from 'jasmine';
-import { OccurrenceStorage }          from '../../../app/provider/occurrence_storage';
+import {OccurrenceStorage}          from '../../../app/provider/occurrence_storage';
 import {Symptom} from '../../../models/symptom';
 import {Occurrence} from '../../../models/occurrence';
 import {DateProvider} from "../../../app/provider/date_provider";
@@ -26,19 +26,19 @@ describe('Occurrence storage', () => {
     });
   });
 
-  function buildSymptom1(): Symptom{
+  function buildSymptom1(): Symptom {
     return new Symptom("Abdominal Pain");
   }
 
-  function buildSymptom2(): Symptom{
+  function buildSymptom2(): Symptom {
     return new Symptom("Abnormal Facial Expressions");
   }
 
-  function buildOccurrence1(): Occurrence{
+  function buildOccurrence1(): Occurrence {
     return new Occurrence(buildSymptom1(), DateProvider.getCurrentISODateAsString(), null, null);
   }
 
-  function buildOccurrence2(): Occurrence{
+  function buildOccurrence2(): Occurrence {
     return new Occurrence(buildSymptom2(), DateProvider.getCurrentISODateAsString(), null, null);
   }
 

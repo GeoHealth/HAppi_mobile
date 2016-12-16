@@ -6,7 +6,7 @@ let loki = require('lokijs');
 let localForage = require('localforage');
 
 @Injectable()
-export class OccurrenceStorage {
+export class OccurrenceStorage {
   private inMemoryDB: any;
   store: any;
   private occurrences: any;
@@ -17,14 +17,14 @@ export class OccurrenceStorage {
     this.importAll();
   };
 
-  private initStore(){
+  private initStore() {
     this.store = localForage.createInstance({
       name: 'symptom occurrence happi'
     });
     this.store.setDriver([localForage.INDEXEDDB, localForage.WEBSQL, localForage.LOCALSTORAGE]);
   };
 
-  private initInMemoryDB(){
+  private initInMemoryDB() {
     this.inMemoryDB = new loki('occurrences');
     this.occurrences = this.inMemoryDB.addCollection('occurrences');
   };
@@ -49,8 +49,8 @@ export class OccurrenceStorage {
   };
 
   /**
-    * Add the given occurrence to the database
-    */
+   * Add the given occurrence to the database
+   */
   add(occurrence: Occurrence) {
     if (occurrence instanceof Occurrence) {
       this.occurrences.insert(occurrence);
@@ -61,15 +61,15 @@ export class OccurrenceStorage {
   };
 
   /**
-    * Returns the number of occurrences storred in the database
-    */
+   * Returns the number of occurrences storred in the database
+   */
   size(): number {
     return this.occurrences.count();
   };
 
   /**
-    * Find and return the occurrence matching the given id
-    */
+   * Find and return the occurrence matching the given id
+   */
   findById(searchId): Occurrence {
     return this.occurrences.find({occurrence_id: searchId})[0];
   };

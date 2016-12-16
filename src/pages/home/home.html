@@ -9,10 +9,12 @@
     <ion-item *ngFor="let symptom of symptom_storage.all()">
       <ion-row>
         <ion-col>
-          <button id="{{symptom.name}}" ion-button full (click)="createOccurrence(symptom)" (press)="openLongPressMenu(symptom)">{{symptom.name}}</button>
+          <button id="{{symptom.name}}" ion-button full (click)="createOccurrence(symptom)"
+                  (press)="openLongPressMenu(symptom)">{{symptom.name}}
+          </button>
         </ion-col>
         <ion-col width-10>
-          <button (click)="createDetailedOccurrence(symptom)" ion-button full text-center color="info" >
+          <button (click)="createDetailedOccurrence(symptom)" ion-button full text-center color="info">
             <ion-icon name="create"></ion-icon>
           </button>
         </ion-col>
@@ -23,9 +25,8 @@
 
   <button ion-button (click)="addSymptom()" full color="default" icon-left>
     <ion-icon name="add"></ion-icon>
-     Add symptom
-   </button>
-
+    Add symptom
+  </button>
 
 
 </ion-content>

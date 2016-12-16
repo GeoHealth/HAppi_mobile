@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {NavParams, NavController} from 'ionic-angular';
 import {OccurrenceStorage} from '../../app/provider/occurrence_storage';
 import {Symptom} from "../../models/symptom";
@@ -6,7 +6,7 @@ import {Occurrence} from "../../models/occurrence";
 import {DateProvider} from "../../app/provider/date_provider";
 import {Factor} from "../../models/factor";
 import {GPSCoordinates} from "../../models/coordinate";
-import { Geolocation } from 'ionic-native';
+import {Geolocation} from 'ionic-native';
 import {DOMHelper} from "../../app/domhelper/domhelper";
 import {FactorInstance} from "../../models/factor_instance";
 

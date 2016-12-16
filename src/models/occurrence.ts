@@ -18,7 +18,7 @@ export class Occurrence {
     this.date = date;
     this.gps_coordinate = gps_location;
     this.factors = factors;
-    if (isNullOrUndefined(this.factors)){
+    if (isNullOrUndefined(this.factors)) {
       this.factors = [];
     }
   }

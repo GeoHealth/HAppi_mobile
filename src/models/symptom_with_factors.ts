@@ -3,7 +3,7 @@ import {Factor} from "./factor";
 export class SymptomWithFactor extends Symptom {
   factors: Factor[];
 
-  constructor(name: string){
+  constructor(name: string) {
     super(name);
     this.factors = undefined;
   }

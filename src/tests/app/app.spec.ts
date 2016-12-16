@@ -1,5 +1,5 @@
-import { HAppiApp }                      from '../../app/app.component';
-import { NavMock, PlatformMock } from '../mocks';
+import {HAppiApp}                      from '../../app/app.component';
+import {NavMock, PlatformMock} from '../mocks';
 // import { Page2 }                           from '../pages';
 
 let instance: HAppiApp = null;

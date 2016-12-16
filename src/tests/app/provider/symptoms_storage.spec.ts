@@ -1,4 +1,4 @@
-import { SymptomsStorage }          from '../../../app/provider/symptoms_storage';
+import {SymptomsStorage}          from '../../../app/provider/symptoms_storage';
 import {Symptom} from '../../../models/symptom';
 
 describe('Symptoms storage', () => {
@@ -55,8 +55,17 @@ describe('Symptoms storage', () => {
   });
 
   it('should throw an exception', () => {
-    let symptom = {id: '', name: 'not symptom', short_description: '', long_description: '', category: null, gender_filter: ''};
-    expect(() => { symptomsStorage.add(symptom as Symptom); } ).toThrow(new Error("Wrong type adding to symptoms_storage"));
+    let symptom = {
+      id: '',
+      name: 'not symptom',
+      short_description: '',
+      long_description: '',
+      category: null,
+      gender_filter: ''
+    };
+    expect(() => {
+      symptomsStorage.add(symptom as Symptom);
+    }).toThrow(new Error("Wrong type adding to symptoms_storage"));
   });
 
   it('should read all symptoms', () => {

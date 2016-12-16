@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
-import { HomePage } from '../home/home';
+import {HomePage} from '../home/home';
 import {StatisticPage} from '../statistic/statistic';
-import { OccurrencePage } from '../occurrence/occurrence';
+import {OccurrencePage} from '../occurrence/occurrence';
 
 @Component({
   templateUrl: 'tabs.html'
