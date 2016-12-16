@@ -7,7 +7,6 @@ export class RestService {
   http: Http;
   apiDomainName = 'localhost';
   apiPort = '3000';
-  apiVersion = ''; // will be 'v1', 'v2', ... in the future but for now leave it blank.
 
   constructor(http: Http) {
     this.http = http;
@@ -34,19 +33,16 @@ export class RestService {
    * Return a simple headers options for JSON content
    * @returns {RequestOptions}
    */
-  generateJSONHeadersOptions(): RequestOptions {
+  static generateJSONHeadersOptions(): RequestOptions {
     let headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
-    let options = new RequestOptions({headers: headers});
-    return options;
+    return new RequestOptions({headers: headers});
   }
 
-  handlePostResponse(res: Response) {
-    console.log('success', res); //TODO remove before commit
-    return {};
+  static handlePostResponse(res: Response) {
+    return res;
   }
 
-  handleError(error: Response | any) {
-    // In a real world app, we might use a remote logging infrastructure
+  static handleError(error: Response | any) {
     let errMsg: string;
     if (error instanceof Response) {
       const body = error.json() || '';
@@ -55,7 +51,6 @@ export class RestService {
     } else {
       errMsg = error.message ? error.message : error.toString();
     }
-    console.error('error', errMsg); //TODO remove ça aussi :-O
     return Observable.throw(errMsg);
   }
 

@@ -9,7 +9,7 @@ export class OccurrenceRestService extends RestService {
   occurrencesPath = 'occurrences';
 
   constructor(http: Http) {
-    super(http)
+    super(http);
   }
 
   addOccurrence(occurrence: Occurrence): Observable<{}> {
@@ -19,10 +19,10 @@ export class OccurrenceRestService extends RestService {
     return this.http.post(
       this.getFullURL(this.occurrencesPath),
       data,
-      this.generateJSONHeadersOptions()
+      RestService.generateJSONHeadersOptions()
     )
-      .map(this.handlePostResponse)
-      .catch(this.handleError);
+      .map(RestService.handlePostResponse)
+      .catch(RestService.handleError);
 
   }
 

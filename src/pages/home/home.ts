@@ -63,21 +63,26 @@ export class HomePage {
     createOccurrence(symptom: Symptom){
       let element = DOMHelper.disableElementById(symptom.name);
       let newOccurrence;
+      let callback_success = (res) => {
+        element.disabled = false;
+      };
+      let callback_error = (err) => {
+        element.disabled = false;
+      };
       let callback_after_location = (gpsCoordinates) => {
         symptom.id = '2';
         newOccurrence = new Occurrence(symptom, DateProvider.getCurrentISODateAsString(), gpsCoordinates, null);
         this.occurrences_storage.add(newOccurrence);
         this.occurrence_rest_service.addOccurrence(newOccurrence).subscribe(
-          (res) => {},
-          (error) => {}
+          (res) => {callback_success(res);},
+          (err) => {callback_error(err);}
         );
-        element.disabled = false;
       };
 
       Geolocation.getCurrentPosition().then((gps_location) => {
         let gpsCoordinates = new GPSCoordinates(gps_location.coords);
         callback_after_location.call(this, gpsCoordinates);
-      }).catch((error) => {
+      }).catch((err) => {
         let gpsCoordinates = null;
         callback_after_location.call(this, gpsCoordinates);
       });
