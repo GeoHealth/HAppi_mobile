@@ -23,6 +23,7 @@ export class DetailedOccurrencePage {
   save_btn_id = "save-btn";
   loadingLocation: boolean;
   locationError: boolean;
+  pain: number;
 
   constructor(public navCtrl: NavController, private navParams: NavParams, occurrence_storage: OccurrenceStorage) {
     let symptom = navParams.get("symptom") as Symptom;
