@@ -11,7 +11,7 @@
         {{ occurrence.symptom?.name }}
       </ion-label>
       <ion-label>
-        {{occurrence.gps_location?.latitude}} - {{occurrence.gps_location?.longitude}}
+        {{occurrence.gps_coordinate?.latitude}} - {{occurrence.gps_coordinate?.longitude}}
       </ion-label>
       <ion-datetime displayFormat="MMM DD, YYYY HH:mm" disabled="true" [(ngModel)]="occurrence.date"></ion-datetime>
     </ion-item>
