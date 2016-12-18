@@ -1,6 +1,6 @@
 import {Category} from './category';
 
-export class Symptom {
+export  class Symptom {
 
   id: string;
   name: string;

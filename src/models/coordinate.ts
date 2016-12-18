@@ -7,7 +7,7 @@ export class GPSCoordinates {
   latitude: number;
   longitude: number;
 
-  constructor(coordinates: Coordinates){
+  constructor(coordinates: Coordinates) {
     this.accuracy = coordinates.accuracy;
     this.altitude = coordinates.altitude;
     this.altitude_accuracy = coordinates.altitudeAccuracy;

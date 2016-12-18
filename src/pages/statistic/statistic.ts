@@ -1,7 +1,14 @@
-import { Component } from '@angular/core';
-import { NavController, Platform } from 'ionic-angular';
-import { OccurrenceStorage } from '../../app/provider/occurrence_storage';
-import { GoogleMap, GoogleMapsEvent, GoogleMapsMarker, GoogleMapsLatLng, GoogleMapsMarkerOptions, Geolocation } from 'ionic-native';
+import {Component} from '@angular/core';
+import {NavController, Platform} from 'ionic-angular';
+import {OccurrenceStorage} from '../../app/provider/occurrence_storage';
+import {
+  GoogleMap,
+  GoogleMapsEvent,
+  GoogleMapsMarker,
+  GoogleMapsLatLng,
+  GoogleMapsMarkerOptions,
+  Geolocation
+} from 'ionic-native';
 
 @Component({
   selector: 'page-statistic',
@@ -10,16 +17,17 @@ import { GoogleMap, GoogleMapsEvent, GoogleMapsMarker, GoogleMapsLatLng, GoogleM
 export class StatisticPage {
 
   occurrences_storage: OccurrenceStorage;
+
   map: GoogleMap;
 
-  constructor(public navCtrl: NavController, public platform: Platform,  occurrence_storage: OccurrenceStorage) {
+  constructor(public platform: Platform, occurrence_storage: OccurrenceStorage) {
     this.occurrences_storage = occurrence_storage;
     platform.ready().then(() => {
       this.loadMap();
     });
   }
 
-  loadMap(){
+  loadMap() {
     Geolocation.getCurrentPosition().then((position) => {
       let location = new GoogleMapsLatLng(position.coords.latitude, position.coords.longitude);
 
@@ -53,7 +61,7 @@ export class StatisticPage {
     let occurrences = this.occurrences_storage.all();
 
     for (let occurence of occurrences) {
-      let location = new GoogleMapsLatLng(occurence.gps_location.latitude, occurence.gps_location.longitude);
+      let location = new GoogleMapsLatLng(occurence.gps_coordinate.latitude, occurence.gps_coordinate.longitude);
 
 
       this.map.on(GoogleMapsEvent.MAP_READY).subscribe(() => {
@@ -63,10 +71,13 @@ export class StatisticPage {
         };
 
         this.map.addMarker(markerOptions)
-        .then((marker: GoogleMapsMarker) => {
-          marker.showInfoWindow();
-        });
+          .then((marker: GoogleMapsMarker) => {
+            marker.showInfoWindow();
+          });
       });
     }
+
+
   }
+
 }
