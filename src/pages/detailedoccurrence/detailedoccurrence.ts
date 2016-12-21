@@ -39,7 +39,7 @@ export class DetailedOccurrencePage {
   }
 
   private addFactorsToOccurrence() {
-    for(let factor of this.occurrence.symptom.factors) {
+    for (let factor of this.occurrence.symptom.factors) {
       this.occurrence.factors.push(new FactorInstance(factor, this.comment));
     }
   }
