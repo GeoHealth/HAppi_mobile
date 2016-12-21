@@ -12,6 +12,9 @@ module.exports = function (config) {
       require('karma-mocha-reporter'),
       require('angular-cli/plugins/karma')
     ],
+    mime: {
+      'text/x-typescript': ['ts','tsx']
+    },
     files: [
       { pattern: './src/tests/test.ts', watched: false }
     ],
