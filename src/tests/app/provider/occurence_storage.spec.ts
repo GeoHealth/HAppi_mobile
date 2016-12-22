@@ -5,6 +5,8 @@ import {DateProvider} from "../../../app/provider/date_provider";
 import {SymptomWithFactor} from "../../../models/symptom_with_factors";
 
 describe('OccurrenceStorage', () => {
+  let occurrenceStorage: OccurrenceStorage;
+
   let buildSymptom1 = (): SymptomWithFactor => {
     return new SymptomWithFactor("Abdominal Pain");
   };
@@ -22,36 +24,37 @@ describe('OccurrenceStorage', () => {
   };
 
   let addOccurrence = (newOccurrence) => {
-    this.occurrenceStorage.add(newOccurrence);
+    occurrenceStorage.add(newOccurrence);
   };
 
   beforeEach(() => {
-    this.occurrenceStorage = new OccurrenceStorage();
+    occurrenceStorage = new OccurrenceStorage();
+    let keyValueStore = {};
 
-    spyOn(this.occurrenceStorage.store, 'getItem').and.callFake((key) => {
+    spyOn(occurrenceStorage.store, 'getItem').and.callFake((key) => {
       return new Promise((resolve, reject) => {
-        resolve(this.keyValueStore[key]);
+        resolve(keyValueStore[key]);
       });
     });
-    spyOn(this.occurrenceStorage.store, 'setItem').and.callFake((key, value) => {
+    spyOn(occurrenceStorage.store, 'setItem').and.callFake((key, value) => {
       return new Promise((resolve, reject) => {
         resolve('');
       });
     });
-    spyOn(this.occurrenceStorage.store, 'clear').and.callFake(() => {
-      this.keyValueStore = {};
+    spyOn(occurrenceStorage.store, 'clear').and.callFake(() => {
+      keyValueStore = {};
     });
   });
 
   it('starts with an empty database', () => {
-    expect(this.occurrenceStorage.size()).toEqual(0);
+    expect(occurrenceStorage.size()).toEqual(0);
   });
 
   describe('#add', () => {
     it('stores an occurrence to the database', () => {
-      expect(this.occurrenceStorage.size()).toEqual(0);
-      this.occurrenceStorage.add(buildOccurrence1());
-      expect(this.occurrenceStorage.size()).toEqual(1);
+      expect(occurrenceStorage.size()).toEqual(0);
+      occurrenceStorage.add(buildOccurrence1());
+      expect(occurrenceStorage.size()).toEqual(1);
     });
 
     it('refuses an object that is not an Occurrence', () => {
@@ -64,16 +67,16 @@ describe('OccurrenceStorage', () => {
         factors: null
       };
       expect(() => {
-        this.occurrenceStorage.add(wrong_occurrence)
+        occurrenceStorage.add(wrong_occurrence);
       }).toThrowError(TypeError);
-      expect(this.occurrenceStorage.size()).toEqual(0);
-    })
+      expect(occurrenceStorage.size()).toEqual(0);
+    });
   });
 
   describe('#findById', () => {
     it('returns an instance of Occurrence', () => {
       addOccurrence(buildOccurrence1());
-      let occurrence: Occurrence = this.occurrenceStorage.findById(buildOccurrence1().id);
+      let occurrence: Occurrence = occurrenceStorage.findById(buildOccurrence1().id);
       expect(occurrence instanceof Occurrence).toBeTruthy();
     });
 
@@ -81,7 +84,7 @@ describe('OccurrenceStorage', () => {
       let occurrence1: Occurrence = buildOccurrence1();
       addOccurrence(occurrence1);
 
-      let occurrence: Occurrence = this.occurrenceStorage.findById(occurrence1.id);
+      let occurrence: Occurrence = occurrenceStorage.findById(occurrence1.id);
       expect(occurrence.id).toEqual(occurrence1.id);
       expect(occurrence.symptom.name).toEqual(occurrence1.symptom.name);
     });
@@ -94,7 +97,7 @@ describe('OccurrenceStorage', () => {
       addOccurrence(buildOccurrence1());
       addOccurrence(buildOccurrence2());
 
-      let occurrences = this.occurrenceStorage.all();
+      let occurrences = occurrenceStorage.all();
       expect(occurrences.length).toEqual(2);
       expect(occurrences[0].symptom.name).toEqual(occurrence1.symptom.name);
       expect(occurrences[1].symptom.name).toEqual(occurrence2.symptom.name);

@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Occurrence} from '../../models/occurrence';
+import {CachedArray} from "./CachedArray";
 
 declare let require: any;
 let loki = require('lokijs');
@@ -10,11 +11,13 @@ export class OccurrenceStorage {
   private inMemoryDB: any;
   store: any;
   private occurrences: any;
+  private cache_occurrences: CachedArray<Occurrence>;
 
   constructor() {
     this.initStore();
     this.initInMemoryDB();
     this.importAll();
+    this.cache_occurrences = new CachedArray<Occurrence>();
   };
 
   private initStore() {
@@ -32,19 +35,20 @@ export class OccurrenceStorage {
   private importAll() {
     let self = this;
     this.store.getItem('occurrences').then((value) => {
-      console.log('the full occurrences database has been retrieved');
+      console.info('the full occurrences database has been retrieved');
       self.inMemoryDB.loadJSON(value);
       self.occurrences = self.inMemoryDB.getCollection('occurrences');        // slight hack! we're manually reconnecting the collection variable :-)
     }).catch((err) => {
-      console.log('error importing database: ' + err);
+      console.error('error importing database: ' + err);
     });
   };
 
   private saveAll() {
     this.store.setItem('occurrences', JSON.stringify(this.inMemoryDB)).then((value) => {
-      console.log('database occurrences successfully saved');
+      console.info('database occurrences successfully saved');
+      this.cache_occurrences.invalidateCache();
     }).catch((err) => {
-      console.log('error while saving: ' + err);
+      console.error('error while saving: ' + err);
     });
   };
 
@@ -71,11 +75,13 @@ export class OccurrenceStorage {
    * Find and return the occurrence matching the given id
    */
   findById(searchId): Occurrence {
-    return this.occurrences.find({occurrence_id: searchId})[0];
+    return Occurrence.convertObjectToInstance(this.occurrences.find({occurrence_id: searchId})[0]);
   };
 
   all(): Occurrence[] {
-    return this.occurrences.data as Occurrence[];
+    return this.cache_occurrences.getCache((): Occurrence[] => {
+      return Occurrence.convertObjectsToInstancesArray(this.occurrences.data);
+    });
   }
 
 }

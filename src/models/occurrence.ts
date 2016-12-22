@@ -24,4 +24,19 @@ export class Occurrence {
   }
 
 
+  static convertObjectToInstance(object: any): Occurrence {
+    let instance = new Occurrence(object.symptom, object.date, object.gps_location, object.factors);
+    instance.id = object.id;
+    instance.symptom_id = object.symptom_id;
+    return instance;
+  }
+
+  static convertObjectsToInstancesArray(objects: any[]): Occurrence[] {
+    debugger;
+    let instances: Occurrence[] = [];
+    for (let object of objects) {
+      instances.push(Occurrence.convertObjectToInstance(object));
+    }
+    return instances;
+  }
 }
