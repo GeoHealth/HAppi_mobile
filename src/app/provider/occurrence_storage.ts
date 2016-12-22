@@ -38,6 +38,7 @@ export class OccurrenceStorage {
       console.info('the full occurrences database has been retrieved');
       self.inMemoryDB.loadJSON(value);
       self.occurrences = self.inMemoryDB.getCollection('occurrences');        // slight hack! we're manually reconnecting the collection variable :-)
+      this.cache_occurrences.invalidateCache();
     }).catch((err) => {
       console.error('error importing database: ' + err);
     });

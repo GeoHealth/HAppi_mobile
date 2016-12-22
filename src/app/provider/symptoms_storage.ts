@@ -1,6 +1,7 @@
 import {Symptom} from '../../models/symptom';
 import {Injectable} from '@angular/core';
 import {SymptomWithFactor} from "../../models/symptom_with_factors";
+import {CachedArray} from "./cached_array";
 
 declare let require: any;
 let loki = require('lokijs');
@@ -11,11 +12,13 @@ export class SymptomsStorage {
   private inMemoryDB: any;
   store: any;
   private symptoms: any;
+  private cache_symptoms: CachedArray<SymptomWithFactor>;
 
   constructor() {
     this.initStore();
     this.initInMemoryDB();
     this.importAll();
+    this.cache_symptoms = new CachedArray<SymptomWithFactor>();
   }
 
   private initStore() {
@@ -36,6 +39,7 @@ export class SymptomsStorage {
       console.log('the full database has been retrieved');
       self.inMemoryDB.loadJSON(value);
       self.symptoms = self.inMemoryDB.getCollection('symptoms');        // slight hack! we're manually reconnecting the collection variable :-)
+      this.cache_symptoms.invalidateCache();
     }).catch((err) => {
       console.log('error importing database: ' + err);
     });
@@ -44,6 +48,7 @@ export class SymptomsStorage {
   private saveAll() {
     this.store.setItem('storeKey', JSON.stringify(this.inMemoryDB)).then((value) => {
       console.log('database successfully saved');
+      this.cache_symptoms.invalidateCache();
     }).catch((err) => {
       console.log('error while saving: ' + err);
     });
@@ -59,7 +64,9 @@ export class SymptomsStorage {
   }
 
   all(): SymptomWithFactor[] {
-    return this.symptoms.data as SymptomWithFactor[];
+    return this.cache_symptoms.getCache((): SymptomWithFactor[] => {
+      return SymptomWithFactor.convertObjectsToInstancesArray(this.symptoms.data);
+    });
   }
 
   /**
@@ -77,7 +84,7 @@ export class SymptomsStorage {
    *
    **/
   findByName(name: string): SymptomWithFactor[] {
-    return this.symptoms.find({name: name}) as SymptomWithFactor[];
+    return SymptomWithFactor.convertObjectsToInstancesArray(this.symptoms.find({name: name}));
   }
 
 

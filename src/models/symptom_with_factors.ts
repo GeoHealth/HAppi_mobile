@@ -16,6 +16,15 @@ export class SymptomWithFactor extends Symptom {
     instance.long_description = object.long_description;
     instance.category = object.category;
     instance.gender_filter = object.gender_filter;
+    instance.factors = object.factors;
     return instance;
+  }
+
+  static convertObjectsToInstancesArray(objects: any[]): SymptomWithFactor[] {
+    let instances: SymptomWithFactor[] = [];
+    for (let object of objects) {
+      instances.push(SymptomWithFactor.convertObjectToInstance(object));
+    }
+    return instances;
   }
 }
