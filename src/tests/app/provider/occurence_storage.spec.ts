@@ -7,12 +7,15 @@ import {SymptomWithFactor} from "../../../models/symptom_with_factors";
 describe('OccurrenceStorage', () => {
   let occurrenceStorage: OccurrenceStorage;
 
+  let symptom_name1 = "Abdominal Pain";
+  let symptom_name2 = "Abnormal Facial Expressions";
+
   let buildSymptom1 = (): SymptomWithFactor => {
-    return new SymptomWithFactor("Abdominal Pain");
+    return new SymptomWithFactor(symptom_name1);
   };
 
   let buildSymptom2 = (): SymptomWithFactor => {
-    return new SymptomWithFactor("Abnormal Facial Expressions");
+    return new SymptomWithFactor(symptom_name2);
   };
 
   let buildOccurrence1 = (): Occurrence => {
@@ -57,7 +60,7 @@ describe('OccurrenceStorage', () => {
       expect(occurrenceStorage.size()).toEqual(1);
     });
 
-    it('refuses an object that is not an Occurrence', () => {
+    it('refuses an object that is not an Occurrence by throwing a TypeError exception', () => {
       let wrong_occurrence = {
         id: 'id',
         symptom: null,
@@ -74,15 +77,17 @@ describe('OccurrenceStorage', () => {
   });
 
   describe('#findById', () => {
-    it('returns an instance of Occurrence', () => {
+    beforeEach(() => {
       addOccurrence(buildOccurrence1());
+    });
+
+    it('returns an instance of Occurrence', () => {
       let occurrence: Occurrence = occurrenceStorage.findById(buildOccurrence1().id);
       expect(occurrence instanceof Occurrence).toBeTruthy();
     });
 
     it('finds an occurrence by id', () => {
       let occurrence1: Occurrence = buildOccurrence1();
-      addOccurrence(occurrence1);
 
       let occurrence: Occurrence = occurrenceStorage.findById(occurrence1.id);
       expect(occurrence.id).toEqual(occurrence1.id);
@@ -91,16 +96,23 @@ describe('OccurrenceStorage', () => {
   });
 
   describe('#all', () => {
-    it('reads all symptoms', () => {
-      let occurrence1: Occurrence = buildOccurrence1();
-      let occurrence2: Occurrence = buildOccurrence2();
+    beforeEach(() => {
       addOccurrence(buildOccurrence1());
       addOccurrence(buildOccurrence2());
+    });
 
+    it('returns all symptoms', () => {
       let occurrences = occurrenceStorage.all();
       expect(occurrences.length).toEqual(2);
-      expect(occurrences[0].symptom.name).toEqual(occurrence1.symptom.name);
-      expect(occurrences[1].symptom.name).toEqual(occurrence2.symptom.name);
+      expect(occurrences[0].symptom.name).toEqual(symptom_name1);
+      expect(occurrences[1].symptom.name).toEqual(symptom_name2);
+    });
+
+    it('returns an array of instances of Occurrence', () => {
+      let occurrences = occurrenceStorage.all();
+      for (let occurrence of occurrences) {
+        expect(occurrence instanceof Occurrence).toBeTruthy();
+      }
     });
   });
 

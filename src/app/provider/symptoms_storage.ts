@@ -33,9 +33,9 @@ export class SymptomsStorage {
     this.symptoms = this.inMemoryDB.addCollection('symptoms');
   }
 
-  private importAll(): Promise<any> {
+  private importAll() {
     let self = this;
-    return this.store.getItem('storeKey').then((value) => {
+    this.store.getItem('storeKey').then((value) => {
       console.log('the full database has been retrieved');
       self.inMemoryDB.loadJSON(value);
       self.symptoms = self.inMemoryDB.getCollection('symptoms');        // slight hack! we're manually reconnecting the collection variable :-)
@@ -45,8 +45,8 @@ export class SymptomsStorage {
     });
   }
 
-  private saveAll(): Promise<any> {
-    return this.store.setItem('storeKey', JSON.stringify(this.inMemoryDB)).then((value) => {
+  private saveAll() {
+    this.store.setItem('storeKey', JSON.stringify(this.inMemoryDB)).then((value) => {
       console.log('database successfully saved');
       this.cache_symptoms.invalidateCache();
     }).catch((err) => {
@@ -54,10 +54,10 @@ export class SymptomsStorage {
     });
   }
 
-  add(symptom: SymptomWithFactor): Promise<any> {
+  add(symptom: SymptomWithFactor) {
     if (symptom instanceof SymptomWithFactor) {
       this.symptoms.insert(symptom);
-      return this.saveAll();
+      this.saveAll();
     } else {
       throw new TypeError("Wrong type adding to symptoms_storage");
     }
@@ -71,7 +71,7 @@ export class SymptomsStorage {
 
   /**
    *
-   * Returns the number of symptoms storred in the database
+   * Returns the number of symptoms stored in the database
    *
    **/
   size(): number {
@@ -80,7 +80,7 @@ export class SymptomsStorage {
 
   /**
    *
-   * Returns all symptoms with the name
+   * Returns all symptoms with the name matching the given name
    *
    **/
   findByName(name: string): SymptomWithFactor[] {
@@ -88,8 +88,9 @@ export class SymptomsStorage {
   }
 
 
-  remove(symptom: Symptom): Promise<any> {
-    this.symptoms.remove(this.symptoms.find(symptom));
-    return this.saveAll();
+  remove(symptom: Symptom) {
+    let s = this.symptoms.find(symptom);
+    this.symptoms.remove(s);
+    this.saveAll();
   }
 }

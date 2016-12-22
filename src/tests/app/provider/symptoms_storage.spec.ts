@@ -24,74 +24,118 @@ describe('Symptoms storage', () => {
     });
   });
 
-  let symptom_name = "Abdominal Pain";
+  let symptom_name1 = "Abdominal Pain";
+  let symptom_id1 = "1";
+  let symptom_name2 = "Abnormal Facial Expressions";
+  let symptom_id2 = "2";
 
   let buildSymptom1 = () => {
-    return new SymptomWithFactor(symptom_name);
+    let symptom = new SymptomWithFactor(symptom_name1);
+    symptom.id = symptom_id1;
+    return symptom;
+  };
+
+  let buildSymptom2 = () => {
+    let symptom = new SymptomWithFactor(symptom_name2);
+    symptom.id = symptom_id2;
+    return symptom;
   };
 
   let addSymptom = (symptom: SymptomWithFactor) => {
     symptomsStorage.add(symptom);
   };
 
-  let addFewSymptoms = (): Promise<any> => {
+  let addFewSymptoms = () => {
     addSymptom(buildSymptom1());
-    let symptom = new SymptomWithFactor("Abnormal Facial Expressions");
-    return symptomsStorage.add(symptom);
+    addSymptom(buildSymptom2());
   };
 
-  it('should start with an empty database', () => {
+  it('starts with an empty database', () => {
     expect(symptomsStorage.size()).toEqual(0);
   });
 
-  it('should store and read a symptom correclty', () => {
-    addSymptom(buildSymptom1());
-    expect(symptomsStorage.findByName(symptom_name)[0].name).toEqual(symptom_name);
-  });
-
-  it('should be contain one element', () => {
-    addSymptom(buildSymptom1());
-    expect(symptomsStorage.size()).toEqual(1);
-  });
-
-  it('should throw an exception', () => {
-    let symptom = {
-      id: '',
-      name: 'not symptom',
-      short_description: '',
-      long_description: '',
-      category: null,
-      gender_filter: ''
-    };
-    expect(() => {
-      symptomsStorage.add(symptom as SymptomWithFactor);
-    }).toThrow(new Error("Wrong type adding to symptoms_storage"));
-  });
-
-  it('should read all symptoms', () => {
-    addFewSymptoms();
-    let symptoms = symptomsStorage.all();
-    expect(symptoms.length).toEqual(2);
-    expect(symptoms[0].name).toEqual(symptom_name);
-  });
-
-  it('should delete a symptom', (done) => {
-    let symptoms = symptomsStorage.all();
-    expect(symptoms.length).toEqual(0);
-
-    symptomsStorage.add(buildSymptom1()).then(() => {
-      symptoms = symptomsStorage.all();
-      expect(symptoms.length).toEqual(1);
-      expect(symptoms[0].name).toEqual(symptom_name);
-
-      symptomsStorage.remove(symptoms[0]).then(() => {
-        symptoms = symptomsStorage.all();
-        expect(symptoms.length).toEqual(0);
-        done();
-      });
-
+  describe('#add', () => {
+    it('stores a symptom', () => {
+      expect(symptomsStorage.size()).toEqual(0);
+      symptomsStorage.add(buildSymptom1());
+      expect(symptomsStorage.size()).toEqual(1);
     });
 
+    it('refuses an object that is not a SymptomWithFactor by throwing a TypeError exception', () => {
+      let wrong_occurrence = {
+        id: 'id',
+        name: 'name',
+        short_description: 'short',
+        long_description: 'long',
+        gender_filter: 'both',
+        category: null,
+        factors: null
+      };
+      expect(() => {
+        symptomsStorage.add(wrong_occurrence);
+      }).toThrowError(TypeError);
+      expect(symptomsStorage.size()).toEqual(0);
+    });
   });
 
-});
+  describe('#findByName', () => {
+    beforeEach(() => {
+      addSymptom(buildSymptom1());
+    });
+
+    it('finds a symptom by its name and returns it', () => {
+      expect(symptomsStorage.findByName(symptom_name1)[0].name).toEqual(symptom_name1);
+    });
+
+    it('returns an instance of SymptomWithFactor', () => {
+      let symptom: SymptomWithFactor = symptomsStorage.findByName(symptom_name1)[0];
+      expect(symptom instanceof SymptomWithFactor).toBeTruthy();
+    });
+  });
+
+  describe('#size', () => {
+    it('returns the number of symptoms stored', () => {
+      expect(symptomsStorage.size()).toEqual(0);
+
+      addSymptom(buildSymptom1());
+      expect(symptomsStorage.size()).toEqual(1);
+
+      addSymptom(buildSymptom2());
+      expect(symptomsStorage.size()).toEqual(2);
+    });
+  });
+
+  describe('#all', () => {
+    it('reads all symptoms', () => {
+      addFewSymptoms();
+      let symptoms = symptomsStorage.all();
+      expect(symptoms.length).toEqual(2);
+      expect(symptoms[0].name).toEqual(symptom_name1);
+    });
+  });
+
+  describe('#remove', () => {
+    it('deletes an existing symptom', () => {
+      addFewSymptoms();
+      expect(symptomsStorage.size()).toEqual(2);
+
+      let symptoms = symptomsStorage.all();
+      symptomsStorage.remove(symptoms[0]);
+      expect(symptomsStorage.size()).toEqual(1);
+
+      symptomsStorage.remove(symptoms[1]);
+      expect(symptomsStorage.size()).toEqual(0);
+    });
+
+    it('does nothing when the given symptom does not exist', () => {
+      addSymptom(buildSymptom1());
+      expect(symptomsStorage.size()).toEqual(1);
+
+      symptomsStorage.remove(buildSymptom2());
+      expect(symptomsStorage.size()).toEqual(1);
+    });
+  });
+
+
+})
+;
