@@ -33,9 +33,9 @@ export class SymptomsStorage {
     this.symptoms = this.inMemoryDB.addCollection('symptoms');
   }
 
-  private importAll() {
+  private importAll(): Promise<any> {
     let self = this;
-    this.store.getItem('storeKey').then((value) => {
+    return this.store.getItem('storeKey').then((value) => {
       console.log('the full database has been retrieved');
       self.inMemoryDB.loadJSON(value);
       self.symptoms = self.inMemoryDB.getCollection('symptoms');        // slight hack! we're manually reconnecting the collection variable :-)
@@ -45,8 +45,8 @@ export class SymptomsStorage {
     });
   }
 
-  private saveAll() {
-    this.store.setItem('storeKey', JSON.stringify(this.inMemoryDB)).then((value) => {
+  private saveAll(): Promise<any> {
+    return this.store.setItem('storeKey', JSON.stringify(this.inMemoryDB)).then((value) => {
       console.log('database successfully saved');
       this.cache_symptoms.invalidateCache();
     }).catch((err) => {
@@ -54,10 +54,10 @@ export class SymptomsStorage {
     });
   }
 
-  add(symptom: SymptomWithFactor) {
+  add(symptom: SymptomWithFactor): Promise<any> {
     if (symptom instanceof SymptomWithFactor) {
       this.symptoms.insert(symptom);
-      this.saveAll();
+      return this.saveAll();
     } else {
       throw new TypeError("Wrong type adding to symptoms_storage");
     }
@@ -88,8 +88,8 @@ export class SymptomsStorage {
   }
 
 
-  remove(symptom: Symptom) {
-    this.symptoms.remove(symptom);
-    this.saveAll();
+  remove(symptom: Symptom): Promise<any> {
+    this.symptoms.remove(this.symptoms.find(symptom));
+    return this.saveAll();
   }
 }

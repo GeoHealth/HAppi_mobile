@@ -34,10 +34,10 @@ describe('Symptoms storage', () => {
     symptomsStorage.add(symptom);
   };
 
-  let addFewSymptoms = () => {
+  let addFewSymptoms = (): Promise<any> => {
     addSymptom(buildSymptom1());
     let symptom = new SymptomWithFactor("Abnormal Facial Expressions");
-    symptomsStorage.add(symptom);
+    return symptomsStorage.add(symptom);
   };
 
   it('should start with an empty database', () => {
@@ -75,18 +75,23 @@ describe('Symptoms storage', () => {
     expect(symptoms[0].name).toEqual(symptom_name);
   });
 
-  it('should delete a symptom correclty', () => {
+  it('should delete a symptom', (done) => {
     let symptoms = symptomsStorage.all();
     expect(symptoms.length).toEqual(0);
 
-    addFewSymptoms();
-    symptoms = symptomsStorage.all();
-    expect(symptoms.length).toEqual(2);
-    expect(symptoms[0].name).toEqual(symptom_name);
+    symptomsStorage.add(buildSymptom1()).then(() => {
+      symptoms = symptomsStorage.all();
+      expect(symptoms.length).toEqual(1);
+      expect(symptoms[0].name).toEqual(symptom_name);
 
-    symptomsStorage.remove(symptoms[0]);
-    expect(symptoms.length).toEqual(1);
-    expect(symptoms[0].name).not.toEqual(symptom_name);
+      symptomsStorage.remove(symptoms[0]).then(() => {
+        symptoms = symptomsStorage.all();
+        expect(symptoms.length).toEqual(0);
+        done();
+      });
+
+    });
+
   });
 
 });
