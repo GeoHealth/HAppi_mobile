@@ -2,7 +2,7 @@ export class CachedArray<T> {
   private is_dirty: boolean;
   private values: T[];
 
-  constructor()  {
+  constructor() {
     this.is_dirty = true;
   }
 
@@ -11,10 +11,14 @@ export class CachedArray<T> {
   }
 
   getCache(cacheBuilder: () => T[]): T[] {
-    if(this.is_dirty){
+    if (this.is_dirty) {
       this.values = cacheBuilder();
       this.is_dirty = false;
     }
     return this.values;
+  }
+
+  isDirty(): boolean {
+    return this.is_dirty;
   }
 }

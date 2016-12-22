@@ -1,7 +1,7 @@
 import {SymptomsStorage}          from '../../../app/provider/symptoms_storage';
 import {SymptomWithFactor} from "../../../models/symptom_with_factors";
 
-describe('Symptoms storage', () => {
+describe('SymptomsStorage', () => {
   let symptomsStorage: SymptomsStorage;
   let keyValueStore = {};
 
