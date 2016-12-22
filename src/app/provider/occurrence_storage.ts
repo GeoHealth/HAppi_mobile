@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Occurrence} from '../../models/occurrence';
-import {CachedArray} from "./CachedArray";
+import {CachedArray} from "./cached_array";
 
 declare let require: any;
 let loki = require('lokijs');
