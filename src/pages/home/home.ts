@@ -39,9 +39,16 @@ export class HomePage {
   addSymptom() {
     let prompt = this.alertCtrl.create({
       title: 'Add symptom',
-      inputs: [{
-        name: 'name'
-      }],
+      inputs: [
+        {
+          name: 'name',
+          placeholder: 'name'
+        },
+        {
+          name: 'id',
+          placeholder: 'id'
+        }
+      ],
       buttons: [
         {
           text: 'Cancel'
@@ -50,6 +57,7 @@ export class HomePage {
           text: 'Add',
           handler: (data) => {
             let symptom = new SymptomWithFactor(data.name);
+            symptom.id = data.id;
             symptom.factors.push(new Factor('pain intensity', 'pain_intensity'));
             this.symptom_storage.add(symptom);
             console.log(this.symptom_storage.all());
