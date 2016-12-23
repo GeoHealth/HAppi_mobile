@@ -10,6 +10,7 @@ import {TabsPage} from '../pages/tabs/tabs';
 import {DetailedOccurrencePage} from "../pages/detailedoccurrence/detailedoccurrence";
 import {FactorPainIntensityComponent} from "../pages/detailedoccurrence/factors.components/pain-intensity";
 import {OccurrenceRestService} from "./services/occurrence_rest_service";
+import {TranslationProvider} from "./provider/translation_provider";
 
 @NgModule({
   declarations: [
@@ -36,7 +37,7 @@ import {OccurrenceRestService} from "./services/occurrence_rest_service";
   providers: [{
     provide: ErrorHandler,
     useClass: IonicErrorHandler
-  }, OccurrenceStorage, SymptomsStorage, OccurrenceRestService]
+  }, OccurrenceStorage, SymptomsStorage, OccurrenceRestService, TranslationProvider]
 
 })
 export class AppModule {
