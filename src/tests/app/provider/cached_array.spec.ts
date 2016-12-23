@@ -19,7 +19,7 @@ describe('CachedArray', () => {
   });
 
   describe('#invalidateCache', () => {
-    it('set is_dirty to true', () => {
+    it('set the dirty flag to true', () => {
       cached_array.getCache(cache_builder);
       cached_array.invalidateCache();
       expect(cached_array.isDirty()).toBeTruthy();
