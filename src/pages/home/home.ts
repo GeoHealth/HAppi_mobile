@@ -29,14 +29,14 @@ export class HomePage {
   occurrence_rest_service: OccurrenceRestService;
 
   constructor(public navCtrl: NavController, private alertCtrl: AlertController, occurrence_storage: OccurrenceStorage, symptoms_storage: SymptomsStorage,
-              actionSheetCtrl: ActionSheetController, platform: Platform, occurrence_rest_service: OccurrenceRestService, translation: TranslationProvider) {
+              actionSheetCtrl: ActionSheetController, platform: Platform, occurrence_rest_service: OccurrenceRestService, public translation: TranslationProvider) {
     this.symptom_storage = symptoms_storage;
     this.occurrences_storage = occurrence_storage;
     this.actionSheetCtrl = actionSheetCtrl;
     this.platform = platform;
     this.occurrence_rest_service = occurrence_rest_service;
-    // console.log(translation.gettext('test'));
-    // console.log(translation.gettext('Test number 2'));
+    console.log(translation.gettext('test'));
+    console.log(translation.gettext('Test number 2'));
   };
 
   addSymptom() {

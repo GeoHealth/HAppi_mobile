@@ -7,21 +7,16 @@ declare let Gettext: any;
 export class TranslationProvider {
   private gt: any;
   private locale_to_file = {
-    "en": "en.po",
-    "fr_BE": "fr_BE.po"
+    "en": "en.json",
+    "fr_BE": "fr_BE.json"
   };
   private current_locale: string;
   private json_locale_data: any;
+  static domain: string = "happi_mobile";
 
   constructor(private http: Http) {
-    debugger;
     this.loadCurrentLocale();
     this.loadJSONLocale();
-    let params = {
-      "domain": "happi_mobile",
-      "locale_data": this.json_locale_data
-    };
-    this.gt = new Gettext(params);
   }
 
   private loadCurrentLocale() {
@@ -34,25 +29,25 @@ export class TranslationProvider {
 
   private loadJSONLocale() {
     let translationFilePath = this.getTranslationFilePath();
-    this.json_locale_data = this.http.get(translationFilePath)
-      .map((res) => {
+
+    var xhttp = new XMLHttpRequest();
+    let self = this;
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        self.json_locale_data = {"happi_mobile": JSON.parse(this.responseText)};
         debugger;
-        this.json_locale_data = res;
-      })
-      .catch((error: Response | any) => {
-        let errMsg: string;
-        if (error instanceof Response) {
-          const body = error.json() || '';
-          const err = body.error || JSON.stringify(body);
-          errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-        } else {
-          errMsg = error.message ? error.message : error.toString();
-        }
-        return Observable.throw(errMsg);
-      });
+        let params = {
+          "domain": TranslationProvider.domain,
+          "locale_data": self.json_locale_data
+        };
+        self.gt = new Gettext(params);
+      }
+    };
+    xhttp.open("GET", translationFilePath, true);
+    xhttp.send();
   }
 
   private getTranslationFilePath() {
-    return 'assets/locales' + this.locale_to_file[this.current_locale];
+    return './assets/locales/' + this.locale_to_file[this.current_locale];
   }
 }
