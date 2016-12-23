@@ -1,8 +1,8 @@
 {
    "": {
       "project-id-version": "happi_mobile",
-      "pot-creation-date": "2016-12-23 17:23+0100",
-      "po-revision-date": "2016-12-23 17:23+0100",
+      "pot-creation-date": "2016-12-24 00:15+0100",
+      "po-revision-date": "2016-12-24 00:15+0100",
       "last-translator": "",
       "language-team": "Geohealth Crew <geohealth.info@gmail.com>",
       "language": "en",
@@ -18,8 +18,12 @@
       "x-poedit-searchpathexcluded-0": "tests",
       "x-poedit-searchpathexcluded-1": "assets"
    },
-   "test": [
+   "Symptoms": [
       null,
-      "This is an English test"
+      "Symptoms"
+   ],
+   "Add symptom": [
+      null,
+      "Add symptom"
    ]
 }

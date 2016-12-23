@@ -1,6 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Http, Response} from "@angular/http";
-import {Observable} from "rxjs";
+import {isNullOrUndefined} from "util";
 declare let Gettext: any;
 
 @Injectable()
@@ -14,28 +13,31 @@ export class TranslationProvider {
   private json_locale_data: any;
   static domain: string = "happi_mobile";
 
-  constructor(private http: Http) {
+  constructor() {
     this.loadCurrentLocale();
     this.loadJSONLocale();
   }
 
   private loadCurrentLocale() {
-    this.current_locale = "en"; //TODO get it dynamically
+    this.current_locale = "en";
   }
 
   gettext(msgid) {
-    return this.gt.gettext(msgid);
+    if(isNullOrUndefined(this.gt)){
+      return "loading...";
+    } else {
+      return this.gt.gettext(msgid);
+    }
   }
 
   private loadJSONLocale() {
     let translationFilePath = this.getTranslationFilePath();
 
-    var xhttp = new XMLHttpRequest();
+    let xhttp = new XMLHttpRequest();
     let self = this;
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         self.json_locale_data = {"happi_mobile": JSON.parse(this.responseText)};
-        debugger;
         let params = {
           "domain": TranslationProvider.domain,
           "locale_data": self.json_locale_data

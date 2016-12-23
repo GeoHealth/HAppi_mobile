@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Symptoms</ion-title>
+    <ion-title>{{translation.gettext("Symptoms")}}</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -10,7 +10,7 @@
       <ion-row>
         <ion-col>
           <button id="{{symptom.name}}" ion-button full (click)="createOccurrence(symptom)"
-                  (press)="openLongPressMenu(symptom)">{{symptom.name}}
+                  (press)="openLongPressMenu(symptom)">{{translation.gettext(symptom.name)}}
           </button>
         </ion-col>
         <ion-col width-10>
@@ -25,7 +25,7 @@
 
   <button ion-button (click)="addSymptom()" full color="default" icon-left>
     <ion-icon name="add"></ion-icon>
-    Add symptom
+    {{translation.gettext("Add symptom")}}
   </button>
 
 

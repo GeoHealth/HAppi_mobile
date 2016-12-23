@@ -35,8 +35,6 @@ export class HomePage {
     this.actionSheetCtrl = actionSheetCtrl;
     this.platform = platform;
     this.occurrence_rest_service = occurrence_rest_service;
-    console.log(translation.gettext('test'));
-    console.log(translation.gettext('Test number 2'));
   };
 
   addSymptom() {

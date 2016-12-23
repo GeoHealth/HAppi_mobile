@@ -1,8 +1,8 @@
 {
    "": {
       "project-id-version": "happi_mobile",
-      "pot-creation-date": "2016-12-23 17:20+0100",
-      "po-revision-date": "2016-12-23 17:22+0100",
+      "pot-creation-date": "2016-12-24 00:11+0100",
+      "po-revision-date": "2016-12-24 00:16+0100",
       "last-translator": "",
       "language-team": "Geohealth Crew <geohealth.info@gmail.com>",
       "language": "fr_BE",
@@ -13,13 +13,17 @@
       "x-poedit-basepath": "../../../src",
       "plural-forms": "nplurals=2; plural=(n > 1);",
       "x-poedit-sourcecharset": "UTF-8",
-      "x-poedit-keywordslist": "traduction.gettext;_.gettext;gettext;__.gettext",
+      "x-poedit-keywordslist": "traduction.gettext;_.gettext;gettext;__.gettext;translation.gettext",
       "x-poedit-searchpath-0": ".",
       "x-poedit-searchpathexcluded-0": "tests",
       "x-poedit-searchpathexcluded-1": "assets"
    },
-   "test": [
+   "Symptoms": [
       null,
-      "Ceci est une traduction en français belge"
+      "Symptomes"
+   ],
+   "Add symptom": [
+      null,
+      "Ajouter un symptome"
    ]
 }

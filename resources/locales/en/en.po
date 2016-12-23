@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: happi_mobile\n"
-"POT-Creation-Date: 2016-12-23 17:23+0100\n"
-"PO-Revision-Date: 2016-12-23 17:23+0100\n"
+"POT-Creation-Date: 2016-12-24 00:15+0100\n"
+"PO-Revision-Date: 2016-12-24 00:15+0100\n"
 "Last-Translator: \n"
 "Language-Team: Geohealth Crew <geohealth.info@gmail.com>\n"
 "Language: en\n"
@@ -18,6 +18,13 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: tests\n"
 "X-Poedit-SearchPathExcluded-1: assets\n"
 
-#: pages/home/home.ts:38
-msgid "test"
-msgstr "This is an English test"
+#: pages/home/home.html:3
+msgid "Symptoms"
+msgstr "Symptoms"
+
+#: pages/home/home.html:28
+msgid "Add symptom"
+msgstr "Add symptom"
+
+#~ msgid "test"
+#~ msgstr "This is an English test"
