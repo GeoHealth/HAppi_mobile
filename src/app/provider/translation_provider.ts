@@ -16,7 +16,8 @@ export class TranslationProvider {
   private locale_to_file = {
     "en-US": "en.json",
     "fr-BE": "fr_BE.json",
-    "fr-FR": "fr_BE.json"
+    "fr-FR": "fr_BE.json",
+    "fr": "fr_BE.json"
   };
   private _current_locale: string;
   private json_locale_data: any;
