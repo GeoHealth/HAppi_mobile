@@ -8,6 +8,7 @@ import {Geolocation} from 'ionic-native';
 import {DOMHelper} from "../../app/domhelper/domhelper";
 import {FactorInstance} from "../../models/factor_instance";
 import {SymptomWithFactor} from "../../models/symptom_with_factors";
+import {TranslationProvider} from "../../app/provider/translation_provider";
 
 @Component({
   selector: 'page-detailed-occurrence',
@@ -23,7 +24,7 @@ export class DetailedOccurrencePage {
   loadingLocation: boolean;
   locationError: boolean;
 
-  constructor(public navCtrl: NavController, private navParams: NavParams, occurrence_storage: OccurrenceStorage) {
+  constructor(public navCtrl: NavController, private navParams: NavParams, occurrence_storage: OccurrenceStorage, public translation: TranslationProvider) {
     let symptom = navParams.get("symptom") as SymptomWithFactor;
     this.occurrence = new Occurrence(symptom, DateProvider.getCurrentISODateAsString(), null, null);
     this.occurrences_storage = occurrence_storage;

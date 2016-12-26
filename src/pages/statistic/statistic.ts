@@ -9,6 +9,7 @@ import {
   GoogleMapsMarkerOptions,
   Geolocation
 } from 'ionic-native';
+import {TranslationProvider} from "../../app/provider/translation_provider";
 
 @Component({
   selector: 'page-statistic',
@@ -20,7 +21,7 @@ export class StatisticPage {
 
   map: GoogleMap;
 
-  constructor(public platform: Platform, occurrence_storage: OccurrenceStorage) {
+  constructor(public platform: Platform, occurrence_storage: OccurrenceStorage, public translation: TranslationProvider) {
     this.occurrences_storage = occurrence_storage;
     platform.ready().then(() => {
       this.loadMap();

@@ -1,8 +1,8 @@
 {
    "": {
       "project-id-version": "happi_mobile",
-      "pot-creation-date": "2016-12-24 00:11+0100",
-      "po-revision-date": "2016-12-24 00:16+0100",
+      "pot-creation-date": "2016-12-26 17:47+0100",
+      "po-revision-date": "2016-12-26 17:50+0100",
       "last-translator": "",
       "language-team": "Geohealth Crew <geohealth.info@gmail.com>",
       "language": "fr_BE",
@@ -18,6 +18,22 @@
       "x-poedit-searchpathexcluded-0": "tests",
       "x-poedit-searchpathexcluded-1": "assets"
    },
+   "Detailed occurrence": [
+      null,
+      "Occurrence détaillée"
+   ],
+   "Comment": [
+      null,
+      "Commentaire"
+   ],
+   "Location retrieved": [
+      null,
+      "Position récupérée"
+   ],
+   "Save occurrence": [
+      null,
+      "Sauvegarder"
+   ],
    "Symptoms": [
       null,
       "Symptomes"
@@ -25,5 +41,13 @@
    "Add symptom": [
       null,
       "Ajouter un symptome"
+   ],
+   "Occurrence": [
+      null,
+      "Occurrence"
+   ],
+   "Statistic": [
+      null,
+      "Statistiques"
    ]
 }
