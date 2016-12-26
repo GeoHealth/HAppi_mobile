@@ -23,7 +23,7 @@ export class TranslationProvider {
   }
 
   gettext(msgid) {
-    if(isNullOrUndefined(this.gt)){
+    if (isNullOrUndefined(this.gt)) {
       return "loading...";
     } else {
       return this.gt.gettext(msgid);
@@ -35,8 +35,8 @@ export class TranslationProvider {
 
     let xhttp = new XMLHttpRequest();
     let self = this;
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
+    xhttp.onreadystatechange = function () {
+      if (this.readyState === 4 && this.status === 200) {
         self.json_locale_data = {"happi_mobile": JSON.parse(this.responseText)};
         let params = {
           "domain": TranslationProvider.domain,
