@@ -34,7 +34,7 @@ export class RestService {
    * @returns {RequestOptions}
    */
   static generateJSONHeadersOptions(): RequestOptions {
-    let headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
+    let headers = new Headers({'Content-Type': 'application/json'});
     return new RequestOptions({headers: headers});
   }
 
