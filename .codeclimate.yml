@@ -33,4 +33,6 @@ ratings:
   - "**.less"
   - "**.scss"
   - "**.sss"
-exclude_paths: []
+exclude_paths:
+  - src/assets/js/**/*
+  - src/tests/test.js
