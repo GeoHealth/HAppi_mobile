@@ -44,6 +44,10 @@ export class TranslationProvider {
     this.loadJSONLocale();
   }
 
+  get current_locale(): string {
+    return this._current_locale;
+  }
+
   /**
    * Set the locale to the device's preferred language.
    */
@@ -54,7 +58,6 @@ export class TranslationProvider {
       console.error(err);
       this.current_locale = null;
     });
-
   }
 
   /**
@@ -74,7 +77,7 @@ export class TranslationProvider {
   /**
    * Load the JSON file containing the translation corresponding to the current_locale.
    */
-  private loadJSONLocale() {
+  loadJSONLocale() {
     let translationFilePath = this.getTranslationFilePath();
 
     let xhttp = new XMLHttpRequest();
