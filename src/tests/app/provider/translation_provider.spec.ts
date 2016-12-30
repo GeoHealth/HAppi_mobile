@@ -3,40 +3,9 @@ import {PlatformMock} from "../../mocks";
 import {Platform} from "ionic-angular";
 import {Globalization} from "ionic-native";
 
-declare let Gettext: any;
-
 describe('TranslationProvider', () => {
   let translation_provider: TranslationProvider;
   let locale = 'fr-BE';
-  let json_translation_mock = {
-    "": {
-      "project-id-version": "happi_mobile",
-      "pot-creation-date": "2016-12-24 00:15+0100",
-      "po-revision-date": "2016-12-24 00:15+0100",
-      "last-translator": "",
-      "language-team": "Geohealth Crew <geohealth.info@gmail.com>",
-      "language": "en",
-      "mime-version": "1.0",
-      "content-type": "text/plain; charset=UTF-8",
-      "content-transfer-encoding": "8bit",
-      "x-generator": "Poedit 1.8.11",
-      "x-poedit-basepath": "../../../src",
-      "plural-forms": "nplurals=2; plural=(n != 1);",
-      "x-poedit-sourcecharset": "UTF-8",
-      "x-poedit-keywordslist": "traduction.gettext;_.gettext;gettext;__.gettext",
-      "x-poedit-searchpath-0": ".",
-      "x-poedit-searchpathexcluded-0": "tests",
-      "x-poedit-searchpathexcluded-1": "assets"
-    },
-    "any": [
-      null,
-      "any"
-    ],
-    "test string": [
-      null,
-      "another test"
-    ]
-  };
 
   beforeEach(() => {
     translation_provider = new TranslationProvider(new PlatformMock() as Platform);
