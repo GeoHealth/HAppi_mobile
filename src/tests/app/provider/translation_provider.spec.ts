@@ -106,19 +106,6 @@ describe('TranslationProvider', () => {
   });
 
   describe('#gettext', () => {
-    xit('returns the translation', () => { // Gettext is not defined in this context
-      spyOn(translation_provider, 'loadJSONLocale').and.callFake(() => {
-        let params = {
-          "domain": TranslationProvider.domain,
-          "locale_data": {"happi_mobile": json_translation_mock}
-        };
-        translation_provider.gt = new Gettext(params);
-      });
-      translation_provider.loadJSONLocale();
-
-      expect(translation_provider.gettext("test string")).toEqual("another test");
-    });
-
     it('returns "loading..." if the translator is null or undefined', () => {
       expect(translation_provider.gettext('any')).toEqual(TranslationProvider.loadingText);
     });
