@@ -12,7 +12,7 @@ declare let Gettext: any;
  */
 @Injectable()
 export class TranslationProvider {
-  private gt: any;
+  gt: any;
   private locale_to_file = {
     "en-US": "en.json",
     "fr-BE": "fr_BE.json",
@@ -21,9 +21,16 @@ export class TranslationProvider {
   };
   private _current_locale: string;
   private json_locale_data: any;
+
   static domain: string = "happi_mobile";
   static default_locale: string = "en-US";
+  static loadingText = "loading...";
+  static locale_files_path = './assets/locales/';
 
+  /**
+   * Create a new instance that will use the device preferred locale as translator.
+   * @param platform
+   */
   constructor(public platform: Platform) {
     platform.ready().then(() => {
       this.loadDevicePreferredLocale();
@@ -49,10 +56,12 @@ export class TranslationProvider {
   }
 
   /**
-   * Set the locale to the device's preferred language.
+   * Set the locale to the device's preferred language or the default_locale if the preferred one cannot be retrieved.
+   *
+   * @returns {Promise}: return a promise indicating when the language has been retrieved (or failed).
    */
   public loadDevicePreferredLocale() {
-    Globalization.getPreferredLanguage().then((locale) => {
+    return Globalization.getPreferredLanguage().then((locale) => {
       this.current_locale = locale.value;
     }).catch((err) => {
       console.error(err);
@@ -64,18 +73,18 @@ export class TranslationProvider {
    * Retrieve the translation of the given msgid.
    * Before the translation module is ready, it will return "loading...".
    * @param msgid a message id.
-   * @returns {any} the string "loading..." if the module is not yet ready otherwise it returns the translation corresponding to the current_locale.
+   * @returns {string} the string "loading..." if the module is not yet ready otherwise it returns the translation corresponding to the current_locale.
    */
-  gettext(msgid) {
+  gettext(msgid): string {
     if (isNullOrUndefined(this.gt)) {
-      return "loading...";
+      return TranslationProvider.loadingText;
     } else {
       return this.gt.gettext(msgid);
     }
   }
 
   /**
-   * Load the JSON file containing the translation corresponding to the current_locale.
+   * Load the JSON file containing the translation corresponding to the current_locale and initialize a new instance of the translator.
    */
   loadJSONLocale() {
     let translationFilePath = this.getTranslationFilePath();
@@ -101,6 +110,6 @@ export class TranslationProvider {
    * @returns {string}
    */
   private getTranslationFilePath() {
-    return './assets/locales/' + this.locale_to_file[this._current_locale];
+    return TranslationProvider.locale_files_path + this.locale_to_file[this._current_locale];
   }
 }
