@@ -15,8 +15,6 @@ import {TranslationProvider} from "../../app/provider/translation_provider";
   templateUrl: 'detailedoccurrence.html'
 })
 export class DetailedOccurrencePage {
-
-
   occurrence: Occurrence;
   occurrences_storage: OccurrenceStorage;
   comment: string;
