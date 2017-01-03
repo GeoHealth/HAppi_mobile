@@ -4,38 +4,38 @@ import {Platform} from "ionic-angular";
 import {Globalization} from "ionic-native";
 
 describe('TranslationProvider', () => {
-  let translation_provider: TranslationProvider;
-  let locale = 'fr-BE';
 
   beforeEach(() => {
-    translation_provider = new TranslationProvider(new PlatformMock() as Platform);
+    this.translation_provider = new TranslationProvider(new PlatformMock() as Platform);
+    this.locale = 'fr-BE';
   });
 
   describe('#current_locale', () => {
-    let locale = 'locale';
 
     beforeEach(() => {
-      spyOn(translation_provider, 'loadJSONLocale');
+      this.locale = 'locale';
+
+      spyOn(this.translation_provider, 'loadJSONLocale');
     });
 
     it('sets current_locale to the given value', () => {
-      translation_provider.current_locale = locale;
-      expect(translation_provider.current_locale).toEqual(locale);
+      this.translation_provider.current_locale = this.locale;
+      expect(this.translation_provider.current_locale).toEqual(this.locale);
     });
 
     it('calls loadJSONLocale', () => {
-      translation_provider.current_locale = locale;
-      expect(translation_provider.loadJSONLocale).toHaveBeenCalled();
+      this.translation_provider.current_locale = this.locale;
+      expect(this.translation_provider.loadJSONLocale).toHaveBeenCalled();
     });
 
     it('sets current_locale to the default language if the given value is null', () => {
-      translation_provider.current_locale = null;
-      expect(translation_provider.current_locale).toEqual(TranslationProvider.default_locale);
+      this.translation_provider.current_locale = null;
+      expect(this.translation_provider.current_locale).toEqual(TranslationProvider.default_locale);
     });
 
     it('sets current_locale to the default language if the given value is undefined', () => {
-      translation_provider.current_locale = undefined;
-      expect(translation_provider.current_locale).toEqual(TranslationProvider.default_locale);
+      this.translation_provider.current_locale = undefined;
+      expect(this.translation_provider.current_locale).toEqual(TranslationProvider.default_locale);
     });
   });
 
@@ -50,12 +50,12 @@ describe('TranslationProvider', () => {
 
     it('set the value of the current_locale to the language of the device', (done) => {
       getPreferredLanguagePromise = new Promise((resolve, reject) => {
-        resolve({"value": locale});
+        resolve({"value": this.locale});
       });
 
-      translation_provider.loadDevicePreferredLocale().then(() => {
+      this.translation_provider.loadDevicePreferredLocale().then(() => {
         expect(Globalization.getPreferredLanguage).toHaveBeenCalled();
-        expect(translation_provider.current_locale).toEqual(locale);
+        expect(this.translation_provider.current_locale).toEqual(this.locale);
         done();
       });
 
@@ -66,17 +66,21 @@ describe('TranslationProvider', () => {
         reject({});
       });
 
-      translation_provider.loadDevicePreferredLocale().then(() => {
+      this.translation_provider.loadDevicePreferredLocale().then(() => {
         expect(Globalization.getPreferredLanguage).toHaveBeenCalled();
-        expect(translation_provider.current_locale).toEqual(TranslationProvider.default_locale);
+        expect(this.translation_provider.current_locale).toEqual(TranslationProvider.default_locale);
         done();
       });
     });
+
+    afterEach(() => {
+      getPreferredLanguagePromise = null;
+    })
   });
 
   describe('#gettext', () => {
     it('returns "loading..." if the translator is null or undefined', () => {
-      expect(translation_provider.gettext('any')).toEqual(TranslationProvider.loadingText);
+      expect(this.translation_provider.gettext('any')).toEqual(TranslationProvider.loadingText);
     });
   });
 

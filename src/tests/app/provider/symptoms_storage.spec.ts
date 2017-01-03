@@ -2,63 +2,53 @@ import {SymptomsStorage}          from '../../../app/provider/symptoms_storage';
 import {SymptomWithFactor} from "../../../models/symptom_with_factors";
 
 describe('SymptomsStorage', () => {
-  let symptomsStorage: SymptomsStorage;
-  let keyValueStore = {};
-
   beforeEach(() => {
-    symptomsStorage = new SymptomsStorage();
+    this.symptomsStorage = new SymptomsStorage();
+    this.keyValueStore = {};
+    this.symptom_name1 = "Abdominal Pain";
+    this.symptom_id1 = "1";
+    this.symptom_name2 = "Abnormal Facial Expressions";
+    this.symptom_id2 = "2";
 
-    spyOn(symptomsStorage.store, 'getItem').and.callFake((key) => {
+    this.symptom1 = new SymptomWithFactor(this.symptom_name1);
+    this.symptom1.id = this.symptom_id1;
+
+    this.symptom2 = new SymptomWithFactor(this.symptom_name2);
+    this.symptom2.id = this.symptom_id2;
+
+    this.addSymptom = (symptom: SymptomWithFactor) => {
+      this.symptomsStorage.add(symptom);
+    };
+
+    this.addFewSymptoms = () => {
+      this.addSymptom(this.symptom1);
+      this.addSymptom(this.symptom2);
+    };
+
+    spyOn(this.symptomsStorage.store, 'getItem').and.callFake((key) => {
       return new Promise((resolve, reject) => {
-        resolve(keyValueStore[key]);
+        resolve(this.keyValueStore[key]);
       });
     });
-    spyOn(symptomsStorage.store, 'setItem').and.callFake((key, value) => {
-      console.log('item set');
+    spyOn(this.symptomsStorage.store, 'setItem').and.callFake((key, value) => {
       return new Promise((resolve, reject) => {
         resolve('');
       });
     });
-    spyOn(symptomsStorage.store, 'clear').and.callFake(() => {
-      keyValueStore = {};
+    spyOn(this.symptomsStorage.store, 'clear').and.callFake(() => {
+      this.keyValueStore = {};
     });
   });
 
-  let symptom_name1 = "Abdominal Pain";
-  let symptom_id1 = "1";
-  let symptom_name2 = "Abnormal Facial Expressions";
-  let symptom_id2 = "2";
-
-  let buildSymptom1 = () => {
-    let symptom = new SymptomWithFactor(symptom_name1);
-    symptom.id = symptom_id1;
-    return symptom;
-  };
-
-  let buildSymptom2 = () => {
-    let symptom = new SymptomWithFactor(symptom_name2);
-    symptom.id = symptom_id2;
-    return symptom;
-  };
-
-  let addSymptom = (symptom: SymptomWithFactor) => {
-    symptomsStorage.add(symptom);
-  };
-
-  let addFewSymptoms = () => {
-    addSymptom(buildSymptom1());
-    addSymptom(buildSymptom2());
-  };
-
   it('starts with an empty database', () => {
-    expect(symptomsStorage.size()).toEqual(0);
+    expect(this.symptomsStorage.size()).toEqual(0);
   });
 
   describe('#add', () => {
     it('stores a symptom', () => {
-      expect(symptomsStorage.size()).toEqual(0);
-      symptomsStorage.add(buildSymptom1());
-      expect(symptomsStorage.size()).toEqual(1);
+      expect(this.symptomsStorage.size()).toEqual(0);
+      this.symptomsStorage.add(this.symptom1);
+      expect(this.symptomsStorage.size()).toEqual(1);
     });
 
     it('refuses an object that is not a SymptomWithFactor by throwing a TypeError exception', () => {
@@ -72,70 +62,67 @@ describe('SymptomsStorage', () => {
         factors: null
       };
       expect(() => {
-        symptomsStorage.add(wrong_occurrence);
+        this.symptomsStorage.add(wrong_occurrence);
       }).toThrowError(TypeError);
-      expect(symptomsStorage.size()).toEqual(0);
+      expect(this.symptomsStorage.size()).toEqual(0);
     });
   });
 
   describe('#findByName', () => {
     beforeEach(() => {
-      addSymptom(buildSymptom1());
+      this.addSymptom(this.symptom1);
     });
 
     it('finds a symptom by its name and returns it', () => {
-      expect(symptomsStorage.findByName(symptom_name1)[0].name).toEqual(symptom_name1);
+      expect(this.symptomsStorage.findByName(this.symptom_name1)[0].name).toEqual(this.symptom_name1);
     });
 
     it('returns an instance of SymptomWithFactor', () => {
-      let symptom: SymptomWithFactor = symptomsStorage.findByName(symptom_name1)[0];
+      let symptom: SymptomWithFactor = this.symptomsStorage.findByName(this.symptom_name1)[0];
       expect(symptom instanceof SymptomWithFactor).toBeTruthy();
     });
   });
 
   describe('#size', () => {
     it('returns the number of symptoms stored', () => {
-      expect(symptomsStorage.size()).toEqual(0);
+      expect(this.symptomsStorage.size()).toEqual(0);
 
-      addSymptom(buildSymptom1());
-      expect(symptomsStorage.size()).toEqual(1);
+      this.addSymptom(this.symptom1);
+      expect(this.symptomsStorage.size()).toEqual(1);
 
-      addSymptom(buildSymptom2());
-      expect(symptomsStorage.size()).toEqual(2);
+      this.addSymptom(this.symptom2);
+      expect(this.symptomsStorage.size()).toEqual(2);
     });
   });
 
   describe('#all', () => {
     it('reads all symptoms', () => {
-      addFewSymptoms();
-      let symptoms = symptomsStorage.all();
+      this.addFewSymptoms();
+      let symptoms = this.symptomsStorage.all();
       expect(symptoms.length).toEqual(2);
-      expect(symptoms[0].name).toEqual(symptom_name1);
+      expect(symptoms[0].name).toEqual(this.symptom_name1);
     });
   });
 
   describe('#remove', () => {
     it('deletes an existing symptom', () => {
-      addFewSymptoms();
-      expect(symptomsStorage.size()).toEqual(2);
+      this.addFewSymptoms();
+      expect(this.symptomsStorage.size()).toEqual(2);
 
-      let symptoms = symptomsStorage.all();
-      symptomsStorage.remove(symptoms[0]);
-      expect(symptomsStorage.size()).toEqual(1);
+      let symptoms = this.symptomsStorage.all();
+      this.symptomsStorage.remove(symptoms[0]);
+      expect(this.symptomsStorage.size()).toEqual(1);
 
-      symptomsStorage.remove(symptoms[1]);
-      expect(symptomsStorage.size()).toEqual(0);
+      this.symptomsStorage.remove(symptoms[1]);
+      expect(this.symptomsStorage.size()).toEqual(0);
     });
 
     it('does nothing when the given symptom does not exist', () => {
-      addSymptom(buildSymptom1());
-      expect(symptomsStorage.size()).toEqual(1);
+      this.addSymptom(this.symptom1);
+      expect(this.symptomsStorage.size()).toEqual(1);
 
-      symptomsStorage.remove(buildSymptom2());
-      expect(symptomsStorage.size()).toEqual(1);
+      this.symptomsStorage.remove(this.symptom2);
+      expect(this.symptomsStorage.size()).toEqual(1);
     });
   });
-
-
-})
-;
+});

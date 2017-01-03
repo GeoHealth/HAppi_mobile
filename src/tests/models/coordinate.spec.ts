@@ -1,25 +1,27 @@
-
 import {GPSCoordinates} from "../../models/coordinate";
+
 describe('GPSCoordinates', () => {
 
   describe('#constructor', () => {
-    let latitude = 50.65;
-    let longitude = 4.06;
-    let altitude = 25.2;
-    let accuracy = 10;
-    let altitudeAccuracy = 10;
-    let speed = 20.0;
-    let heading = 1;
+    beforeEach(() => {
+      this.latitude = 50.65;
+      this.longitude = 4.06;
+      this.altitude = 25.2;
+      this.accuracy = 10;
+      this.altitudeAccuracy = 10;
+      this.speed = 20.0;
+      this.heading = 1;
+    });
 
     it('initializes the object with all the attributes', () => {
       let coordinates = {
-        "latitude": latitude,
-        "longitude": longitude,
-        "altitude": altitude,
-        "accuracy": accuracy,
-        "altitudeAccuracy": altitudeAccuracy,
-        "speed": speed,
-        "heading": heading
+        "latitude": this.latitude,
+        "longitude": this.longitude,
+        "altitude": this.altitude,
+        "accuracy": this.accuracy,
+        "altitudeAccuracy": this.altitudeAccuracy,
+        "speed": this.speed,
+        "heading": this.heading
       };
       let gps_coordinates = new GPSCoordinates(coordinates);
 

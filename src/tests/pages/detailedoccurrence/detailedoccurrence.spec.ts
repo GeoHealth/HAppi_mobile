@@ -3,10 +3,13 @@ import {NavMock, NavParamsMock} from "../../mocks";
 import {OccurrenceStorage} from "../../../app/provider/occurrence_storage";
 
 describe('DetailedOccurrencePage', () => {
-  let detailed_occurrence: DetailedOccurrencePage;
 
   beforeEach(() => {
-    detailed_occurrence = new DetailedOccurrencePage(new NavMock() as any, new NavParamsMock() as any, new OccurrenceStorage(), null);
+    this.detailed_occurrence = new DetailedOccurrencePage(new NavMock() as any, new NavParamsMock() as any, new OccurrenceStorage(), null);
+  });
+
+  beforeEach(() => {
+    spyOn(this.detailed_occurrence, 'retrieveCurrentLocation');
   });
 
   describe('#constructor', () => {

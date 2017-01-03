@@ -2,25 +2,23 @@ import {RestService} from "../../../app/services/rest_service";
 import {RequestOptions} from "@angular/http";
 
 describe('RestService', () => {
-  let rest_service: any;
-
   beforeEach(() => {
-    rest_service = new RestService(null);
+    this.rest_service = new RestService(null);
   });
 
   describe('#getBaseURL', () => {
     it('returns "http://" + domain + ":" + port + "/"', () => {
-      let expect_url = "http://" + rest_service.apiDomainName + ":" + rest_service.apiPort + "/";
-      expect(rest_service.getBaseURL()).toEqual(expect_url);
+      let expect_url = "http://" + this.rest_service.apiDomainName + ":" + this.rest_service.apiPort + "/";
+      expect(this.rest_service.getBaseURL()).toEqual(expect_url);
     });
   });
 
   describe('#getFullURL', () => {
     it('returns the base url + path', () => {
-      let base_url = rest_service.getBaseURL();
+      let base_url = this.rest_service.getBaseURL();
       let path = "path";
       let expect_url = base_url + path;
-      expect(rest_service.getFullURL(path)).toEqual(expect_url);
+      expect(this.rest_service.getFullURL(path)).toEqual(expect_url);
     });
   });
 
