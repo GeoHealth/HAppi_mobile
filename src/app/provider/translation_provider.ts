@@ -12,7 +12,7 @@ declare let Gettext: any;
  */
 @Injectable()
 export class TranslationProvider {
-  gt: any;
+  private gt: any;
   private locale_to_file = {
     "en-US": "en.json",
     "fr-BE": "fr_BE.json",
