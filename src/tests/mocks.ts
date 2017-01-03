@@ -1,5 +1,6 @@
 // IONIC:
 
+import {SymptomWithFactor} from "../models/symptom_with_factors";
 export class ConfigMock {
 
   public get(): any {
@@ -62,4 +63,27 @@ export class MenuMock {
       resolve();
     });
   }
+}
+
+export class NavParamsMock {
+  private symptom_with_factor_mock: SymptomWithFactor = {
+    id: "1",
+    name: "name",
+    short_description: "desc",
+    long_description: "desc long",
+    gender_filter: "male",
+    category: null,
+    factors: [
+      {
+        id: 1,
+        name: "factor",
+        type: "pain"
+      }
+    ]
+  };
+  public get(name): any {
+    if(name == 'symptom') {
+      return this.symptom_with_factor_mock;
+    }
+  };
 }
