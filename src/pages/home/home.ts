@@ -44,10 +44,6 @@ export class HomePage {
         {
           name: 'name',
           placeholder: 'name'
-        },
-        {
-          name: 'id',
-          placeholder: 'id'
         }
       ],
       buttons: [
@@ -58,7 +54,6 @@ export class HomePage {
           text: 'Add',
           handler: (data) => {
             let symptom = new SymptomWithFactor(data.name);
-            symptom.id = data.id;
             symptom.factors.push(new Factor('pain intensity', 'pain_intensity'));
             this.symptom_storage.add(symptom);
             console.log(this.symptom_storage.all());
