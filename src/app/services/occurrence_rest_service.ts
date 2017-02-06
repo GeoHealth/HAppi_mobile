@@ -15,9 +15,8 @@ export class OccurrenceRestService extends RestService {
   add(occurrence: Occurrence): Observable<{}> {
     occurrence.symptom_id = occurrence.symptom.id;
     let data = JSON.stringify({'occurrence': occurrence});
-    debugger;
     return this.http.post(
-      this.getFullURL(this.occurrencesPath),
+      this.getFullURL(this.occurrencesPath, null),
       data,
       RestService.generateJSONHeadersOptions()
     )

@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
 import {Headers, RequestOptions, Http, Response} from "@angular/http";
+import {isNullOrUndefined} from "util";
 
 @Injectable()
 export class RestService {
@@ -23,10 +24,17 @@ export class RestService {
   /**
    * Return the base URL plus the given path
    * @param path a path (bot starting with a '/')
+   * @param parameters map of parameters
    * @returns {string}
    */
-  getFullURL(path): string {
-    return this.getBaseURL() + path;
+  getFullURL(path: String, parameters: Map<String,String>): string {
+    let fullURL = this.getBaseURL() + path + '?';
+    if(!isNullOrUndefined(parameters)) {
+      parameters.forEach((value: String, key:String) => {
+        fullURL += key + '=' + value + '&';
+      });
+    }
+    return fullURL;
   }
 
   /**
