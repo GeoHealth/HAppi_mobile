@@ -41,8 +41,7 @@ export class HomePage {
   addSymptom() {
     let modal = this.modalCtrl.create(AddSymptomPage);
     modal.onDidDismiss(data => {
-        let symptom = new SymptomWithFactor(data.name);
-        symptom.id = data.id;
+        let symptom = SymptomWithFactor.convertObjectToInstance(data);
         this.symptom_storage.add(symptom);
       }
     );

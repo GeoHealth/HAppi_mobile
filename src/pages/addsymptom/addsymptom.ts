@@ -23,10 +23,10 @@ export class AddSymptomPage {
     this.symptom_rest_service.get(event.target.value).subscribe(response => {this.items = response.symptoms});
   }
 
-  dismiss(data: any) {
+  dismiss(symptom: any) {
     // Returning data from the modal:
     this.viewCtrl.dismiss(
-        data
+      symptom
     );
 }
 
