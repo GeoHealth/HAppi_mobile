@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AlertController, ActionSheetController, Platform, ModalController} from 'ionic-angular';
+import {ActionSheetController, Platform, ModalController} from 'ionic-angular';
 import {SymptomsStorage} from '../../app/provider/symptoms_storage';
 import {OccurrenceStorage} from '../../app/provider/occurrence_storage';
 import {Symptom} from '../../models/symptom';
@@ -48,7 +48,7 @@ export class HomePage {
   };
 
   createOccurrence(symptom: SymptomWithFactor) {
-    let element = DOMHelper.disableElementById(symptom.name);
+    let element = DOMHelper.disableElementById(symptom.id);
     let newOccurrence;
     let callback_success = (res) => {
       element.disabled = false;
@@ -83,7 +83,7 @@ export class HomePage {
     });
   };
 
-  private deleteSymptom(symptom: Symptom) {
+  deleteSymptom(symptom: Symptom) {
     this.symptom_storage.remove(symptom);
   }
 

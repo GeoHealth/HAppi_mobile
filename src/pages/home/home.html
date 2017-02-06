@@ -6,11 +6,22 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-item *ngFor="let symptom of symptom_storage.all()">
-      <button id="{{symptom.name}}" ion-button full (click)="createOccurrence(symptom)"
-              (press)="createDetailedOccurrence(symptom)">{{translation.gettext(symptom.name)}}
-      </button>
-    </ion-item>
+    <ion-item-sliding *ngFor="let symptom of symptom_storage.all()">
+      <ion-item>
+        <ion-avatar>
+          <button id="{{symptom.id}}" ion-button full (click)="createOccurrence(symptom)"
+                  (press)="createDetailedOccurrence(symptom)">{{translation.gettext(symptom.name)}}
+          </button>
+        </ion-avatar>
+      </ion-item>
+
+      <ion-item-options side="right">
+        <button ion-button color="danger" (click)="deleteSymptom(symptom)">
+          <ion-icon name="trash"></ion-icon>
+          {{translation.gettext("Delete")}}
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
   </ion-list>
 
   <button ion-button (click)="addSymptom()" full color="default" icon-left>
