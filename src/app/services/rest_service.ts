@@ -50,6 +50,10 @@ export class RestService {
     return res;
   }
 
+  static extractData(res: Response) {
+    return res.json() || { };
+  }
+
   static handleError(error: Response | any) {
     let errMsg: string;
     if (error instanceof Response) {
