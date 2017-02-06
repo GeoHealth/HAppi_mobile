@@ -12,7 +12,6 @@ import {DateProvider} from "../../app/provider/date_provider";
 import {DOMHelper} from "../../app/domhelper/domhelper";
 import {OccurrenceRestService} from "../../app/services/occurrence_rest_service";
 import {SymptomWithFactor} from "../../models/symptom_with_factors";
-import {Factor} from "../../models/factor";
 import {TranslationProvider} from "../../app/provider/translation_provider";
 import {AddSymptomPage} from "../addsymptom/addsymptom";
 
@@ -29,7 +28,7 @@ export class HomePage {
   private platform: Platform;
   occurrence_rest_service: OccurrenceRestService;
 
-  constructor(public navCtrl: NavController, private alertCtrl: AlertController, occurrence_storage: OccurrenceStorage, symptoms_storage: SymptomsStorage,
+  constructor(public navCtrl: NavController, occurrence_storage: OccurrenceStorage, symptoms_storage: SymptomsStorage,
               actionSheetCtrl: ActionSheetController, platform: Platform, occurrence_rest_service: OccurrenceRestService, public translation: TranslationProvider, public modalCtrl: ModalController) {
     this.symptom_storage = symptoms_storage;
     this.occurrences_storage = occurrence_storage;
@@ -58,7 +57,6 @@ export class HomePage {
       element.disabled = false;
     };
     let callback_after_location = (gpsCoordinates) => {
-      symptom.id = '2';
       newOccurrence = new Occurrence(symptom, DateProvider.getCurrentISODateAsString(), gpsCoordinates, null);
       this.occurrences_storage.add(newOccurrence);
       this.occurrence_rest_service.add(newOccurrence).subscribe(
@@ -84,32 +82,6 @@ export class HomePage {
       symptom: symptom
     });
   };
-
-  openLongPressMenu(symptom: Symptom) {
-    let actionSheet = this.actionSheetCtrl.create({
-      title: 'Symptom',
-      cssClass: 'long-press-symptom-menu',
-      buttons: [
-        {
-          text: 'Delete',
-          role: 'destructive',
-          icon: !this.platform.is('ios') ? 'trash' : null,
-          handler: () => {
-            console.log('Delete symptom clicked');
-            console.log(symptom.name);
-            this.deleteSymptom(symptom);
-          }
-        }, {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        }
-      ]
-    });
-    actionSheet.present();
-  }
 
   private deleteSymptom(symptom: Symptom) {
     this.symptom_storage.remove(symptom);
