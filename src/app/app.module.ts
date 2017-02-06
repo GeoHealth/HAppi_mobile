@@ -13,6 +13,13 @@ import {OccurrenceRestService} from "./services/occurrence_rest_service";
 import {SymptomRestService} from "./services/symptom_rest_service";
 import {TranslationProvider} from "./provider/translation_provider";
 import {AddSymptomPage} from '../pages/addsymptom/addsymptom';
+import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
+
+const cloudSettings: CloudSettings = {
+  'core': {
+    'app_id': '317959d7'
+  }
+};
 
 @NgModule({
   declarations: [
@@ -23,10 +30,11 @@ import {AddSymptomPage} from '../pages/addsymptom/addsymptom';
     TabsPage,
     DetailedOccurrencePage,
     FactorPainIntensityComponent,
-    AddSymptomPage
+    AddSymptomPage,
   ],
   imports: [
-    IonicModule.forRoot(HAppiApp)
+    IonicModule.forRoot(HAppiApp),
+    CloudModule.forRoot(cloudSettings)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
