@@ -87,3 +87,17 @@ export class NavParamsMock {
     }
   };
 }
+
+export class HttpMock {
+  public post(): any {
+    return new Promise((resolve: Function) => {
+      resolve();
+    });
+  }
+
+  public get(): any {
+    return new Promise((resolve: Function) => {
+      resolve();
+    });
+  }
+}
