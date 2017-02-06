@@ -23,7 +23,7 @@ export class RestService {
 
   /**
    * Return the base URL plus the given path
-   * @param path a path (bot starting with a '/')
+   * @param path a path (not starting with a '/')
    * @param parameters map of parameters
    * @returns {string}
    */
