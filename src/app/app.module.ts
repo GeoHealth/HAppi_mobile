@@ -10,7 +10,9 @@ import {TabsPage} from '../pages/tabs/tabs';
 import {DetailedOccurrencePage} from "../pages/detailedoccurrence/detailedoccurrence";
 import {FactorPainIntensityComponent} from "../pages/detailedoccurrence/factors.components/pain-intensity";
 import {OccurrenceRestService} from "./services/occurrence_rest_service";
+import {SymptomRestService} from "./services/symptom_rest_service";
 import {TranslationProvider} from "./provider/translation_provider";
+import {AddSymptomPage} from '../pages/addsymptom/addsymptom';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import {TranslationProvider} from "./provider/translation_provider";
     StatisticPage,
     TabsPage,
     DetailedOccurrencePage,
-    FactorPainIntensityComponent
+    FactorPainIntensityComponent,
+    AddSymptomPage
   ],
   imports: [
     IonicModule.forRoot(HAppiApp)
@@ -32,12 +35,13 @@ import {TranslationProvider} from "./provider/translation_provider";
     OccurrencePage,
     StatisticPage,
     TabsPage,
-    DetailedOccurrencePage
+    DetailedOccurrencePage,
+    AddSymptomPage
   ],
   providers: [{
     provide: ErrorHandler,
     useClass: IonicErrorHandler
-  }, OccurrenceStorage, SymptomsStorage, OccurrenceRestService, TranslationProvider]
+  }, OccurrenceStorage, SymptomsStorage, OccurrenceRestService, SymptomRestService, TranslationProvider]
 
 })
 export class AppModule {

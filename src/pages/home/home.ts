@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AlertController, ActionSheetController, Platform} from 'ionic-angular';
+import {AlertController, ActionSheetController, Platform, ModalController} from 'ionic-angular';
 import {SymptomsStorage} from '../../app/provider/symptoms_storage';
 import {OccurrenceStorage} from '../../app/provider/occurrence_storage';
 import {Symptom} from '../../models/symptom';
@@ -14,6 +14,7 @@ import {OccurrenceRestService} from "../../app/services/occurrence_rest_service"
 import {SymptomWithFactor} from "../../models/symptom_with_factors";
 import {Factor} from "../../models/factor";
 import {TranslationProvider} from "../../app/provider/translation_provider";
+import {AddSymptomPage} from "../addsymptom/addsymptom";
 
 
 @Component({
@@ -29,7 +30,7 @@ export class HomePage {
   occurrence_rest_service: OccurrenceRestService;
 
   constructor(public navCtrl: NavController, private alertCtrl: AlertController, occurrence_storage: OccurrenceStorage, symptoms_storage: SymptomsStorage,
-              actionSheetCtrl: ActionSheetController, platform: Platform, occurrence_rest_service: OccurrenceRestService, public translation: TranslationProvider) {
+              actionSheetCtrl: ActionSheetController, platform: Platform, occurrence_rest_service: OccurrenceRestService, public translation: TranslationProvider, public modalCtrl: ModalController) {
     this.symptom_storage = symptoms_storage;
     this.occurrences_storage = occurrence_storage;
     this.actionSheetCtrl = actionSheetCtrl;
@@ -38,31 +39,8 @@ export class HomePage {
   };
 
   addSymptom() {
-    let prompt = this.alertCtrl.create({
-      title: 'Add symptom',
-      inputs: [
-        {
-          name: 'name',
-          placeholder: 'name'
-        }
-      ],
-      buttons: [
-        {
-          text: 'Cancel'
-        },
-        {
-          text: 'Add',
-          handler: (data) => {
-            let symptom = new SymptomWithFactor(data.name);
-            symptom.factors.push(new Factor('pain intensity', 'pain_intensity'));
-            this.symptom_storage.add(symptom);
-            console.log(this.symptom_storage.all());
-          }
-        }
-      ]
-    });
-
-    prompt.present();
+    let modal = this.modalCtrl.create(AddSymptomPage);
+    modal.present();
   };
 
   createOccurrence(symptom: SymptomWithFactor) {
