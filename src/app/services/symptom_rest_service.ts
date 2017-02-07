@@ -11,7 +11,7 @@ export class SymptomRestService extends RestService {
   }
 
   get(name: String) {
-    let parameters = new Map<String,String>([['name', name]]);
+    let parameters = new Map<String, String>([['name', name]]);
     return this.http.get(this.getFullURL(this.symptomPath, parameters))
       .map(RestService.extractData)
       .catch(RestService.handleError);

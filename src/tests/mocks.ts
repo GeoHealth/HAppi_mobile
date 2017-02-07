@@ -1,6 +1,7 @@
 // IONIC:
 
 import {SymptomWithFactor} from "../models/symptom_with_factors";
+import {Http} from "@angular/http";
 export class ConfigMock {
 
   public get(): any {
@@ -81,14 +82,19 @@ export class NavParamsMock {
       }
     ]
   };
+
   public get(name): any {
-    if(name == 'symptom') {
+    if (name === 'symptom') {
       return this.symptom_with_factor_mock;
     }
   };
 }
 
-export class HttpMock {
+export class HttpMock extends Http {
+  constructor() {
+    super(null, null);
+  }
+
   public post(): any {
     return new Promise((resolve: Function) => {
       resolve();

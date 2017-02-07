@@ -75,7 +75,7 @@ describe('TranslationProvider', () => {
 
     afterEach(() => {
       getPreferredLanguagePromise = null;
-    })
+    });
   });
 
   describe('#gettext', () => {

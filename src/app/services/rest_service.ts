@@ -29,9 +29,9 @@ export class RestService {
    */
   getFullURL(path: String, parameters?: Map<String,String>): string {
     let fullURL = this.getBaseURL() + path;
-    if(!isNullOrUndefined(parameters)) {
+    if (!isNullOrUndefined(parameters)) {
       fullURL += '?';
-      parameters.forEach((value: String, key:String) => {
+      parameters.forEach((value: String, key: String) => {
         fullURL += key + '=' + value + '&';
       });
     }
@@ -52,7 +52,7 @@ export class RestService {
   }
 
   static extractData(res: Response) {
-    return res.json() || { };
+    return res.json() || {};
   }
 
   static handleError(error: Response | any) {

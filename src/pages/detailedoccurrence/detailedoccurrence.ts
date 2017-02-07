@@ -56,8 +56,7 @@ export class DetailedOccurrencePage {
     }
   }
 
-  private
-  retrieveCurrentLocation() {
+  private retrieveCurrentLocation() {
     this.loadingLocation = true;
     this.locationError = false;
     Geolocation.getCurrentPosition().then((gps_location) => {
