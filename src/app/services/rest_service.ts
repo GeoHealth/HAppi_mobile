@@ -27,7 +27,7 @@ export class RestService {
    * @param parameters map of parameters
    * @returns {string}
    */
-  getFullURL(path: String, parameters?: Map<String,String>): string {
+  getFullURL(path: String, parameters?: Map<String, String>): string {
     let fullURL = this.getBaseURL() + path;
     if (!isNullOrUndefined(parameters)) {
       fullURL += '?';
