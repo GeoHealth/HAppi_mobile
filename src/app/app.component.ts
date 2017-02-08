@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {Platform} from 'ionic-angular';
 import {StatusBar, Splashscreen} from 'ionic-native';
 
-import {TabsPage} from '../pages/tabs/tabs';
+import {LoginPage} from '../pages/login/login';
 
 // Add the RxJS Observable operators.
 import './rxjs-operators';
@@ -11,7 +11,7 @@ import './rxjs-operators';
   template: `<ion-nav [root]="rootPage"></ion-nav>`
 })
 export class HAppiApp {
-  rootPage = TabsPage;
+  rootPage = LoginPage;
 
   constructor(platform: Platform) {
     platform.ready().then(() => {

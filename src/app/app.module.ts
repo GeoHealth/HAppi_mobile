@@ -14,6 +14,10 @@ import {SymptomRestService} from "./services/symptom_rest_service";
 import {TranslationProvider} from "./provider/translation_provider";
 import {AddSymptomPage} from '../pages/addsymptom/addsymptom';
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
+import {LoginPage} from '../pages/login/login'
+import {AuthService} from './provider/auth_service';
+import { RegisterPage } from '../pages/register/register';
+import {AuthRestService} from './services/auth_rest_service'
 
 const cloudSettings: CloudSettings = {
   'core': {
@@ -31,6 +35,8 @@ const cloudSettings: CloudSettings = {
     DetailedOccurrencePage,
     FactorPainIntensityComponent,
     AddSymptomPage,
+    LoginPage,
+    RegisterPage
   ],
   imports: [
     IonicModule.forRoot(HAppiApp),
@@ -44,12 +50,15 @@ const cloudSettings: CloudSettings = {
     StatisticPage,
     TabsPage,
     DetailedOccurrencePage,
-    AddSymptomPage
+    AddSymptomPage,
+    LoginPage,
+    RegisterPage
   ],
   providers: [{
     provide: ErrorHandler,
     useClass: IonicErrorHandler
-  }, OccurrenceStorage, SymptomsStorage, OccurrenceRestService, SymptomRestService, TranslationProvider]
+  }, OccurrenceStorage, SymptomsStorage, OccurrenceRestService, SymptomRestService, TranslationProvider,
+  AuthRestService, AuthService]
 
 })
 export class AppModule {
