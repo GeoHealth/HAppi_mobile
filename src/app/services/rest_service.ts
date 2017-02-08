@@ -8,6 +8,7 @@ export class RestService {
   http: Http;
   apiDomainName = 'localhost';
   apiPort = '3000';
+  static headers: Headers;
 
   constructor(http: Http) {
     this.http = http;
@@ -38,13 +39,18 @@ export class RestService {
     return fullURL;
   }
 
+  getHeaders(): RequestOptions{
+    return new RequestOptions({headers: RestService.headers});
+  }
+
   /**
    * Return a simple headers options for JSON content
-   * @returns {RequestOptions}
+   * @returns {Headers}
    */
-  static generateJSONHeadersOptions(): RequestOptions {
-    let headers = new Headers({'Content-Type': 'application/json'});
-    return new RequestOptions({headers: headers});
+  generateJSONHeadersOptions(): RequestOptions {
+     let json_headers = new Headers(RestService.headers);
+     json_headers.append('Content-Type', 'application/json');
+     return new RequestOptions({headers: json_headers});
   }
 
   static handlePostResponse(res: Response) {

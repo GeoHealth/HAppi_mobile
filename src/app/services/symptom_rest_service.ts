@@ -12,7 +12,7 @@ export class SymptomRestService extends RestService {
 
   get(name: String) {
     let parameters = new Map<String, String>([['name', name]]);
-    return this.http.get(this.getFullURL(this.symptomPath, parameters))
+    return this.http.get(this.getFullURL(this.symptomPath, parameters), this.getHeaders())
       .map(RestService.extractData)
       .catch(RestService.handleError);
   };

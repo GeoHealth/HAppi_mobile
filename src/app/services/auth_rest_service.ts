@@ -19,7 +19,7 @@ export class AuthRestService extends RestService {
     return this.http.post(
       this.getFullURL(this.loginPath, null),
       data,
-      RestService.generateJSONHeadersOptions()
+      this.generateJSONHeadersOptions()
     )
       .map(RestService.handlePostResponse)
       .catch(RestService.handleError);
@@ -30,7 +30,7 @@ export class AuthRestService extends RestService {
     return this.http.post(
       this.getFullURL(this.createPath, null),
       data,
-      RestService.generateJSONHeadersOptions()
+      this.generateJSONHeadersOptions()
     )
       .map(RestService.handlePostResponse)
       .catch(RestService.handleError);

@@ -24,12 +24,12 @@ describe('RestService', () => {
 
   describe('::generateJSONHeadersOptions', () => {
     it('returns an instance of RequestOptions', () => {
-      expect(RestService.generateJSONHeadersOptions() instanceof RequestOptions).toBeTruthy();
+      expect(this.rest_service.generateJSONHeadersOptions() instanceof RequestOptions).toBeTruthy();
     });
 
     it('specifies that Content-Type is JSON', () => {
-      let request_options = RestService.generateJSONHeadersOptions();
-      expect(request_options.headers.get('Content-Type')).toEqual('application/json');
+      let response_request = this.rest_service.generateJSONHeadersOptions();
+      expect(response_request.headers.get('Content-Type')).toEqual('application/json');
     });
   });
 });

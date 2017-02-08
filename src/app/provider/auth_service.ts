@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import {AuthRestService} from '../services/auth_rest_service';
+import {RestService} from '../services/rest_service';
+import {Headers, RequestOptions, Http, Response} from "@angular/http";
 
 export class User {
-  name: string;
   email: string;
 
   constructor(email: string) {
@@ -23,14 +24,25 @@ export class AuthService {
     this.auth_rest_service = auth_rest_service;
   }
 
+  public extractAndSaveHeaders(res: Response) {
+    let needed_headers = ["uid", "access-token", "client", "expiry", "token-type"];
+    let headers = res.headers;
+    let extracted_headers = new Headers();
+    needed_headers.forEach((name) => {
+      extracted_headers.append(name, headers.get(name));
+    });
+    RestService.headers = extracted_headers;
+  }
+
   public login(credentials) {
     if (credentials.email === null || credentials.password === null) {
       return Observable.throw("Please insert credentials");
     } else {
       return Observable.create(observer => {
         this.auth_rest_service.auth(credentials.email, credentials.password).subscribe(
-          (res) => {
+          (res: Response) => {
             this.currentUser = new User(credentials.email);
+            this.extractAndSaveHeaders(res);
             observer.next(true);
             observer.complete();
           },
@@ -49,8 +61,9 @@ export class AuthService {
       return Observable.throw("Please insert credentials");
     } else {
       return Observable.create(observer => {
-        this.auth_rest_service.create(credentials.email, credentials.password, credentials.password).subscribe(
+        this.auth_rest_service.create(credentials.email, credentials.password, credentials.password_confirmation).subscribe(
           (res) => {
+            this.extractAndSaveHeaders(res);
             observer.next(true);
             observer.complete();
           },

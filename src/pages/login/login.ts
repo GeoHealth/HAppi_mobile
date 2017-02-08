@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, AlertController, LoadingController, Loading } from 'ionic-angular';
 import { AuthService } from '../../app/provider/auth_service';
 import { RegisterPage } from '../register/register';
-import { HomePage } from '../home/home';
+import { TabsPage } from '../tabs/tabs';
 
 
 @Component({
@@ -21,14 +21,14 @@ export class LoginPage {
 
   public login() {
     this.showLoading()
-    this.auth.login(this.registerCredentials).subscribe(allowed => {
+    this.auth.login(this.registerCredentials).subscribe((allowed) => {
       if (allowed) {
         setTimeout(() => {
         this.loading.dismiss();
-        this.nav.setRoot(HomePage)
+        this.nav.setRoot(TabsPage)
         });
       } else {
-        this.showError("Access Denied");
+        this.showError("Invalid login credentials. Please try again.");
       }
     },
     error => {

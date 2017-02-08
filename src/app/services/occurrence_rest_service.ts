@@ -18,7 +18,7 @@ export class OccurrenceRestService extends RestService {
     return this.http.post(
       this.getFullURL(this.occurrencesPath, null),
       data,
-      RestService.generateJSONHeadersOptions()
+      this.generateJSONHeadersOptions()
     )
       .map(RestService.handlePostResponse)
       .catch(RestService.handleError);
