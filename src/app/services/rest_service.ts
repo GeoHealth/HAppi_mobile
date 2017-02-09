@@ -6,6 +6,7 @@ import {isNullOrUndefined} from "util";
 @Injectable()
 export class RestService {
   http: Http;
+  protocol = 'http://';
   apiDomainName = 'localhost';
   apiPort = '3000';
   static headers: Headers;
@@ -19,7 +20,7 @@ export class RestService {
    * @returns {string} example: localhost:3000/v1/
    */
   getBaseURL(): string {
-    return 'http://' + this.apiDomainName + ':' + this.apiPort + '/';
+    return this.protocol + this.apiDomainName + ':' + this.apiPort + '/';
   }
 
   /**
@@ -39,7 +40,7 @@ export class RestService {
     return fullURL;
   }
 
-  getHeaders(): RequestOptions{
+  getHeaders(): RequestOptions {
     return new RequestOptions({headers: RestService.headers});
   }
 
@@ -48,9 +49,9 @@ export class RestService {
    * @returns {Headers}
    */
   generateJSONHeadersOptions(): RequestOptions {
-     let json_headers = new Headers(RestService.headers);
-     json_headers.append('Content-Type', 'application/json');
-     return new RequestOptions({headers: json_headers});
+    let json_headers = new Headers(RestService.headers);
+    json_headers.append('Content-Type', 'application/json');
+    return new RequestOptions({headers: json_headers});
   }
 
   static handlePostResponse(res: Response) {
