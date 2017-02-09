@@ -26,7 +26,7 @@ export class LoginPage {
       if (allowed) {
         setTimeout(() => {
           this.loading.dismiss();
-          this.nav.setRoot(TabsPage)
+          this.nav.setRoot(TabsPage);
         });
       } else {
         this.showError("Invalid login credentials. Please try again.");

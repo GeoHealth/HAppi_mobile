@@ -4,7 +4,7 @@
     "no-unused-variable": [
       true
     ],
-    "member-ordering": {"order": "fields-first"},
+    "member-ordering": [true, { "order": "fields-first" }],
     "only-arrow-functions": [true, "allow-declarations"],
     "typedef-whitespace":
       [
