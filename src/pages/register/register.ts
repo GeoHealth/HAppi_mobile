@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { NavController, AlertController } from 'ionic-angular';
-import { AuthService } from '../../app/provider/auth_service';
-import { TabsPage } from '../tabs/tabs';
+import {Component} from '@angular/core';
+import {NavController, AlertController} from 'ionic-angular';
+import {AuthService} from '../../app/provider/auth_service';
+import {TabsPage} from '../tabs/tabs';
 
 @Component({
   selector: 'page-register',
@@ -11,18 +11,18 @@ export class RegisterPage {
   createSuccess = false;
   registerCredentials = {email: '', password: ''};
 
-  constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController) {}
+  constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController) {
+  }
 
   public register() {
-    this.auth.register(this.registerCredentials).subscribe(success => {
+    this.auth.register(this.registerCredentials).subscribe((success) => {
       if (success) {
         this.createSuccess = true;
         this.showPopup("Success", "Account created.");
       } else {
         this.showPopup("Error", "Problem creating account.");
       }
-    },
-    error => {
+    }, (error) => {
       this.showPopup("Error", error);
     });
   }
@@ -32,15 +32,15 @@ export class RegisterPage {
       title: title,
       subTitle: text,
       buttons: [
-       {
-         text: 'OK',
-         handler: data => {
-           if (this.createSuccess) {
-             this.nav.setRoot(TabsPage);
-           }
-         }
-       }
-     ]
+        {
+          text: 'OK',
+          handler: (data) => {
+            if (this.createSuccess) {
+              this.nav.setRoot(TabsPage);
+            }
+          }
+        }
+      ]
     });
     alert.present();
   }

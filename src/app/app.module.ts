@@ -14,10 +14,10 @@ import {SymptomRestService} from "./services/symptom_rest_service";
 import {TranslationProvider} from "./provider/translation_provider";
 import {AddSymptomPage} from '../pages/addsymptom/addsymptom';
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
-import {LoginPage} from '../pages/login/login'
+import {LoginPage} from '../pages/login/login';
 import {AuthService} from './provider/auth_service';
 import { RegisterPage } from '../pages/register/register';
-import {AuthRestService} from './services/auth_rest_service'
+import {AuthRestService} from './services/auth_rest_service';
 
 const cloudSettings: CloudSettings = {
   'core': {

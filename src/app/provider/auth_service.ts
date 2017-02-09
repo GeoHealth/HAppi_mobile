@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import {AuthRestService} from '../services/auth_rest_service';
 import {RestService} from '../services/rest_service';
-import {Headers, RequestOptions, Http, Response} from "@angular/http";
+import {Headers, Response} from "@angular/http";
 
 export class User {
   email: string;
@@ -38,7 +38,7 @@ export class AuthService {
     if (credentials.email === null || credentials.password === null) {
       return Observable.throw("Please insert credentials");
     } else {
-      return Observable.create(observer => {
+      return Observable.create((observer) => {
         this.auth_rest_service.auth(credentials.email, credentials.password).subscribe(
           (res: Response) => {
             this.currentUser = new User(credentials.email);
@@ -50,7 +50,7 @@ export class AuthService {
             observer.next(false);
             observer.complete();
           }
-        )
+        );
       });
 
     }
@@ -60,7 +60,7 @@ export class AuthService {
     if (credentials.email === null || credentials.password === null) {
       return Observable.throw("Please insert credentials");
     } else {
-      return Observable.create(observer => {
+      return Observable.create((observer) => {
         this.auth_rest_service.create(credentials.email, credentials.password, credentials.password_confirmation).subscribe(
           (res) => {
             this.extractAndSaveHeaders(res);
@@ -76,12 +76,12 @@ export class AuthService {
     }
   }
 
-  public getUserInfo() : User {
+  public getUserInfo(): User {
     return this.currentUser;
   }
 
   public logout() {
-    return Observable.create(observer => {
+    return Observable.create((observer) => {
       this.currentUser = null;
       observer.next(true);
       observer.complete();
