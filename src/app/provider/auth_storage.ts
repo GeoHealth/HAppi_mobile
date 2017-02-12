@@ -15,6 +15,7 @@ export class AuthStorage {
     constructor() {
         this.initStore();
         this.initInMemoryDB();
+        this.readHeadersFromDB();
     }
 
     private initStore() {
@@ -28,6 +29,17 @@ export class AuthStorage {
         this.inMemoryDB = new loki('headers');
         this.headers = this.inMemoryDB.addCollection('headers');
     };
+
+  private readHeadersFromDB() {
+    debugger;
+    let self = this;
+    this.store.getItem('headers').then((value) => {
+      self.inMemoryDB.loadJSON(value);
+      self.headers = self.inMemoryDB.getCollection('headers');
+    }).catch((err) => {
+      console.log('error importing database: ' + err);
+    });
+  }
 
 
     get(): Headers {
