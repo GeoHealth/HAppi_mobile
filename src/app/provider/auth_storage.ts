@@ -29,15 +29,19 @@ export class AuthStorage {
     this.headers = this.inMemoryDB.addCollection('headers');
   };
 
-  save(headers: Headers) {
-    if (headers instanceof Headers) {
-      this.store.setItem('hearders', JSON.stringify(this.inMemoryDB)).then((value) => {
+  get(): Headers {
+    return this.headers;
+  }
 
+  save(headers: Headers) {
+      console.log(headers);
+    if (headers instanceof Headers) {
+      this.store.setItem('headers', JSON.stringify(this.inMemoryDB)).then((value) => {
       }).catch((err) => {
 
       });
     } else {
-      throw new TypeError("Wrong type adding to occurrences_storage");
+      throw new TypeError("Wrong type adding to header storage");
     }
   };
 }

@@ -3,7 +3,7 @@ import {NavController, AlertController, LoadingController, Loading} from 'ionic-
 import {AuthService} from '../../app/provider/auth_service';
 import {RegisterPage} from '../register/register';
 import {TabsPage} from '../tabs/tabs';
-
+import {AuthStorage} from '../../app/provider/auth_storage';
 
 @Component({
   selector: 'page-login',
@@ -13,7 +13,9 @@ export class LoginPage {
   loading: Loading;
   registerCredentials = {email: '', password: ''};
 
-  constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
+  constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private auth_storage: AuthStorage) {
+    console.log("constructor loginpage");
+    console.log(this.auth_storage.get());
   }
 
   public createAccount() {
