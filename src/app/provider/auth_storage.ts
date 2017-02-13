@@ -15,7 +15,6 @@ export class AuthStorage {
     constructor() {
         this.initStore();
         this.initInMemoryDB();
-        this.readHeadersFromDB();
     }
 
     private initStore() {
@@ -30,20 +29,21 @@ export class AuthStorage {
         this.headers = this.inMemoryDB.addCollection('headers');
     };
 
-  private readHeadersFromDB() {
-    debugger;
-    let self = this;
-    this.store.getItem('headers').then((value) => {
-      self.inMemoryDB.loadJSON(value);
-      self.headers = self.inMemoryDB.getCollection('headers');
-    }).catch((err) => {
-      console.log('error importing database: ' + err);
-    });
-  }
-
-
-    get(): Headers {
-        return this.headers;
+  /**
+   * Read the headers stored in the DB asynchronously.
+   * @returns {Promise<Headers>} This promise is resolved when the headers are read. The resolved value is the readed headers.
+   */
+  get(): Promise<Headers> {
+        return new Promise((resolve, reject) => {
+          let self = this;
+          this.store.getItem('headers').then((value) => {
+            self.inMemoryDB.loadJSON(value);
+            self.headers = self.inMemoryDB.getCollection('headers');
+            resolve(self.headers);
+          }).catch((err) => {
+            console.log('error importing database: ' + err);
+          });
+        });
     }
 
     save(headers: Headers) {

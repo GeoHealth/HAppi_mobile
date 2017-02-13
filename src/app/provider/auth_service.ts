@@ -33,6 +33,7 @@ export class AuthService {
             extracted_headers.append(name, headers.get(name));
         });
         RestService.headers = extracted_headers;
+        this.auth_storage.save(extracted_headers);
     }
 
     public login(credentials) {
@@ -65,7 +66,6 @@ export class AuthService {
                 this.auth_rest_service.create(credentials.email, credentials.password, credentials.password_confirmation).subscribe(
                     (res) => {
                         console.log("ici",res);
-                        this.auth_storage.save(res.headers);
                         this.extractAndSaveHeaders(res);
                         observer.next(true);
                         observer.complete();

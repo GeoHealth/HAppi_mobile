@@ -15,7 +15,10 @@ export class LoginPage {
 
   constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private auth_storage: AuthStorage) {
     console.log("constructor loginpage");
-    console.log(this.auth_storage.get());
+    this.auth_storage.get().then((val) => {
+      debugger;
+      console.log(val);
+    });
   }
 
   public createAccount() {
