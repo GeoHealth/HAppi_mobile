@@ -47,7 +47,7 @@ export class AuthStorage {
     }
 
     save(headers: Headers) {
-        console.log(headers);
+        this.headers.clear();
         if (headers instanceof Headers) {
             this.headers.insert(headers);
             this.store.setItem('headers', JSON.stringify(this.inMemoryDB)).then((value) => {
@@ -58,5 +58,9 @@ export class AuthStorage {
         } else {
             throw new TypeError("Wrong type adding to header storage");
         }
-    };
+    }
+
+    delete() {
+      this.save(new Headers());
+    }
 }
