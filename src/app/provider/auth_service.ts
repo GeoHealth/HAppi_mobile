@@ -101,9 +101,17 @@ export class AuthService {
   }
 
   public disconnection() {
-    this.auth_rest_service.disconnection();
-    this.auth_storage.delete();
+    return new Promise((resolve, reject) => {
+      this.auth_rest_service.disconnection().subscribe(
+        (res) => {
+          this.auth_storage.delete();
+          resolve();
+        },
+        (err) => {
 
+        }
+      )
+    });
   }
 
 

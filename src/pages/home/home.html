@@ -1,26 +1,21 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>{{translation.gettext("Symptoms")}}</ion-title>
-  </ion-navbar>
-</ion-header>
-
 <ion-content >
+
   <ion-list inset>
     <ion-item-sliding *ngFor="let symptom of symptom_storage.all()">
 
       <button ion-item id="{{symptom.id}}"  (click)="createOccurrence(symptom)"
-        (press)="createDetailedOccurrence(symptom)">{{translation.gettext(symptom.name)}}
-      </button>
-
-      <ion-item-options>
-        <button ion-button color="danger" (click)="deleteSymptom(symptom)"><ion-icon name="trash"></ion-icon> Delete</button>
-      </ion-item-options>
-
-    </ion-item-sliding>
-
-    <button ion-button (click)="addSymptom()" full color="default" icon-left>
-      <ion-icon name="add"></ion-icon>
-      {{translation.gettext("Add symptom")}}
+      (press)="createDetailedOccurrence(symptom)">{{translation.gettext(symptom.name)}}
     </button>
-  </ion-list>
+
+    <ion-item-options>
+      <button ion-button color="danger" (click)="deleteSymptom(symptom)"><ion-icon name="trash"></ion-icon> Delete</button>
+    </ion-item-options>
+
+  </ion-item-sliding>
+
+  <button ion-button (click)="addSymptom()" full color="default" icon-left>
+    <ion-icon name="add"></ion-icon>
+    {{translation.gettext("Add symptom")}}
+  </button>
+</ion-list>
 </ion-content>
