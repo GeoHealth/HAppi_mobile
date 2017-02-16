@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {ActionSheetController, Platform, ModalController} from 'ionic-angular';
+import {ActionSheetController, Platform, ModalController, MenuController} from 'ionic-angular';
 import {SymptomsStorage} from '../../app/provider/symptoms_storage';
 import {OccurrenceStorage} from '../../app/provider/occurrence_storage';
 import {Symptom} from '../../models/symptom';
@@ -22,6 +22,9 @@ import {AddSymptomPage} from "../addsymptom/addsymptom";
 })
 export class HomePage {
 
+  page_name = "Home";
+
+
   symptom_storage: SymptomsStorage;
   occurrences_storage: OccurrenceStorage;
   private actionSheetCtrl: ActionSheetController;
@@ -29,12 +32,15 @@ export class HomePage {
   occurrence_rest_service: OccurrenceRestService;
 
   constructor(public navCtrl: NavController, occurrence_storage: OccurrenceStorage, symptoms_storage: SymptomsStorage,
-              actionSheetCtrl: ActionSheetController, platform: Platform, occurrence_rest_service: OccurrenceRestService, public translation: TranslationProvider, public modalCtrl: ModalController) {
+              actionSheetCtrl: ActionSheetController, platform: Platform, occurrence_rest_service: OccurrenceRestService, public translation: TranslationProvider, public modalCtrl: ModalController,
+            private menu: MenuController) {
     this.symptom_storage = symptoms_storage;
     this.occurrences_storage = occurrence_storage;
     this.actionSheetCtrl = actionSheetCtrl;
     this.platform = platform;
     this.occurrence_rest_service = occurrence_rest_service;
+
+     menu.enable(true);
   };
 
   addSymptom() {

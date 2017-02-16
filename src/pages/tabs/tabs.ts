@@ -1,8 +1,15 @@
 import {Component} from '@angular/core';
 
+import {NavController} from 'ionic-angular';
+
 import {HomePage} from '../home/home';
 import {StatisticPage} from '../statistic/statistic';
 import {OccurrencePage} from '../occurrence/occurrence';
+import {LoginPage} from '../login/login';
+
+import {AuthService} from '../../app/provider/auth_service';
+
+import {TranslationProvider} from "../../app/provider/translation_provider";
 
 @Component({
   templateUrl: 'tabs.html'
@@ -14,7 +21,16 @@ export class TabsPage {
   tab2Root: any = StatisticPage;
   tab3Root: any = OccurrencePage;
 
-  constructor() {
+  page_name = "HAppi";
 
+  constructor(public translation: TranslationProvider, private nav: NavController,
+          private auth_service: AuthService) {
   }
+
+  log_out() {
+    this.auth_service.disconnection().then(() => {
+      this.nav.setRoot(LoginPage);
+    });
+  }
+
 }
