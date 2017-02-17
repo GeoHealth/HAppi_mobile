@@ -1,0 +1,18 @@
+{
+  "symptoms": [
+    {
+      "id": 1,
+      "name": "Mal de tête",
+      "averages": [
+        3,0,4,5,3,4,1
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Mal au ventre",
+      "averages": [
+        4,7,3,0,0,0,1
+      ]
+    }],
+  "unit": "day_of_week"
+}
