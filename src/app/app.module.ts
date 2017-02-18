@@ -19,6 +19,8 @@ import {AuthService} from './provider/auth_service';
 import { RegisterPage } from '../pages/register/register';
 import {AuthRestService} from './services/auth_rest_service';
 import {AuthStorage} from './provider/auth_storage';
+import {StatsRestService} from './services/stats_rest_service';
+
 
 const cloudSettings: CloudSettings = {
   'core': {
@@ -59,7 +61,7 @@ const cloudSettings: CloudSettings = {
     provide: ErrorHandler,
     useClass: IonicErrorHandler
   }, OccurrenceStorage, SymptomsStorage, OccurrenceRestService, SymptomRestService, TranslationProvider,
-  AuthRestService, AuthService, AuthStorage]
+  AuthRestService, AuthService, AuthStorage, StatsRestService]
 
 })
 export class AppModule {

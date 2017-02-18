@@ -1,11 +1,15 @@
-ion-app._gmaps_cdv_ .nav-decor {
-  background-color: transparent !important;
-}
+.ios, .md {
 
-page-statistic {
+  page-home {
 
-  #map {
-    height: 100%;
+    .scroll-content {
+      background-color: map-get($colors, light);
+    }
+
+    ion-card-header {
+      font-weight: bold;
+    }
+
   }
 
 }
