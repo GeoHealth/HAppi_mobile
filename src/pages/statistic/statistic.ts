@@ -13,6 +13,7 @@ export class StatisticPage {
   @ViewChild('dailyCanvas') dailyCanvas;
 
   dailyChart: any;
+  header_data:any;
 
   private colors: string[] = ["rgba(255,0,0,1)", "rgba(0,0,255,1)"]
 
@@ -21,7 +22,7 @@ export class StatisticPage {
 
 
   constructor(public translation: TranslationProvider, private stats_rest_service: StatsRestService) {
-
+    this.header_data={title:"Statistic"};
   }
 
   ionViewDidLoad() {

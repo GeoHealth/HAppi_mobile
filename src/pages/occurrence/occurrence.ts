@@ -9,9 +9,11 @@ import {TranslationProvider} from "../../app/provider/translation_provider";
 export class OccurrencePage {
 
   occurrences_storage: OccurrenceStorage;
+  header_data:any;
 
   constructor(occurrence_storage: OccurrenceStorage, public translation: TranslationProvider) {
     this.occurrences_storage = occurrence_storage;
+    this.header_data={title:"Occurence"};
   }
 
 }

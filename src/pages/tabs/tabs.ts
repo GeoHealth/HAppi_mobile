@@ -27,10 +27,4 @@ export class TabsPage {
           private auth_service: AuthService) {
   }
 
-  log_out() {
-    this.auth_service.disconnection().then(() => {
-      this.nav.setRoot(LoginPage);
-    });
-  }
-
 }

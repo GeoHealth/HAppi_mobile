@@ -20,7 +20,7 @@ import { RegisterPage } from '../pages/register/register';
 import {AuthRestService} from './services/auth_rest_service';
 import {AuthStorage} from './provider/auth_storage';
 import {StatsRestService} from './services/stats_rest_service';
-
+import {CustomHeaderComponent} from '../components/customheader/customheader';
 
 const cloudSettings: CloudSettings = {
   'core': {
@@ -39,7 +39,9 @@ const cloudSettings: CloudSettings = {
     FactorPainIntensityComponent,
     AddSymptomPage,
     LoginPage,
-    RegisterPage
+    RegisterPage,
+    CustomHeaderComponent
+
   ],
   imports: [
     IonicModule.forRoot(HAppiApp),
@@ -55,7 +57,8 @@ const cloudSettings: CloudSettings = {
     DetailedOccurrencePage,
     AddSymptomPage,
     LoginPage,
-    RegisterPage
+    RegisterPage,
+    CustomHeaderComponent
   ],
   providers: [{
     provide: ErrorHandler,

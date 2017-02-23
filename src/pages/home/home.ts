@@ -22,14 +22,13 @@ import {AddSymptomPage} from "../addsymptom/addsymptom";
 })
 export class HomePage {
 
-  page_name = "Home";
-
-
   symptom_storage: SymptomsStorage;
   occurrences_storage: OccurrenceStorage;
   private actionSheetCtrl: ActionSheetController;
   private platform: Platform;
   occurrence_rest_service: OccurrenceRestService;
+
+  header_data:any;
 
   constructor(public navCtrl: NavController, occurrence_storage: OccurrenceStorage, symptoms_storage: SymptomsStorage,
               actionSheetCtrl: ActionSheetController, platform: Platform, occurrence_rest_service: OccurrenceRestService, public translation: TranslationProvider, public modalCtrl: ModalController,
@@ -40,7 +39,8 @@ export class HomePage {
     this.platform = platform;
     this.occurrence_rest_service = occurrence_rest_service;
 
-     menu.enable(true);
+     //menu.enable(true);
+     this.header_data={title:"Home"};
   };
 
   addSymptom() {

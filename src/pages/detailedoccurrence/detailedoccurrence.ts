@@ -23,6 +23,7 @@ export class DetailedOccurrencePage {
   save_btn_id = "save-btn";
   loadingLocation: boolean;
   locationError: boolean;
+  header_data:any;
 
   constructor(public navCtrl: NavController, private navParams: NavParams, occurrence_storage: OccurrenceStorage, public translation: TranslationProvider,
               public occurrence_rest_service: OccurrenceRestService) {
@@ -31,6 +32,7 @@ export class DetailedOccurrencePage {
     this.occurrences_storage = occurrence_storage;
     this.retrieveCurrentLocation();
     this.addFactorsToOccurrence();
+    this.header_data={title:"Detailed Occurrence"};
   }
 
 
