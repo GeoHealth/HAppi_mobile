@@ -11,12 +11,10 @@ import {SymptomRestService} from '../../app/services/symptom_rest_service';
 export class AddSymptomPage {
 
   items: SymptomWithFactor[];
-  header_data:any;
 
 
   constructor(public viewCtrl: ViewController, public translation: TranslationProvider,
               public symptom_rest_service: SymptomRestService) {
-                this.header_data={title:"Add Symptom"};
   }
 
 

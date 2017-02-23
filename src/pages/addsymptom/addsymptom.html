@@ -1,5 +1,8 @@
-<ion-header><custom-header [header]="header_data"></custom-header></ion-header>
-
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{translation.gettext("Add Symptom")}}</ion-title>
+  </ion-navbar>
+</ion-header>
 
 <ion-content padding>
   <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
