@@ -114,17 +114,8 @@ export class AuthService {
     });
   }
 
-
-
   public getUserInfo(): User {
     return this.currentUser;
   }
 
-  public logout() {
-    return Observable.create((observer) => {
-      this.currentUser = null;
-      observer.next(true);
-      observer.complete();
-    });
-  }
 }
