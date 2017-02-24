@@ -1,0 +1,19 @@
+{
+	"unit": "day",
+	"symptoms": [
+		{
+			"id": 253,
+			"name": "Abominal pain",
+			"counts": [
+				{
+					"date": "2017-02-13 00:00:00",
+					"count": 1
+				},
+				{
+					"date": "2017-02-14 00:00:00",
+					"count": 0
+				}
+			]
+		}
+	]
+}

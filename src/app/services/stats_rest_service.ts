@@ -11,7 +11,7 @@ export class StatsRestService extends RestService {
   }
 
   getAverage() {
-    return this.http.get('assets/data/average.json').map(res => res.json());
+    return this.http.get('assets/data/stat.json').map(res => res.json());
 
   }
 
