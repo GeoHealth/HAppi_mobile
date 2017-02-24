@@ -3,6 +3,7 @@ import {Chart} from 'chart.js';
 import {TranslationProvider} from '../../app/provider/translation_provider';
 import {StatsRestService} from '../../app/services/stats_rest_service';
 import {AveragePerPeriod} from '../../models/average_per_period';
+import {GlobalVars} from '../../app/provider/global_vars';
 
 @Component({
   selector: 'page-statistic',
@@ -20,8 +21,8 @@ export class StatisticPage {
   private average_per_period: AveragePerPeriod
 
 
-  constructor(public translation: TranslationProvider, private stats_rest_service: StatsRestService) {
-
+  constructor(public translation: TranslationProvider, private stats_rest_service: StatsRestService, public vars: GlobalVars) {
+    this.vars.setTitle("Statistics");
   }
 
   ionViewDidLoad() {
