@@ -14,6 +14,7 @@ import {OccurrenceRestService} from "../../app/services/occurrence_rest_service"
 import {SymptomWithFactor} from "../../models/symptom_with_factors";
 import {TranslationProvider} from "../../app/provider/translation_provider";
 import {AddSymptomPage} from "../addsymptom/addsymptom";
+import {GlobalVars} from '../../app/provider/global_vars';
 
 
 @Component({
@@ -21,9 +22,6 @@ import {AddSymptomPage} from "../addsymptom/addsymptom";
   templateUrl: 'home.html'
 })
 export class HomePage {
-
-  page_name = "Home";
-
 
   symptom_storage: SymptomsStorage;
   occurrences_storage: OccurrenceStorage;
@@ -33,13 +31,13 @@ export class HomePage {
 
   constructor(public navCtrl: NavController, occurrence_storage: OccurrenceStorage, symptoms_storage: SymptomsStorage,
               actionSheetCtrl: ActionSheetController, platform: Platform, occurrence_rest_service: OccurrenceRestService, public translation: TranslationProvider, public modalCtrl: ModalController,
-            private menu: MenuController) {
+            private menu: MenuController, public vars: GlobalVars) {
     this.symptom_storage = symptoms_storage;
     this.occurrences_storage = occurrence_storage;
     this.actionSheetCtrl = actionSheetCtrl;
     this.platform = platform;
     this.occurrence_rest_service = occurrence_rest_service;
-
+    this.vars.setTitle("Home");
      menu.enable(true);
   };
 

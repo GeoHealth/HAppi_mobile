@@ -10,7 +10,7 @@ import {LoginPage} from '../login/login';
 import {AuthService} from '../../app/provider/auth_service';
 
 import {TranslationProvider} from "../../app/provider/translation_provider";
-
+import {GlobalVars} from '../../app/provider/global_vars';
 @Component({
   templateUrl: 'tabs.html'
 })
@@ -24,7 +24,7 @@ export class TabsPage {
   page_name = "HAppi";
 
   constructor(public translation: TranslationProvider, private nav: NavController,
-          private auth_service: AuthService) {
+          private auth_service: AuthService, public vars: GlobalVars) {
   }
 
   log_out() {

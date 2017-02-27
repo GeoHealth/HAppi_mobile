@@ -1,10 +1,17 @@
 <ion-content>
   <ion-card>
-    <ion-card-header>
-      Chart
+    <ion-card-header class="stat-title">
+      <button (click)="drawPrevious()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+      {{translation.gettext("Statistics")}} : {{getStartDate()}} - {{getEndDate()}}
+      <button (click)="drawNext()">
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
     </ion-card-header>
     <ion-card-content>
-      <canvas #dailyCanvas></canvas>
+      <canvas #dailyCanvas height="400" width="400"></canvas>
+
     </ion-card-content>
   </ion-card>
 </ion-content>

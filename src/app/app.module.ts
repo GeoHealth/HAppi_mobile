@@ -20,7 +20,7 @@ import { RegisterPage } from '../pages/register/register';
 import {AuthRestService} from './services/auth_rest_service';
 import {AuthStorage} from './provider/auth_storage';
 import {StatsRestService} from './services/stats_rest_service';
-
+import {GlobalVars} from './provider/global_vars';
 
 const cloudSettings: CloudSettings = {
   'core': {
@@ -60,7 +60,7 @@ const cloudSettings: CloudSettings = {
   providers: [{
     provide: ErrorHandler,
     useClass: IonicErrorHandler
-  }, OccurrenceStorage, SymptomsStorage, OccurrenceRestService, SymptomRestService, TranslationProvider,
+  }, OccurrenceStorage, SymptomsStorage, OccurrenceRestService, SymptomRestService, TranslationProvider, GlobalVars,
   AuthRestService, AuthService, AuthStorage, StatsRestService]
 
 })
