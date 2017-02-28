@@ -13,6 +13,9 @@ export class OccurrencePage {
 
   constructor(occurrence_storage: OccurrenceStorage, public translation: TranslationProvider,public vars: GlobalVars) {
     this.occurrences_storage = occurrence_storage;
+  }
+
+  ionViewDidEnter() {
     this.vars.setTitle("Occurence");
   }
 

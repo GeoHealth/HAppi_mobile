@@ -24,18 +24,18 @@ export class StatisticPage {
   private end_date;
 
   constructor(public translation: TranslationProvider, private stats_rest_service: StatsRestService, public vars: GlobalVars) {
-    this.vars.setTitle("Statistics");
   }
 
   ionViewDidEnter() {
     this.end_date = moment(new Date(moment().get('year'), moment().get('month'), moment().get('date'), 23, 59, 59));
     this.start_date = moment(this.end_date).subtract(7, 'days');
     this.draw("days");
-
+    this.vars.setTitle("Statistics");
   }
 
   onPageWillEnter() {
     this.draw("days");
+
   }
 
   draw(unit: string) {

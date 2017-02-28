@@ -37,9 +37,12 @@ export class HomePage {
     this.actionSheetCtrl = actionSheetCtrl;
     this.platform = platform;
     this.occurrence_rest_service = occurrence_rest_service;
-    this.vars.setTitle("Home");
      menu.enable(true);
-  };
+  }
+
+  ionViewDidEnter() {
+    this.vars.setTitle("Home");
+  }
 
   addSymptom() {
     let modal = this.modalCtrl.create(AddSymptomPage);
