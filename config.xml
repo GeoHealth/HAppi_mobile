@@ -86,7 +86,7 @@
   <icon src="resources/android/icon/drawable-xhdpi-icon.png"/>
   <icon src="resources\android\icon\drawable-xhdpi-icon.png"/>
   <plugin name="cordova-fabric-plugin" spec="~1.1.7">
-    <variable name="FABRIC_API_KEY" value="092039f8e187f97e66226a12525dbcdbdc22b138" />
-    <variable name="FABRIC_API_SECRET" value="b94de067265e29c03bb6dd304aa2b854c233bcc2fef4db8e2b419880ef4363e8" />
+    <variable name="FABRIC_API_KEY" value="092039f8e187f97e66226a12525dbcdbdc22b138"/>
+    <variable name="FABRIC_API_SECRET" value="b94de067265e29c03bb6dd304aa2b854c233bcc2fef4db8e2b419880ef4363e8"/>
   </plugin>
 </widget>

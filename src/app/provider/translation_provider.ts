@@ -64,7 +64,7 @@ export class TranslationProvider {
     return Globalization.getPreferredLanguage().then((locale) => {
       this.current_locale = locale.value;
     }).catch((err) => {
-      console.error(err);
+      (<any>window).fabric.Crashlytics.sendNonFatalCrash(err);
       this.current_locale = null;
     });
   }

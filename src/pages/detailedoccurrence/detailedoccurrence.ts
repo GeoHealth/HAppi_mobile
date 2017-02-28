@@ -42,6 +42,7 @@ export class DetailedOccurrencePage {
         this.navCtrl.pop();
       },
       (err) => {
+        (<any>window).fabric.Crashlytics.sendNonFatalCrash(err);
         element.disabled = false;
       }
     );
@@ -62,7 +63,8 @@ export class DetailedOccurrencePage {
     Geolocation.getCurrentPosition().then((gps_location) => {
       this.occurrence.gps_coordinate = new GPSCoordinates(gps_location.coords);
       this.loadingLocation = false;
-    }).catch((error) => {
+    }).catch((err) => {
+      (<any>window).fabric.Crashlytics.sendNonFatalCrash(err);
       this.occurrence.gps_coordinate = null;
       this.loadingLocation = false;
       this.locationError = true;

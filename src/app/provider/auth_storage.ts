@@ -41,7 +41,7 @@ export class AuthStorage {
             self.headers = self.inMemoryDB.getCollection('headers');
             resolve(self.headers);
           }).catch((err) => {
-            console.log('error importing database: ' + err);
+            (<any>window).fabric.Crashlytics.sendNonFatalCrash('error importing database: ' + err);
           });
         });
     }
@@ -53,7 +53,7 @@ export class AuthStorage {
             this.store.setItem('headers', JSON.stringify(this.inMemoryDB)).then((value) => {
 
             }).catch((err) => {
-
+              (<any>window).fabric.Crashlytics.sendNonFatalCrash(err);
             });
         } else {
             throw new TypeError("Wrong type adding to header storage");

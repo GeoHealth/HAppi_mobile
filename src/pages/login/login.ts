@@ -51,8 +51,9 @@ export class LoginPage {
             } else {
                 this.showError("Invalid login credentials. Please try again.");
             }
-        }, (error) => {
-            this.showError(error);
+        }, (err) => {
+            (<any>window).fabric.Crashlytics.sendNonFatalCrash(err);
+            this.showError(err);
         });
     }
 

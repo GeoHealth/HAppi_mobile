@@ -35,21 +35,19 @@ export class OccurrenceStorage {
   private importAll() {
     let self = this;
     this.store.getItem('occurrences').then((value) => {
-      console.info('the full occurrences database has been retrieved');
       self.inMemoryDB.loadJSON(value);
       self.occurrences = self.inMemoryDB.getCollection('occurrences');        // slight hack! we're manually reconnecting the collection variable :-)
       this.cache_occurrences.invalidateCache();
     }).catch((err) => {
-      console.error('error importing database: ' + err);
+      (<any>window).fabric.Crashlytics.sendNonFatalCrash('error importing database: ' + err);
     });
   };
 
   private saveAll() {
     this.store.setItem('occurrences', JSON.stringify(this.inMemoryDB)).then((value) => {
-      console.info('database occurrences successfully saved');
       this.cache_occurrences.invalidateCache();
     }).catch((err) => {
-      console.error('error while saving: ' + err);
+      (<any>window).fabric.Crashlytics.sendNonFatalCrash('error saving database: ' + err);
     });
   };
 

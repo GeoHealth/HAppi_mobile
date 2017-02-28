@@ -114,6 +114,8 @@ export class StatisticPage {
             }
           }
         });
+      } else {
+        (<any>window).fabric.Crashlytics.sendNonFatalCrash(success);
       }
     });
   }

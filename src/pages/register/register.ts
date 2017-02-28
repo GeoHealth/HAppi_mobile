@@ -22,8 +22,9 @@ export class RegisterPage {
       } else {
         this.showPopup("Error", "Problem creating account.");
       }
-    }, (error) => {
-      this.showPopup("Error", error);
+    }, (err) => {
+      (<any>window).fabric.Crashlytics.sendNonFatalCrash(err);
+      this.showPopup("Error", err);
     });
   }
 

@@ -6,9 +6,9 @@ import {isNullOrUndefined} from "util";
 @Injectable()
 export class RestService {
   http: Http;
-  protocol = 'http://';
-  apiDomainName = 'localhost';
-  apiPort = '3000';
+  protocol = 'https://';
+  apiDomainName = 'geohealth-happibackend-test.yxvj.flynnhub.com';
+  apiPort = '443';
   static headers: Headers;
 
   constructor(http: Http) {
@@ -71,6 +71,7 @@ export class RestService {
     } else {
       errMsg = error.message ? error.message : error.toString();
     }
+    (<any>window).fabric.Crashlytics.sendNonFatalCrash(errMsg);
     return Observable.throw(errMsg);
   }
 

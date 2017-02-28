@@ -58,6 +58,7 @@ export class HomePage {
       element.disabled = false;
     };
     let callback_error = (err) => {
+      (<any>window).fabric.Crashlytics.sendNonFatalCrash(err);
       element.disabled = false;
     };
     let callback_after_location = (gpsCoordinates) => {
@@ -77,6 +78,7 @@ export class HomePage {
       let gpsCoordinates = new GPSCoordinates(gps_location.coords);
       callback_after_location.call(this, gpsCoordinates);
     }).catch((err) => {
+      (<any>window).fabric.Crashlytics.sendNonFatalCrash(err);
       callback_after_location.call(this, null);
     });
   };

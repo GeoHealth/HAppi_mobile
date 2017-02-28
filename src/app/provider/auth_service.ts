@@ -49,6 +49,7 @@ export class AuthService {
             observer.complete();
           },
           (err) => {
+            (<any>window).fabric.Crashlytics.sendNonFatalCrash(err);
             observer.next(false);
             observer.complete();
           }
@@ -70,6 +71,7 @@ export class AuthService {
             observer.complete();
           },
           (err) => {
+            (<any>window).fabric.Crashlytics.sendNonFatalCrash(err);
             observer.next(false);
             observer.complete();
           }
@@ -91,11 +93,12 @@ export class AuthService {
         },
 
         (err) => {
+          (<any>window).fabric.Crashlytics.sendNonFatalCrash(err);
           resolve(false);
         }
       );
     }).catch((err) => {
-
+      (<any>window).fabric.Crashlytics.sendNonFatalCrash(err);
     });
 
   }
@@ -104,11 +107,12 @@ export class AuthService {
     return new Promise((resolve, reject) => {
       this.auth_rest_service.disconnection().subscribe(
         (res) => {
+          (<any>window).fabric.Crashlytics.sendNonFatalCrash(err);
           this.auth_storage.delete();
           resolve();
         },
         (err) => {
-
+          (<any>window).fabric.Crashlytics.sendNonFatalCrash(err);
         }
       )
     });

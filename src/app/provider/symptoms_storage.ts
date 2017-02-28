@@ -36,21 +36,19 @@ export class SymptomsStorage {
   private importAll() {
     let self = this;
     this.store.getItem('storeKey').then((value) => {
-      console.log('the full database has been retrieved');
       self.inMemoryDB.loadJSON(value);
       self.symptoms = self.inMemoryDB.getCollection('symptoms');        // slight hack! we're manually reconnecting the collection variable :-)
       this.cache_symptoms.invalidateCache();
     }).catch((err) => {
-      console.log('error importing database: ' + err);
+      (<any>window).fabric.Crashlytics.sendNonFatalCrash('error importing database: ' + err);
     });
   }
 
   private saveAll() {
     this.store.setItem('storeKey', JSON.stringify(this.inMemoryDB)).then((value) => {
-      console.log('database successfully saved');
       this.cache_symptoms.invalidateCache();
     }).catch((err) => {
-      console.log('error while saving: ' + err);
+      (<any>window).fabric.Crashlytics.sendNonFatalCrash('error while saving: ' + err);
     });
   }
 
