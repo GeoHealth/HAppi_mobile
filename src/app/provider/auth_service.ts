@@ -66,11 +66,11 @@ export class AuthService {
         this.auth_rest_service.create(credentials.email, credentials.password, credentials.password_confirmation).subscribe(
           (res) => {
             this.extractAndSaveHeaders(res);
-            observer.next(true);
+            observer.next({success: true});
             observer.complete();
           },
           (err) => {
-            observer.next(false);
+            observer.next({success:false, msg: JSON.parse(err._body).errors.full_messages[0]});
             observer.complete();
           }
         );

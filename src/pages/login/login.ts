@@ -27,8 +27,6 @@ export class LoginPage {
                   }
                 }
               )
-
-
               }
         });
         setTimeout(() => {

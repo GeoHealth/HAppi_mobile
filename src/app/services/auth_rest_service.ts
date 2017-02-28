@@ -34,7 +34,7 @@ export class AuthRestService extends RestService {
       this.generateJSONHeadersOptions()
     )
       .map(RestService.handlePostResponse)
-      .catch(RestService.handleError);
+      .catch(RestService.handleErrorWithoutParsing);
   }
 
   validate(headers: Headers) {
