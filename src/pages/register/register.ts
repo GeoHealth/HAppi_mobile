@@ -1,7 +1,7 @@
-import {Component} from '@angular/core';
-import {NavController, AlertController} from 'ionic-angular';
-import {AuthService} from '../../app/provider/auth_service';
-import {TabsPage} from '../tabs/tabs';
+import {Component} from "@angular/core";
+import {NavController, AlertController} from "ionic-angular";
+import {AuthService} from "../../app/provider/auth_service";
+import {TabsPage} from "../tabs/tabs";
 import {Crashlytics} from "../../app/services/crashlytics";
 
 @Component({

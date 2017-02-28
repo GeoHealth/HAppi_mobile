@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {Occurrence} from '../../models/occurrence';
+import {Injectable} from "@angular/core";
+import {Occurrence} from "../../models/occurrence";
 import {CachedArray} from "./cached_array";
 import {Crashlytics} from "../services/crashlytics";
 

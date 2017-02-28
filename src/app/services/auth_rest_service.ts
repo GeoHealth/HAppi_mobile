@@ -16,7 +16,7 @@ export class AuthRestService extends RestService {
   }
 
   auth(email: String, password: String): Observable<{}> {
-    let data = {'email' : email, 'password': password};
+    let data = {'email': email, 'password': password};
     return this.http.post(
       this.getFullURL(this.loginPath, null),
       data,
@@ -51,8 +51,8 @@ export class AuthRestService extends RestService {
       this.getFullURL(this.disconnectionPath, null),
       this.generateJSONHeadersOptions()
     )
-    .map(RestService.handlePostResponse)
-    .catch(RestService.handleError);
+      .map(RestService.handlePostResponse)
+      .catch(RestService.handleError);
   }
 
 }

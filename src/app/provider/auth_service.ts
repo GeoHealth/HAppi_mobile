@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import {AuthRestService} from '../services/auth_rest_service';
-import {RestService} from '../services/rest_service';
+import {Injectable} from "@angular/core";
+import {Observable} from "rxjs/Observable";
+import "rxjs/add/operator/map";
+import {AuthRestService} from "../services/auth_rest_service";
+import {RestService} from "../services/rest_service";
 import {Headers, Response} from "@angular/http";
-import {AuthStorage} from './auth_storage';
+import {AuthStorage} from "./auth_storage";
 import {Crashlytics} from "../services/crashlytics";
 
 export class User {
@@ -73,7 +73,7 @@ export class AuthService {
           },
           (err) => {
             this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
-            observer.next({success:false, msg: JSON.parse(err._body).errors.full_messages[0]});
+            observer.next({success: false, msg: JSON.parse(err._body).errors.full_messages[0]});
             observer.complete();
           }
         );

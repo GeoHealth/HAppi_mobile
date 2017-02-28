@@ -1,8 +1,8 @@
-import {Component} from '@angular/core';
+import {Component} from "@angular/core";
 import {TranslationProvider} from "../../app/provider/translation_provider";
-import {ViewController} from 'ionic-angular';
-import {SymptomWithFactor} from '../../models/symptom_with_factors';
-import {SymptomRestService} from '../../app/services/symptom_rest_service';
+import {ViewController} from "ionic-angular";
+import {SymptomWithFactor} from "../../models/symptom_with_factors";
+import {SymptomRestService} from "../../app/services/symptom_rest_service";
 
 @Component({
   selector: 'page-addsymptom',

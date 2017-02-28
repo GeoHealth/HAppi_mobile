@@ -1,6 +1,6 @@
 import {Platform} from "ionic-angular";
 import {Injectable} from "@angular/core";
-import * as stacktrace from 'stacktrace-js';
+import * as stacktrace from "stacktrace-js";
 
 @Injectable()
 export class Crashlytics {

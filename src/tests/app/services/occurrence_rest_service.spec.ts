@@ -1,5 +1,5 @@
-import {} from 'jasmine';
-import {OccurrenceRestService} from '../../../app/services/occurrence_rest_service';
+import {} from "jasmine";
+import {OccurrenceRestService} from "../../../app/services/occurrence_rest_service";
 import {Http} from "@angular/http";
 import {Occurrence} from "../../../models/occurrence";
 import {HttpMock} from "../../mocks";

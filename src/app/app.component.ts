@@ -1,11 +1,8 @@
-import {Component} from '@angular/core';
-import {Platform} from 'ionic-angular';
-import {StatusBar, Splashscreen} from 'ionic-native';
-
-import {LoginPage} from '../pages/login/login';
-
-// Add the RxJS Observable operators.
-import './rxjs-operators';
+import {Component} from "@angular/core";
+import {Platform} from "ionic-angular";
+import {StatusBar, Splashscreen} from "ionic-native";
+import {LoginPage} from "../pages/login/login";
+import "./rxjs-operators";
 
 @Component({
   template: `<ion-nav [root]="rootPage"></ion-nav>`

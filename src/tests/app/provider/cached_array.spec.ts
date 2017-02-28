@@ -1,4 +1,5 @@
 import {CachedArray} from "../../../app/provider/cached_array";
+
 describe('CachedArray', () => {
   beforeEach(() => {
     this.cached_array = new CachedArray<string>();

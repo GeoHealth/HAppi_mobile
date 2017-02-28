@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {isNullOrUndefined} from "util";
-import {Globalization} from 'ionic-native';
+import {Globalization} from "ionic-native";
 import {Platform} from "ionic-angular";
 import {Crashlytics} from "../services/crashlytics";
 

@@ -1,11 +1,10 @@
-import {Component} from '@angular/core';
-import {ActionSheetController, Platform, ModalController, MenuController} from 'ionic-angular';
-import {SymptomsStorage} from '../../app/provider/symptoms_storage';
-import {OccurrenceStorage} from '../../app/provider/occurrence_storage';
-import {Symptom} from '../../models/symptom';
-import {NavController} from 'ionic-angular';
-import {Occurrence} from '../../models/occurrence';
-import {Geolocation} from 'ionic-native';
+import {Component} from "@angular/core";
+import {ActionSheetController, Platform, ModalController, MenuController, NavController} from "ionic-angular";
+import {SymptomsStorage} from "../../app/provider/symptoms_storage";
+import {OccurrenceStorage} from "../../app/provider/occurrence_storage";
+import {Symptom} from "../../models/symptom";
+import {Occurrence} from "../../models/occurrence";
+import {Geolocation} from "ionic-native";
 import {GPSCoordinates} from "../../models/coordinate";
 import {DetailedOccurrencePage} from "../detailedoccurrence/detailedoccurrence";
 import {DateProvider} from "../../app/provider/date_provider";
@@ -14,7 +13,7 @@ import {OccurrenceRestService} from "../../app/services/occurrence_rest_service"
 import {SymptomWithFactor} from "../../models/symptom_with_factors";
 import {TranslationProvider} from "../../app/provider/translation_provider";
 import {AddSymptomPage} from "../addsymptom/addsymptom";
-import {GlobalVars} from '../../app/provider/global_vars';
+import {GlobalVars} from "../../app/provider/global_vars";
 import {Crashlytics} from "../../app/services/crashlytics";
 
 
@@ -32,13 +31,13 @@ export class HomePage {
 
   constructor(public navCtrl: NavController, occurrence_storage: OccurrenceStorage, symptoms_storage: SymptomsStorage,
               actionSheetCtrl: ActionSheetController, platform: Platform, occurrence_rest_service: OccurrenceRestService, public translation: TranslationProvider, public modalCtrl: ModalController,
-            private menu: MenuController, public vars: GlobalVars, private crashlytics: Crashlytics) {
+              private menu: MenuController, public vars: GlobalVars, private crashlytics: Crashlytics) {
     this.symptom_storage = symptoms_storage;
     this.occurrences_storage = occurrence_storage;
     this.actionSheetCtrl = actionSheetCtrl;
     this.platform = platform;
     this.occurrence_rest_service = occurrence_rest_service;
-     menu.enable(true);
+    menu.enable(true);
   };
 
   ionViewDidEnter() {

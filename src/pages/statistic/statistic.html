@@ -5,7 +5,7 @@
         <ion-icon name="arrow-back"></ion-icon>
       </button>
       {{translation.gettext("Statistics")}} : {{getStartDate()}} - {{getEndDate()}}
-      <button (click)="drawNext()"  [attr.disabled]="disable() ? '' : null">
+      <button (click)="drawNext()" [attr.disabled]="disable() ? '' : null">
         <ion-icon name="arrow-forward"></ion-icon>
       </button>
     </ion-card-header>

@@ -1,6 +1,6 @@
 import {RestService} from "./rest_service";
 import {Injectable} from "@angular/core";
-import {Http, Headers, RequestOptions} from "@angular/http";
+import {Http} from "@angular/http";
 
 @Injectable()
 export class StatsRestService extends RestService {
@@ -11,7 +11,7 @@ export class StatsRestService extends RestService {
     super(http);
   }
 
-  getCount (start_date: any, end_date: any, unit: any) {
+  getCount(start_date: any, end_date: any, unit: any) {
     let data = new Map();
     data.set("start", start_date);
     data.set("end", end_date);
@@ -20,8 +20,8 @@ export class StatsRestService extends RestService {
       this.getFullURL(this.countPath, data),
       this.getHeaders()
     )
-    .map(RestService.extractData)
-    .catch(RestService.handleError);
+      .map(RestService.extractData)
+      .catch(RestService.handleError);
   }
 
 

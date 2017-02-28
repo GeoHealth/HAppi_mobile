@@ -1,4 +1,4 @@
-import {SymptomsStorage}          from '../../../app/provider/symptoms_storage';
+import {SymptomsStorage} from "../../../app/provider/symptoms_storage";
 import {SymptomWithFactor} from "../../../models/symptom_with_factors";
 import {CrashlyticsMock} from "../../mocks";
 

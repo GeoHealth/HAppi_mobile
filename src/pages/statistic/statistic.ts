@@ -1,11 +1,11 @@
-import {Component, ViewChild} from '@angular/core';
-import {Chart} from 'chart.js';
-import {TranslationProvider} from '../../app/provider/translation_provider';
-import {StatsRestService} from '../../app/services/stats_rest_service';
-import {SymptomsCounts} from '../../models/symptoms_counts';
-import {GlobalVars} from '../../app/provider/global_vars';
+import {Component, ViewChild} from "@angular/core";
+import {Chart} from "chart.js";
+import {TranslationProvider} from "../../app/provider/translation_provider";
+import {StatsRestService} from "../../app/services/stats_rest_service";
+import {SymptomsCounts} from "../../models/symptoms_counts";
+import {GlobalVars} from "../../app/provider/global_vars";
 import {isNullOrUndefined} from "util";
-import * as moment from 'moment';
+import * as moment from "moment";
 import {Crashlytics} from "../../app/services/crashlytics";
 
 @Component({
@@ -49,18 +49,17 @@ export class StatisticPage {
         if (this.symptoms_counts.symptoms.length > 0) {
           let symptom = this.symptoms_counts.symptoms[0];
 
-          for(let x = 0; x < symptom.counts.length; x++) {
+          for (let x = 0; x < symptom.counts.length; x++) {
             labels.push(moment(symptom.counts[x].date).format('MM-DD-YYYY'));
           }
 
 
-
-          for(let line = 0; line < this.symptoms_counts.symptoms.length; line++) {
+          for (let line = 0; line < this.symptoms_counts.symptoms.length; line++) {
             let y = [];
             let symptom = this.symptoms_counts.symptoms[line];
             let data = [];
 
-            for(let x = 0; x < symptom.counts.length; x++) {
+            for (let x = 0; x < symptom.counts.length; x++) {
               data.push(symptom.counts[x].count)
             }
 
@@ -105,14 +104,14 @@ export class StatisticPage {
               },
               legend: {
                 position: 'bottom',
-                labels : {
+                labels: {
                   usePointStyle: true
                 }
               }
             }
           });
         } else {
-          if (!isNullOrUndefined(this.dailyChart)) {
+          if (!isNullOrUndefined(this.dailyChart)) {
             this.dailyChart.destroy();
           }
           this.symptoms_counts = undefined;
@@ -146,7 +145,7 @@ export class StatisticPage {
   getRandomColor() {
     let letters = '0123456789ABCDEF'.split('');
     let color = '#';
-    for (var i = 0; i < 6; i++ ) {
+    for (var i = 0; i < 6; i++) {
       color += letters[Math.round(Math.random() * 15)];
     }
     return color;

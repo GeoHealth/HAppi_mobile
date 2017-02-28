@@ -1,4 +1,4 @@
-import {CountPerDate} from './count_per_date';
+import {CountPerDate} from "./count_per_date";
 
 export class SymptomCount {
 

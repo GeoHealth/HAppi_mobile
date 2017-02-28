@@ -12,7 +12,8 @@
     </ion-item>
     <ion-item id="comment">
       <ion-label>{{translation.gettext("Comment")}}</ion-label>
-      <ion-textarea [(ngModel)]="comment" rows="6" placeholder="{{translation.gettext('Describe the context of your symptom...')}}"></ion-textarea>
+      <ion-textarea [(ngModel)]="comment" rows="6"
+                    placeholder="{{translation.gettext('Describe the context of your symptom...')}}"></ion-textarea>
     </ion-item>
     <ion-item>
       Location:
@@ -22,7 +23,8 @@
     </ion-item>
     <span *ngFor="let factor_instance of occurrence?.factors">
       <span [ngSwitch]="factor_instance.factor.type">
-        <factor-pain-intensity *ngSwitchCase="'pain_intensity'"  [(ngModel)]="factor_instance.value" ngDefaultControl></factor-pain-intensity>
+        <factor-pain-intensity *ngSwitchCase="'pain_intensity'" [(ngModel)]="factor_instance.value"
+                               ngDefaultControl></factor-pain-intensity>
       </span>
 
     </span>

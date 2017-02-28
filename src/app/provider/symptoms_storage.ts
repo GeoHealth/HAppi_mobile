@@ -1,5 +1,5 @@
-import {Symptom} from '../../models/symptom';
-import {Injectable} from '@angular/core';
+import {Symptom} from "../../models/symptom";
+import {Injectable} from "@angular/core";
 import {SymptomWithFactor} from "../../models/symptom_with_factors";
 import {CachedArray} from "./cached_array";
 import {Crashlytics} from "../services/crashlytics";

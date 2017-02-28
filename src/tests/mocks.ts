@@ -1,5 +1,4 @@
 // IONIC:
-
 import {SymptomWithFactor} from "../models/symptom_with_factors";
 import {Http} from "@angular/http";
 import {Crashlytics} from "../app/services/crashlytics";
@@ -110,7 +109,7 @@ export class HttpMock extends Http {
 }
 
 export class CrashlyticsMock extends Crashlytics {
-  constructor(){
+  constructor() {
     super(new PlatformMock() as any)
   }
 

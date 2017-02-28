@@ -1,16 +1,12 @@
-import {Component} from '@angular/core';
-
-import {NavController} from 'ionic-angular';
-
-import {HomePage} from '../home/home';
-import {StatisticPage} from '../statistic/statistic';
-import {OccurrencePage} from '../occurrence/occurrence';
-import {LoginPage} from '../login/login';
-
-import {AuthService} from '../../app/provider/auth_service';
-
+import {Component} from "@angular/core";
+import {NavController} from "ionic-angular";
+import {HomePage} from "../home/home";
+import {StatisticPage} from "../statistic/statistic";
+import {OccurrencePage} from "../occurrence/occurrence";
+import {LoginPage} from "../login/login";
+import {AuthService} from "../../app/provider/auth_service";
 import {TranslationProvider} from "../../app/provider/translation_provider";
-import {GlobalVars} from '../../app/provider/global_vars';
+import {GlobalVars} from "../../app/provider/global_vars";
 @Component({
   templateUrl: 'tabs.html'
 })
@@ -24,7 +20,7 @@ export class TabsPage {
   page_name = "HAppi";
 
   constructor(public translation: TranslationProvider, private nav: NavController,
-          private auth_service: AuthService, public vars: GlobalVars) {
+              private auth_service: AuthService, public vars: GlobalVars) {
   }
 
   log_out() {

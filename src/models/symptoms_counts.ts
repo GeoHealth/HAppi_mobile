@@ -1,4 +1,4 @@
-import {SymptomCount} from './symptom_count'
+import {SymptomCount} from "./symptom_count";
 
 export class SymptomsCounts {
 
