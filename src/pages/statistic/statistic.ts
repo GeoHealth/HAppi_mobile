@@ -4,7 +4,7 @@ import {TranslationProvider} from '../../app/provider/translation_provider';
 import {StatsRestService} from '../../app/services/stats_rest_service';
 import {SymptomsCounts} from '../../models/symptoms_counts';
 import {GlobalVars} from '../../app/provider/global_vars';
-
+import {isNullOrUndefined} from "util";
 import * as moment from 'moment';
 import {Crashlytics} from "../../app/services/crashlytics";
 
@@ -18,23 +18,19 @@ export class StatisticPage {
 
   dailyChart: any;
 
-  //private colors: string[] = ["rgba(255,0,0,1)", "rgba(0,0,255,1)"]
-
-
   private symptoms_counts: SymptomsCounts;
 
   private start_date;
   private end_date;
 
   constructor(public translation: TranslationProvider, private stats_rest_service: StatsRestService, public vars: GlobalVars, private crashlytics: Crashlytics) {
-    this.vars.setTitle("Statistics");
   }
 
   ionViewDidEnter() {
     this.end_date = moment(new Date(moment().get('year'), moment().get('month'), moment().get('date'), 23, 59, 59));
     this.start_date = moment(this.end_date).subtract(7, 'days');
     this.draw("days");
-
+    this.vars.setTitle("Statistics");
   }
 
   onPageWillEnter() {
@@ -57,66 +53,70 @@ export class StatisticPage {
             labels.push(moment(symptom.counts[x].date).format('MM-DD-YYYY'));
           }
 
-        }
 
-        for(let line = 0; line < this.symptoms_counts.symptoms.length; line++) {
-          let y = [];
-          let symptom = this.symptoms_counts.symptoms[line];
-          let data = [];
 
-          for(let x = 0; x < symptom.counts.length; x++) {
-            data.push(symptom.counts[x].count)
+          for(let line = 0; line < this.symptoms_counts.symptoms.length; line++) {
+            let y = [];
+            let symptom = this.symptoms_counts.symptoms[line];
+            let data = [];
+
+            for(let x = 0; x < symptom.counts.length; x++) {
+              data.push(symptom.counts[x].count)
+            }
+
+            let color = this.getRandomColor()
+
+            let dataset = {
+              label: symptom.name,
+              fill: false,
+              lineTension: 0.1,
+              borderCapStyle: 'butt',
+              borderColor: color,
+              borderDash: [],
+              borderDashOffset: 0.0,
+              borderJoinStyle: 'miter',
+              pointBorderWidth: 1,
+              pointHoverRadius: 5,
+              pointHoverBorderWidth: 2,
+              pointRadius: 1,
+              pointHitRadius: 10,
+              data: data,
+              spanGaps: false,
+            };
+            datasets.push(dataset);
           }
 
-          let color = this.getRandomColor()
-
-          let dataset = {
-            label: symptom.name,
-            fill: false,
-            lineTension: 0.1,
-            borderCapStyle: 'butt',
-            borderColor: color,
-            borderDash: [],
-            borderDashOffset: 0.0,
-            borderJoinStyle: 'miter',
-            pointBorderWidth: 1,
-            pointHoverRadius: 5,
-            pointHoverBorderWidth: 2,
-            pointRadius: 1,
-            pointHitRadius: 10,
-            data: data,
-            spanGaps: false,
-          };
-          datasets.push(dataset);
-        }
-
-        this.dailyChart = new Chart(this.dailyCanvas.nativeElement, {
-          type: 'line',
-          data: {
-            labels: labels,
-            datasets: datasets
-          },
-          options: {
-            responsive: true,
-            scales: {
-              yAxes: [{
-                ticks: {
-                  suggestedMax: 10,
-                  min: 0,
-                  stepSize: 1
-                }
-              }]
+          this.dailyChart = new Chart(this.dailyCanvas.nativeElement, {
+            type: 'line',
+            data: {
+              labels: labels,
+              datasets: datasets
             },
-            legend: {
-              position: 'bottom',
-              labels : {
-                usePointStyle: true
+            options: {
+              responsive: true,
+              scales: {
+                yAxes: [{
+                  ticks: {
+                    suggestedMax: 10,
+                    min: 0,
+                    stepSize: 1
+                  }
+                }]
+              },
+              legend: {
+                position: 'bottom',
+                labels : {
+                  usePointStyle: true
+                }
               }
             }
+          });
+        } else {
+          if (!isNullOrUndefined(this.dailyChart)) {
+            this.dailyChart.destroy();
           }
-        });
-      } else {
-        this.crashlytics.sendNonFatalCrashWithStacktraceCreation(success);
+          this.symptoms_counts = undefined;
+        }
       }
     });
   }
@@ -150,5 +150,16 @@ export class StatisticPage {
       color += letters[Math.round(Math.random() * 15)];
     }
     return color;
+  }
+
+  showErrorMsg() {
+    return isNullOrUndefined(this.symptoms_counts);
+  }
+
+  disable() {
+    var now = moment(new Date(moment().get('year'), moment().get('month'), moment().get('date'), 23, 59, 59));
+    var duration = moment.duration(now.diff(this.end_date));
+    var days = duration.asDays();
+    return days == 0;
   }
 }

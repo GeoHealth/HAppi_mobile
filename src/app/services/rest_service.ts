@@ -75,5 +75,9 @@ export class RestService {
     return Observable.throw(errMsg);
   }
 
+  static handleErrorWithoutParsing(error: Response | any) {
+    return Observable.throw(error);
+  }
+
 
 }
