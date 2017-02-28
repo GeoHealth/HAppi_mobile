@@ -5,6 +5,7 @@ import {AuthRestService} from '../services/auth_rest_service';
 import {RestService} from '../services/rest_service';
 import {Headers, Response} from "@angular/http";
 import {AuthStorage} from './auth_storage';
+import {Crashlytics} from "../services/crashlytics";
 
 export class User {
   email: string;
@@ -21,7 +22,7 @@ export class AuthService {
   auth_rest_service: AuthRestService;
 
 
-  constructor(auth_rest_service: AuthRestService, private auth_storage: AuthStorage) {
+  constructor(auth_rest_service: AuthRestService, private auth_storage: AuthStorage, private crashlytics: Crashlytics) {
     this.auth_rest_service = auth_rest_service;
   }
 
@@ -49,7 +50,7 @@ export class AuthService {
             observer.complete();
           },
           (err) => {
-            (<any>window).fabric.Crashlytics.sendNonFatalCrash(err);
+            this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
             observer.next(false);
             observer.complete();
           }
@@ -71,7 +72,7 @@ export class AuthService {
             observer.complete();
           },
           (err) => {
-            (<any>window).fabric.Crashlytics.sendNonFatalCrash(err);
+            this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
             observer.next(false);
             observer.complete();
           }
@@ -93,12 +94,12 @@ export class AuthService {
         },
 
         (err) => {
-          (<any>window).fabric.Crashlytics.sendNonFatalCrash(err);
+          this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
           resolve(false);
         }
       );
     }).catch((err) => {
-      (<any>window).fabric.Crashlytics.sendNonFatalCrash(err);
+      this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
     });
 
   }
@@ -111,7 +112,7 @@ export class AuthService {
           resolve();
         },
         (err) => {
-          (<any>window).fabric.Crashlytics.sendNonFatalCrash(err);
+          this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
         }
       )
     });

@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Headers} from "@angular/http";
+import {Crashlytics} from "../services/crashlytics";
 
 declare let require: any;
 let loki = require('lokijs');
@@ -12,7 +13,7 @@ export class AuthStorage {
     store: any;
     private headers: any;
 
-    constructor() {
+    constructor(private crashlytics: Crashlytics) {
         this.initStore();
         this.initInMemoryDB();
     }
@@ -41,7 +42,7 @@ export class AuthStorage {
             self.headers = self.inMemoryDB.getCollection('headers');
             resolve(self.headers);
           }).catch((err) => {
-            (<any>window).fabric.Crashlytics.sendNonFatalCrash('error importing database: ' + err);
+            this.crashlytics.sendNonFatalCrashWithStacktraceCreation('error importing database: ' + err);
           });
         });
     }
@@ -53,7 +54,7 @@ export class AuthStorage {
             this.store.setItem('headers', JSON.stringify(this.inMemoryDB)).then((value) => {
 
             }).catch((err) => {
-              (<any>window).fabric.Crashlytics.sendNonFatalCrash(err);
+              this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
             });
         } else {
             throw new TypeError("Wrong type adding to header storage");

@@ -1,9 +1,10 @@
 import {SymptomsStorage}          from '../../../app/provider/symptoms_storage';
 import {SymptomWithFactor} from "../../../models/symptom_with_factors";
+import {CrashlyticsMock} from "../../mocks";
 
 describe('SymptomsStorage', () => {
   beforeEach(() => {
-    this.symptomsStorage = new SymptomsStorage();
+    this.symptomsStorage = new SymptomsStorage(new CrashlyticsMock() as any);
     this.keyValueStore = {};
     this.symptom_name1 = "Abdominal Pain";
     this.symptom_id1 = "1";

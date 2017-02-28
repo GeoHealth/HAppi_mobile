@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {NavController, AlertController} from 'ionic-angular';
 import {AuthService} from '../../app/provider/auth_service';
 import {TabsPage} from '../tabs/tabs';
+import {Crashlytics} from "../../app/services/crashlytics";
 
 @Component({
   selector: 'page-register',
@@ -11,7 +12,7 @@ export class RegisterPage {
   createSuccess = false;
   registerCredentials = {email: '', password: ''};
 
-  constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController) {
+  constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController, private crashlytics: Crashlytics) {
   }
 
   public register() {
@@ -23,7 +24,7 @@ export class RegisterPage {
         this.showPopup("Error", "Problem creating account.");
       }
     }, (err) => {
-      (<any>window).fabric.Crashlytics.sendNonFatalCrash(err);
+      this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
       this.showPopup("Error", err);
     });
   }

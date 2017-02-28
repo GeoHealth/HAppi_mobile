@@ -1,12 +1,12 @@
 import {TranslationProvider} from "../../../app/provider/translation_provider";
-import {PlatformMock} from "../../mocks";
+import {PlatformMock, CrashlyticsMock} from "../../mocks";
 import {Platform} from "ionic-angular";
 import {Globalization} from "ionic-native";
 
 describe('TranslationProvider', () => {
 
   beforeEach(() => {
-    this.translation_provider = new TranslationProvider(new PlatformMock() as Platform);
+    this.translation_provider = new TranslationProvider(new PlatformMock() as Platform, new CrashlyticsMock() as any);
     this.locale = 'fr-BE';
   });
 

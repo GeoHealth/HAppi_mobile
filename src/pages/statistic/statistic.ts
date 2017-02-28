@@ -6,6 +6,7 @@ import {SymptomsCounts} from '../../models/symptoms_counts';
 import {GlobalVars} from '../../app/provider/global_vars';
 
 import * as moment from 'moment';
+import {Crashlytics} from "../../app/services/crashlytics";
 
 @Component({
   selector: 'page-statistic',
@@ -25,7 +26,7 @@ export class StatisticPage {
   private start_date;
   private end_date;
 
-  constructor(public translation: TranslationProvider, private stats_rest_service: StatsRestService, public vars: GlobalVars) {
+  constructor(public translation: TranslationProvider, private stats_rest_service: StatsRestService, public vars: GlobalVars, private crashlytics: Crashlytics) {
     this.vars.setTitle("Statistics");
   }
 
@@ -115,7 +116,7 @@ export class StatisticPage {
           }
         });
       } else {
-        (<any>window).fabric.Crashlytics.sendNonFatalCrash(success);
+        this.crashlytics.sendNonFatalCrashWithStacktraceCreation(success);
       }
     });
   }

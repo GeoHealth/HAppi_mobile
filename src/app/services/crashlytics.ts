@@ -3,7 +3,7 @@ import {Injectable} from "@angular/core";
 import * as stacktrace from 'stacktrace-js';
 
 @Injectable()
-export class Analytics {
+export class Crashlytics {
   private handler: any;
 
   constructor(public platform: Platform) {
@@ -12,7 +12,7 @@ export class Analytics {
     )
   }
 
-  private setup() {
+  protected setup() {
     if (!(<any>window).fabric) {
       return;
     }
@@ -63,6 +63,12 @@ export class Analytics {
     }
 
     this.handler.Crashlytics.sendNonFatalCrash(message, stacktrace);
+  }
+
+  sendNonFatalCrashWithStacktraceCreation(message: string) {
+    stacktrace.get().then(
+      (trace) => this.sendNonFatalCrash(message, trace)
+    );
   }
 
   sendSignUp(type: string, success: boolean, attributes?: any) {

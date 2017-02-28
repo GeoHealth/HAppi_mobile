@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {isNullOrUndefined} from "util";
 import {Globalization} from 'ionic-native';
 import {Platform} from "ionic-angular";
+import {Crashlytics} from "../services/crashlytics";
 
 declare let Gettext: any;
 
@@ -31,7 +32,7 @@ export class TranslationProvider {
    * Create a new instance that will use the device preferred locale as translator.
    * @param platform
    */
-  constructor(public platform: Platform) {
+  constructor(public platform: Platform, private crashlytics: Crashlytics) {
     platform.ready().then(() => {
       this.loadDevicePreferredLocale();
     });
@@ -64,7 +65,7 @@ export class TranslationProvider {
     return Globalization.getPreferredLanguage().then((locale) => {
       this.current_locale = locale.value;
     }).catch((err) => {
-      (<any>window).fabric.Crashlytics.sendNonFatalCrash(err);
+      this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
       this.current_locale = null;
     });
   }

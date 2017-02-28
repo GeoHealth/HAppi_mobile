@@ -15,6 +15,7 @@ import {SymptomWithFactor} from "../../models/symptom_with_factors";
 import {TranslationProvider} from "../../app/provider/translation_provider";
 import {AddSymptomPage} from "../addsymptom/addsymptom";
 import {GlobalVars} from '../../app/provider/global_vars';
+import {Crashlytics} from "../../app/services/crashlytics";
 
 
 @Component({
@@ -31,7 +32,7 @@ export class HomePage {
 
   constructor(public navCtrl: NavController, occurrence_storage: OccurrenceStorage, symptoms_storage: SymptomsStorage,
               actionSheetCtrl: ActionSheetController, platform: Platform, occurrence_rest_service: OccurrenceRestService, public translation: TranslationProvider, public modalCtrl: ModalController,
-            private menu: MenuController, public vars: GlobalVars) {
+            private menu: MenuController, public vars: GlobalVars, private crashlytics: Crashlytics) {
     this.symptom_storage = symptoms_storage;
     this.occurrences_storage = occurrence_storage;
     this.actionSheetCtrl = actionSheetCtrl;
@@ -39,6 +40,7 @@ export class HomePage {
     this.occurrence_rest_service = occurrence_rest_service;
     this.vars.setTitle("Home");
      menu.enable(true);
+    this.crashlytics.sendNonFatalCrashWithStacktraceCreation('kikou lol');
   };
 
   addSymptom() {
@@ -58,7 +60,7 @@ export class HomePage {
       element.disabled = false;
     };
     let callback_error = (err) => {
-      (<any>window).fabric.Crashlytics.sendNonFatalCrash(err);
+      this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
       element.disabled = false;
     };
     let callback_after_location = (gpsCoordinates) => {
@@ -78,7 +80,7 @@ export class HomePage {
       let gpsCoordinates = new GPSCoordinates(gps_location.coords);
       callback_after_location.call(this, gpsCoordinates);
     }).catch((err) => {
-      (<any>window).fabric.Crashlytics.sendNonFatalCrash(err);
+      this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
       callback_after_location.call(this, null);
     });
   };

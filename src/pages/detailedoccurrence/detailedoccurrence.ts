@@ -11,6 +11,7 @@ import {SymptomWithFactor} from "../../models/symptom_with_factors";
 import {TranslationProvider} from "../../app/provider/translation_provider";
 import {isNullOrUndefined} from "util";
 import {OccurrenceRestService} from "../../app/services/occurrence_rest_service";
+import {Crashlytics} from "../../app/services/crashlytics";
 
 @Component({
   selector: 'page-detailed-occurrence',
@@ -25,7 +26,7 @@ export class DetailedOccurrencePage {
   locationError: boolean;
 
   constructor(public navCtrl: NavController, private navParams: NavParams, occurrence_storage: OccurrenceStorage, public translation: TranslationProvider,
-              public occurrence_rest_service: OccurrenceRestService) {
+              public occurrence_rest_service: OccurrenceRestService, private crashlytics: Crashlytics) {
     let symptom = navParams.get("symptom") as SymptomWithFactor;
     this.occurrence = new Occurrence(symptom, DateProvider.getCurrentISODateAsString(), null, null);
     this.occurrences_storage = occurrence_storage;
@@ -42,7 +43,7 @@ export class DetailedOccurrencePage {
         this.navCtrl.pop();
       },
       (err) => {
-        (<any>window).fabric.Crashlytics.sendNonFatalCrash(err);
+        this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
         element.disabled = false;
       }
     );
@@ -64,7 +65,7 @@ export class DetailedOccurrencePage {
       this.occurrence.gps_coordinate = new GPSCoordinates(gps_location.coords);
       this.loadingLocation = false;
     }).catch((err) => {
-      (<any>window).fabric.Crashlytics.sendNonFatalCrash(err);
+      this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
       this.occurrence.gps_coordinate = null;
       this.loadingLocation = false;
       this.locationError = true;

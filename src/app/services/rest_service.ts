@@ -71,7 +71,7 @@ export class RestService {
     } else {
       errMsg = error.message ? error.message : error.toString();
     }
-    (<any>window).fabric.Crashlytics.sendNonFatalCrash(errMsg);
+    (<any>window).fabric.sendNonFatalCrashWithStacktraceCreation(errMsg);
     return Observable.throw(errMsg);
   }
 

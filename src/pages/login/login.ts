@@ -6,6 +6,7 @@ import {TabsPage} from '../tabs/tabs';
 import {AuthStorage} from '../../app/provider/auth_storage';
 import {Headers} from "@angular/http";
 import {isNullOrUndefined} from "util";
+import {Crashlytics} from "../../app/services/crashlytics";
 
 @Component({
     selector: 'page-login',
@@ -15,7 +16,7 @@ export class LoginPage {
     loading: Loading;
     registerCredentials = {email: '', password: ''};
 
-    constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private auth_storage: AuthStorage) {
+    constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private auth_storage: AuthStorage, private crashlytics: Crashlytics) {
         this.showLoading();
         this.auth_storage.get().then((val: any) => {
             if (!isNullOrUndefined(val) && val.data.length > 0) {
@@ -52,7 +53,7 @@ export class LoginPage {
                 this.showError("Invalid login credentials. Please try again.");
             }
         }, (err) => {
-            (<any>window).fabric.Crashlytics.sendNonFatalCrash(err);
+            this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
             this.showError(err);
         });
     }

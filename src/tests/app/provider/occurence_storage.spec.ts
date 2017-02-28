@@ -3,10 +3,11 @@ import {OccurrenceStorage} from '../../../app/provider/occurrence_storage';
 import {Occurrence} from '../../../models/occurrence';
 import {DateProvider} from "../../../app/provider/date_provider";
 import {SymptomWithFactor} from "../../../models/symptom_with_factors";
+import {CrashlyticsMock} from "../../mocks";
 
 describe('OccurrenceStorage', () => {
   beforeEach(() => {
-    this.occurrenceStorage = new OccurrenceStorage();
+    this.occurrenceStorage = new OccurrenceStorage(new CrashlyticsMock() as any);
     this.symptom_name1 = "Abdominal Pain";
     this.symptom_name2 = "Abnormal Facial Expressions";
 

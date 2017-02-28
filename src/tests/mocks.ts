@@ -2,6 +2,7 @@
 
 import {SymptomWithFactor} from "../models/symptom_with_factors";
 import {Http} from "@angular/http";
+import {Crashlytics} from "../app/services/crashlytics";
 export class ConfigMock {
 
   public get(): any {
@@ -105,5 +106,15 @@ export class HttpMock extends Http {
     return new Promise((resolve: Function) => {
       resolve();
     });
+  }
+}
+
+export class CrashlyticsMock extends Crashlytics {
+  constructor(){
+    super(new PlatformMock() as any)
+  }
+
+  protected setup() {
+    return;
   }
 }

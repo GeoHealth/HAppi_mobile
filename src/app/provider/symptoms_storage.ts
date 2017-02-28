@@ -2,6 +2,7 @@ import {Symptom} from '../../models/symptom';
 import {Injectable} from '@angular/core';
 import {SymptomWithFactor} from "../../models/symptom_with_factors";
 import {CachedArray} from "./cached_array";
+import {Crashlytics} from "../services/crashlytics";
 
 declare let require: any;
 let loki = require('lokijs');
@@ -14,7 +15,7 @@ export class SymptomsStorage {
   private symptoms: any;
   private cache_symptoms: CachedArray<SymptomWithFactor>;
 
-  constructor() {
+  constructor(private crashlytics: Crashlytics) {
     this.initStore();
     this.initInMemoryDB();
     this.importAll();
@@ -40,7 +41,7 @@ export class SymptomsStorage {
       self.symptoms = self.inMemoryDB.getCollection('symptoms');        // slight hack! we're manually reconnecting the collection variable :-)
       this.cache_symptoms.invalidateCache();
     }).catch((err) => {
-      (<any>window).fabric.Crashlytics.sendNonFatalCrash('error importing database: ' + err);
+      this.crashlytics.sendNonFatalCrashWithStacktraceCreation('error importing database: ' + err);
     });
   }
 
@@ -48,7 +49,7 @@ export class SymptomsStorage {
     this.store.setItem('storeKey', JSON.stringify(this.inMemoryDB)).then((value) => {
       this.cache_symptoms.invalidateCache();
     }).catch((err) => {
-      (<any>window).fabric.Crashlytics.sendNonFatalCrash('error while saving: ' + err);
+      this.crashlytics.sendNonFatalCrashWithStacktraceCreation('error while saving: ' + err);
     });
   }
 

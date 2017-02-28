@@ -7,8 +7,8 @@ describe('RestService', () => {
   });
 
   describe('#getBaseURL', () => {
-    it('returns "http://" + domain + ":" + port + "/"', () => {
-      let expect_url = "http://" + this.rest_service.apiDomainName + ":" + this.rest_service.apiPort + "/";
+    it('returns "protocol" + domain + ":" + port + "/"', () => {
+      let expect_url = this.rest_service.protocol + this.rest_service.apiDomainName + ":" + this.rest_service.apiPort + "/";
       expect(this.rest_service.getBaseURL()).toEqual(expect_url);
     });
   });

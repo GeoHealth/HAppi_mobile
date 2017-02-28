@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Occurrence} from '../../models/occurrence';
 import {CachedArray} from "./cached_array";
+import {Crashlytics} from "../services/crashlytics";
 
 declare let require: any;
 let loki = require('lokijs');
@@ -13,7 +14,7 @@ export class OccurrenceStorage {
   private occurrences: any;
   private cache_occurrences: CachedArray<Occurrence>;
 
-  constructor() {
+  constructor(private crashlytics: Crashlytics) {
     this.initStore();
     this.initInMemoryDB();
     this.importAll();
@@ -39,7 +40,7 @@ export class OccurrenceStorage {
       self.occurrences = self.inMemoryDB.getCollection('occurrences');        // slight hack! we're manually reconnecting the collection variable :-)
       this.cache_occurrences.invalidateCache();
     }).catch((err) => {
-      (<any>window).fabric.Crashlytics.sendNonFatalCrash('error importing database: ' + err);
+      this.crashlytics.sendNonFatalCrashWithStacktraceCreation('error importing database: ' + err);
     });
   };
 
@@ -47,7 +48,7 @@ export class OccurrenceStorage {
     this.store.setItem('occurrences', JSON.stringify(this.inMemoryDB)).then((value) => {
       this.cache_occurrences.invalidateCache();
     }).catch((err) => {
-      (<any>window).fabric.Crashlytics.sendNonFatalCrash('error saving database: ' + err);
+      this.crashlytics.sendNonFatalCrashWithStacktraceCreation('error saving database: ' + err);
     });
   };
 
