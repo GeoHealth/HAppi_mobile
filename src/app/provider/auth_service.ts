@@ -46,11 +46,14 @@ export class AuthService {
           (res: Response) => {
             this.currentUser = new User(credentials.email);
             this.extractAndSaveHeaders(res);
+            this.setCrashlyticsMetadata(res.headers.get('uid'), res.headers.get('uid'), res.headers.get('uid'), res.headers.get('client'));
+            this.crashlytics.sendLogin("Direct", true);
             observer.next(true);
             observer.complete();
           },
           (err) => {
             this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
+            this.crashlytics.sendLogin("Direct", false);
             observer.next(false);
             observer.complete();
           }
@@ -68,11 +71,14 @@ export class AuthService {
         this.auth_rest_service.create(credentials.email, credentials.password, credentials.password_confirmation).subscribe(
           (res) => {
             this.extractAndSaveHeaders(res);
+            this.setCrashlyticsMetadata(res.headers.get('uid'), res.headers.get('uid'), res.headers.get('uid'), res.headers.get('client'));
+            this.crashlytics.sendSignUp("Direct", true);
             observer.next({success: true});
             observer.complete();
           },
           (err) => {
             this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
+            this.crashlytics.sendSignUp("Direct", false);
             observer.next({success: false, msg: JSON.parse(err._body).errors.full_messages[0]});
             observer.complete();
           }
@@ -89,12 +95,15 @@ export class AuthService {
           let success = JSON.parse(res._body).success;
           if (success) {
             RestService.headers = headers;
+            this.setCrashlyticsMetadata(headers.get('uid'), headers.get('uid'), headers.get('uid'), headers.get('client'));
+            this.crashlytics.sendLogin("token", true);
           }
           resolve(success);
         },
 
         (err) => {
           this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
+          this.crashlytics.sendLogin("token", false);
           resolve(false);
         }
       );
@@ -109,6 +118,7 @@ export class AuthService {
       this.auth_rest_service.disconnection().subscribe(
         (res) => {
           this.auth_storage.delete();
+          this.setCrashlyticsMetadata(null, null, null, null);
           resolve();
         },
         (err) => {
@@ -120,6 +130,13 @@ export class AuthService {
 
   public getUserInfo(): User {
     return this.currentUser;
+  }
+
+  private setCrashlyticsMetadata(uid: string, user_name: string, email: string, client: string) {
+    this.crashlytics.setUserIdentifier(uid);
+    this.crashlytics.setUserName(user_name);
+    this.crashlytics.setUserEmail(email);
+    this.crashlytics.setStringValueForKey('client', client);
   }
 
 }

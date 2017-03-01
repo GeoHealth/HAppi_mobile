@@ -3,7 +3,7 @@
   <name>HAppi</name>
   <description>Health symptoms tracking</description>
   <author email="geohealth.info@gmail.com" href="https://github.com/GeoHealth">GeoHeatlth Crew</author>
-  <content src="http://192.168.56.1:8100" original-src="index.html"/>
+  <content src="index.html"/>
   <access origin="*"/>
   <allow-intent href="http://*/*"/>
   <allow-intent href="https://*/*"/>

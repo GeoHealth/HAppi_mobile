@@ -61,7 +61,7 @@ export class HomePage {
       element.disabled = false;
     };
     let callback_error = (err) => {
-      this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
+      this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err.message);
       element.disabled = false;
     };
     let callback_after_location = (gpsCoordinates) => {
@@ -81,7 +81,7 @@ export class HomePage {
       let gpsCoordinates = new GPSCoordinates(gps_location.coords);
       callback_after_location.call(this, gpsCoordinates);
     }).catch((err) => {
-      this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
+      this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err.message + ': Cannot retrieve current GPS position');
       callback_after_location.call(this, null);
     });
   };

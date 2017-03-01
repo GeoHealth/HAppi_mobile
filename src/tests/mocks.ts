@@ -110,7 +110,7 @@ export class HttpMock extends Http {
 
 export class CrashlyticsMock extends Crashlytics {
   constructor() {
-    super(new PlatformMock() as any)
+    super(new PlatformMock() as any);
   }
 
   protected setup() {

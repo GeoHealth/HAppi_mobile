@@ -54,7 +54,7 @@ export class AuthStorage {
       this.store.setItem('headers', JSON.stringify(this.inMemoryDB)).then((value) => {
 
       }).catch((err) => {
-        this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
+        this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err.message);
       });
     } else {
       throw new TypeError("Wrong type adding to header storage");

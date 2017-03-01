@@ -43,7 +43,7 @@ export class DetailedOccurrencePage {
         this.navCtrl.pop();
       },
       (err) => {
-        this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
+        this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err.message);
         element.disabled = false;
       }
     );
@@ -65,7 +65,7 @@ export class DetailedOccurrencePage {
       this.occurrence.gps_coordinate = new GPSCoordinates(gps_location.coords);
       this.loadingLocation = false;
     }).catch((err) => {
-      this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
+      this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err.message);
       this.occurrence.gps_coordinate = null;
       this.loadingLocation = false;
       this.locationError = true;

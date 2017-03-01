@@ -71,6 +71,15 @@ export class Crashlytics {
     );
   }
 
+  setStringValueForKey(key: string, value: string) {
+    if (!this.handler) {
+      console.warn('fabric not available: setStringValueForKey', key, value);
+      return;
+    }
+
+    this.handler.Crashlytics.setStringValueForKey(key, value);
+  }
+
   sendSignUp(type: string, success: boolean, attributes?: any) {
     if (!this.handler) {
       console.warn('fabric not available: sendSignUp', type, success);
