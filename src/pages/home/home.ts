@@ -47,8 +47,12 @@ export class HomePage {
   addSymptom() {
     let modal = this.modalCtrl.create(AddSymptomPage);
     modal.onDidDismiss((data) => {
-        let symptom = SymptomWithFactor.convertObjectToInstance(data);
-        this.symptom_storage.add(symptom);
+        try {
+          let symptom = SymptomWithFactor.convertObjectToInstance(data);
+          this.symptom_storage.add(symptom);
+        } catch (err) {
+          this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err.message);
+        }
       }
     );
     modal.present();

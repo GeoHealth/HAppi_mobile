@@ -15,10 +15,11 @@
       </ion-item-options>
 
     </ion-item-sliding>
-
-    <button ion-button (click)="addSymptom()" full color="default" icon-left>
-      <ion-icon name="add"></ion-icon>
-      {{translation.gettext("Add symptom")}}
-    </button>
   </ion-list>
+
+  <ion-fab right bottom>
+    <button ion-fab (click)="addSymptom()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>
