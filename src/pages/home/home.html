@@ -1,7 +1,7 @@
 <ion-content>
 
   <ion-list inset>
-    <ion-item-sliding *ngFor="let symptom of symptom_storage.all()">
+    <ion-item-sliding *ngFor="let symptom of symptom_storage.all()" class="symptom-item">
 
       <button ion-item id="{{symptom.id}}" (click)="createOccurrence(symptom)"
               (press)="createDetailedOccurrence(symptom)" text-wrap>{{translation.gettext(symptom.name)}}
