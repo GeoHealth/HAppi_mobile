@@ -15,5 +15,12 @@
 // automatically applied to the <body> element in the app.
 .ion-page > ion-content {
   top: 52px; //Headers height
-  margin-bottom: 56px; //Tabs height
+}
+
+.fixed-content {
+  bottom: 56px; //Tabs height
+}
+
+.scroll-content {
+  bottom: 56px; //Tabs height
 }
