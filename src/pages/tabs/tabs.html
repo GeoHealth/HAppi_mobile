@@ -1,26 +1,33 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>{{translation.gettext(vars.title)}}</ion-title>
-    <ion-buttons end>
-      <button #content ion-button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-buttons left>
+            <button #content ion-button menuToggle>
+                <ion-icon name="menu"></ion-icon>
+            </button>
+        </ion-buttons>
+
+        <ion-title>{{translation.gettext(vars.title)}}</ion-title>
+
+    </ion-navbar>
 </ion-header>
 
-<ion-menu [content]="content">
-  <ion-content>
-    <ion-list>
-      <button ion-item (click)="log_out()">
-        {{translation.gettext("Disconnection")}}
-      </button>
-    </ion-list>
-  </ion-content>
+
+<ion-menu side="left" [content]="content">
+    <ion-content>
+        <ion-toolbar>
+            <ion-title>{{translation.gettext("Menu")}}</ion-title>
+        </ion-toolbar>
+        <ion-list>
+            <button ion-item (click)="log_out()">
+                {{translation.gettext("Disconnection")}}
+            </button>
+            <ion-item menuClose detail-none>{{translation.gettext("Close Menu")}}</ion-item>
+        </ion-list>
+    </ion-content>
 </ion-menu>
 
 <ion-tabs>
-  <ion-tab [root]="tab1Root" tabTitle="Home" tabIcon="home"></ion-tab>
-  <ion-tab [root]="tab2Root" tabTitle="Statistic" tabIcon="heart"></ion-tab>
-  <ion-tab [root]="tab3Root" tabTitle="Occurrence" tabIcon="information-circle"></ion-tab>
+    <ion-tab [root]="tab1Root" tabTitle="Home" tabIcon="home"></ion-tab>
+    <ion-tab [root]="tab2Root" tabTitle="Statistic" tabIcon="heart"></ion-tab>
+    <ion-tab [root]="tab3Root" tabTitle="Occurrence" tabIcon="information-circle"></ion-tab>
 </ion-tabs>
