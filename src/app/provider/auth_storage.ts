@@ -34,7 +34,7 @@ export class AuthStorage {
    * Read the headers stored in the DB asynchronously.
    * @returns {Promise<Headers>} This promise is resolved when the headers are read. The resolved value is the readed headers.
    */
-  get(): Promise<Headers> {
+  getHeaders(): Promise<Headers> {
     return new Promise((resolve, reject) => {
       let self = this;
       this.store.getItem('headers').then((value) => {
@@ -47,7 +47,7 @@ export class AuthStorage {
     });
   }
 
-  save(headers: Headers) {
+  saveHeaders(headers: Headers) {
     this.headers.clear();
     if (headers instanceof Headers) {
       this.headers.insert(headers);
@@ -61,7 +61,7 @@ export class AuthStorage {
     }
   }
 
-  delete() {
-    this.save(new Headers());
+  deleteHeaders() {
+    this.saveHeaders(new Headers());
   }
 }

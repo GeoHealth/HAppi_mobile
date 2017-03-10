@@ -34,7 +34,7 @@ export class AuthService {
       extracted_headers.append(name, headers.get(name));
     });
     RestService.headers = extracted_headers;
-    this.auth_storage.save(extracted_headers);
+    this.auth_storage.saveHeaders(extracted_headers);
   }
 
   public login(credentials) {
@@ -88,7 +88,7 @@ export class AuthService {
   }
 
 
-  public validate(headers: Headers): Promise<Boolean> {
+  public validateToken(headers: Headers): Promise<Boolean> {
     return new Promise((resolve, reject) => {
       this.auth_rest_service.validate(headers).subscribe(
         (res) => {
@@ -117,7 +117,7 @@ export class AuthService {
     return new Promise((resolve, reject) => {
       this.auth_rest_service.disconnection().subscribe(
         (res) => {
-          this.auth_storage.delete();
+          this.auth_storage.deleteHeaders();
           this.setCrashlyticsMetadata(null, null, null, null);
           resolve();
         },
