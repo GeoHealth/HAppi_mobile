@@ -15,6 +15,7 @@ import {TranslationProvider} from "../../app/provider/translation_provider";
 import {AddSymptomPage} from "../addsymptom/addsymptom";
 import {GlobalVars} from "../../app/provider/global_vars";
 import {Crashlytics} from "../../app/services/crashlytics";
+import {SymptomsUserRestService} from "../../app/services/symptoms_user_rest_service";
 
 
 @Component({
@@ -30,8 +31,10 @@ export class HomePage {
   occurrence_rest_service: OccurrenceRestService;
 
   constructor(public navCtrl: NavController, occurrence_storage: OccurrenceStorage, symptoms_storage: SymptomsStorage,
-              actionSheetCtrl: ActionSheetController, platform: Platform, occurrence_rest_service: OccurrenceRestService, public translation: TranslationProvider, public modalCtrl: ModalController,
-              private menu: MenuController, public vars: GlobalVars, private crashlytics: Crashlytics) {
+              actionSheetCtrl: ActionSheetController, platform: Platform, occurrence_rest_service: OccurrenceRestService,
+              public translation: TranslationProvider, public modalCtrl: ModalController,
+              private menu: MenuController, public vars: GlobalVars, private crashlytics: Crashlytics,
+  private symptoms_user_rest_service: SymptomsUserRestService) {
     this.symptom_storage = symptoms_storage;
     this.occurrences_storage = occurrence_storage;
     this.actionSheetCtrl = actionSheetCtrl;
@@ -49,7 +52,9 @@ export class HomePage {
     modal.onDidDismiss((data) => {
         try {
           let symptom = SymptomWithFactor.convertObjectToInstance(data);
-          this.symptom_storage.add(symptom);
+          this.symptoms_user_rest_service.addSymptom(symptom).subscribe((result) => {
+            this.symptom_storage.add(symptom);
+          });
         } catch (err) {
           this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err.message);
         }
@@ -97,7 +102,9 @@ export class HomePage {
   };
 
   deleteSymptom(symptom: Symptom) {
-    this.symptom_storage.remove(symptom);
+    this.symptoms_user_rest_service.deleteSymptom(symptom).subscribe((result) => {
+      this.symptom_storage.remove(symptom);
+    });
   }
 
 }
