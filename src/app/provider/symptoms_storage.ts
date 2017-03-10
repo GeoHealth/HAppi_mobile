@@ -62,6 +62,17 @@ export class SymptomsStorage {
     }
   }
 
+  addAll(symptoms: Array<SymptomWithFactor>) {
+    symptoms.forEach((symptom) => {
+      if (symptom instanceof SymptomWithFactor) {
+        this.symptoms.insert(symptom);
+      } else {
+        throw new TypeError("Wrong type adding to symptoms_storage");
+      }
+    });
+    this.saveAll();
+  }
+
   all(): SymptomWithFactor[] {
     return this.cache_symptoms.getCache((): SymptomWithFactor[] => {
       return SymptomWithFactor.convertObjectsToInstancesArray(this.symptoms.data);

@@ -22,13 +22,13 @@ describe('RestService', () => {
     });
   });
 
-  describe('::generateJSONHeadersOptions', () => {
+  describe('::getHeadersForJSON', () => {
     it('returns an instance of RequestOptions', () => {
-      expect(this.rest_service.generateJSONHeadersOptions() instanceof RequestOptions).toBeTruthy();
+      expect(this.rest_service.getHeadersForJSON() instanceof RequestOptions).toBeTruthy();
     });
 
     it('specifies that Content-Type is JSON', () => {
-      let response_request = this.rest_service.generateJSONHeadersOptions();
+      let response_request = this.rest_service.getHeadersForJSON();
       expect(response_request.headers.get('Content-Type')).toEqual('application/json');
     });
   });

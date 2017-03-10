@@ -6,9 +6,9 @@ import {isNullOrUndefined} from "util";
 @Injectable()
 export class RestService {
   http: Http;
-  protocol = 'https://';
-  apiDomainName = 'geohealth-happibackend-test.yxvj.flynnhub.com';
-  apiPort = '443';
+  protocol = 'http://';
+  apiDomainName = 'localhost';
+  apiPort = '3000';
   static headers: Headers;
 
   constructor(http: Http) {
@@ -48,7 +48,7 @@ export class RestService {
    * Return a simple headers options for JSON content
    * @returns {Headers}
    */
-  generateJSONHeadersOptions(): RequestOptions {
+  getHeadersForJSON(): RequestOptions {
     let json_headers = new Headers(RestService.headers);
     json_headers.append('Content-Type', 'application/json');
     return new RequestOptions({headers: json_headers});

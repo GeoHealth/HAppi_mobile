@@ -7,6 +7,8 @@ import {AuthStorage} from "../../app/provider/auth_storage";
 import {Headers} from "@angular/http";
 import {isNullOrUndefined} from "util";
 import {Crashlytics} from "../../app/services/crashlytics";
+import {Observable} from "rxjs";
+import {SymptomsUserRestService} from "../../app/services/symptoms_user_rest_service";
 
 @Component({
   selector: 'page-login',
@@ -16,7 +18,9 @@ export class LoginPage {
   loading: Loading;
   registerCredentials = {email: '', password: ''};
 
-  constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private auth_storage: AuthStorage, private crashlytics: Crashlytics) {
+  constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController,
+              private loadingCtrl: LoadingController, private auth_storage: AuthStorage,
+              private crashlytics: Crashlytics, private symptoms_user_rest_service: SymptomsUserRestService) {
     this.autoLogin();
   }
 
@@ -27,13 +31,16 @@ export class LoginPage {
   public login() {
     this.showLoading();
     this.auth.login(this.registerCredentials).subscribe((allowed) => {
+      this.loading.dismiss();
       if (allowed) {
-        this.loading.dismiss();
-        this.nav.setRoot(TabsPage);
+        this.retrieveSymptomsForUser().subscribe(() => {
+          this.nav.setRoot(TabsPage);
+        });
       } else {
         this.showError("Invalid login credentials. Please try again.");
       }
     }, (err) => {
+      this.loading.dismiss();
       this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
       this.showError(err);
     });
@@ -47,10 +54,6 @@ export class LoginPage {
   }
 
   showError(text) {
-    setTimeout(() => {
-      this.loading.dismiss();
-    });
-
     let alert = this.alertCtrl.create({
       title: 'Fail',
       subTitle: text,
@@ -74,5 +77,12 @@ export class LoginPage {
       }
       this.loading.dismiss();
     });
+  }
+
+  /**
+   * Read the symptoms from the backend after the user logged in
+   */
+  private retrieveSymptomsForUser(): Observable<boolean> {
+    return this.symptoms_user_rest_service.persistAllSymptomsLocally();
   }
 }

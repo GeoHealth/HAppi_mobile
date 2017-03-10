@@ -20,7 +20,7 @@ export class AuthRestService extends RestService {
     return this.http.post(
       this.getFullURL(this.loginPath, null),
       data,
-      this.generateJSONHeadersOptions()
+      this.getHeadersForJSON()
     )
       .map(RestService.handlePostResponse)
       .catch(RestService.handleError);
@@ -31,7 +31,7 @@ export class AuthRestService extends RestService {
     return this.http.post(
       this.getFullURL(this.createPath, null),
       data,
-      this.generateJSONHeadersOptions()
+      this.getHeadersForJSON()
     )
       .map(RestService.handlePostResponse)
       .catch(RestService.handleErrorWithoutParsing);
@@ -49,7 +49,7 @@ export class AuthRestService extends RestService {
   disconnection() {
     return this.http.delete(
       this.getFullURL(this.disconnectionPath, null),
-      this.generateJSONHeadersOptions()
+      this.getHeadersForJSON()
     )
       .map(RestService.handlePostResponse)
       .catch(RestService.handleError);

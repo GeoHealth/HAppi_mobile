@@ -23,6 +23,7 @@ import {StatsRestService} from "./services/stats_rest_service";
 import {GlobalVars} from "./provider/global_vars";
 import {FabricErrorHandler} from "../fabric_error_handler";
 import {Crashlytics} from "./services/crashlytics";
+import {SymptomsUserRestService} from "./services/symptoms_user_rest_service";
 
 const cloudSettings: CloudSettings = {
   'core': {
@@ -63,7 +64,7 @@ const cloudSettings: CloudSettings = {
     provide: ErrorHandler,
     useClass: FabricErrorHandler
   }, OccurrenceStorage, SymptomsStorage, OccurrenceRestService, SymptomRestService, TranslationProvider, GlobalVars,
-    AuthRestService, AuthService, AuthStorage, StatsRestService, Crashlytics]
+    AuthRestService, AuthService, AuthStorage, StatsRestService, Crashlytics, SymptomsUserRestService]
 
 })
 export class AppModule {

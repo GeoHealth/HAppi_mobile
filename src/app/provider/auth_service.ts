@@ -26,7 +26,7 @@ export class AuthService {
     this.auth_rest_service = auth_rest_service;
   }
 
-  public extractAndSaveHeaders(res: Response) {
+  public extractAndSaveHeaders(res: Response): Observable<boolean>  {
     let needed_headers = ["uid", "access-token", "client", "expiry", "token-type"];
     let headers = res.headers;
     let extracted_headers = new Headers();
@@ -34,10 +34,10 @@ export class AuthService {
       extracted_headers.append(name, headers.get(name));
     });
     RestService.headers = extracted_headers;
-    this.auth_storage.saveHeaders(extracted_headers);
+    return this.auth_storage.saveHeaders(extracted_headers);
   }
 
-  public login(credentials) {
+  public login(credentials): Observable<boolean> {
     if (credentials.email === null || credentials.password === null) {
       return Observable.throw("Please insert credentials");
     } else {
@@ -45,11 +45,12 @@ export class AuthService {
         this.auth_rest_service.auth(credentials.email, credentials.password).subscribe(
           (res: Response) => {
             this.currentUser = new User(credentials.email);
-            this.extractAndSaveHeaders(res);
-            this.setCrashlyticsMetadata(res.headers.get('uid'), res.headers.get('uid'), res.headers.get('uid'), res.headers.get('client'));
-            this.crashlytics.sendLogin("Direct", true);
-            observer.next(true);
-            observer.complete();
+            this.extractAndSaveHeaders(res).subscribe((success) => {
+              this.setCrashlyticsMetadata(res.headers.get('uid'), res.headers.get('uid'), res.headers.get('uid'), res.headers.get('client'));
+              this.crashlytics.sendLogin("Direct", true);
+              observer.next(true);
+              observer.complete();
+            });
           },
           (err) => {
             this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);

@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Headers} from "@angular/http";
 import {Crashlytics} from "../services/crashlytics";
+import {Observable} from "rxjs";
 
 declare let require: any;
 let loki = require('lokijs');
@@ -47,21 +48,27 @@ export class AuthStorage {
     });
   }
 
-  saveHeaders(headers: Headers) {
-    this.headers.clear();
-    if (headers instanceof Headers) {
-      this.headers.insert(headers);
-      this.store.setItem('headers', JSON.stringify(this.inMemoryDB)).then((value) => {
-
-      }).catch((err) => {
-        this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err.message);
-      });
-    } else {
-      throw new TypeError("Wrong type adding to header storage");
-    }
+  saveHeaders(headers: Headers): Observable<boolean>  {
+    return Observable.create((observer) => {
+      this.headers.clear();
+      if (headers instanceof Headers) {
+        this.headers.insert(headers);
+        this.store.setItem('headers', JSON.stringify(this.inMemoryDB)).then((value) => {
+          observer.next(true);
+          observer.complete();
+        }).catch((err) => {
+          this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err.message);
+          observer.next(false);
+          observer.complete();
+        });
+      } else {
+        observer.next(false);
+        observer.complete();
+      }
+    });
   }
 
-  deleteHeaders() {
-    this.saveHeaders(new Headers());
+  deleteHeaders(): Observable<boolean>  {
+    return this.saveHeaders(new Headers());
   }
 }
