@@ -40,7 +40,6 @@ export class SymptomsUserRestService extends RestService {
   persistAllSymptomsLocally(): Observable<boolean> {
     return Observable.create((observer) => {
       this.getAllSymptoms().subscribe((result) => {
-        debugger;
         this.symptoms_storage.addAll(SymptomWithFactor.convertObjectsToInstancesArray(result.symptoms));
         observer.next(true);
         observer.complete();
