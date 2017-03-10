@@ -6,6 +6,8 @@ import {RestService} from "../services/rest_service";
 import {Headers, Response} from "@angular/http";
 import {AuthStorage} from "./auth_storage";
 import {Crashlytics} from "../services/crashlytics";
+import {SymptomsStorage} from "./symptoms_storage";
+import {OccurrenceStorage} from "./occurrence_storage";
 
 export class User {
   email: string;
@@ -22,11 +24,12 @@ export class AuthService {
   auth_rest_service: AuthRestService;
 
 
-  constructor(auth_rest_service: AuthRestService, private auth_storage: AuthStorage, private crashlytics: Crashlytics) {
+  constructor(auth_rest_service: AuthRestService, private auth_storage: AuthStorage, private crashlytics: Crashlytics,
+              private symptoms_storage: SymptomsStorage, private occurrence_storage: OccurrenceStorage) {
     this.auth_rest_service = auth_rest_service;
   }
 
-  public extractAndSaveHeaders(res: Response): Observable<boolean>  {
+  public extractAndSaveHeaders(res: Response): Observable<boolean> {
     let needed_headers = ["uid", "access-token", "client", "expiry", "token-type"];
     let headers = res.headers;
     let extracted_headers = new Headers();
@@ -119,6 +122,8 @@ export class AuthService {
       this.auth_rest_service.disconnection().subscribe(
         (res) => {
           this.auth_storage.deleteHeaders();
+          this.symptoms_storage.removeAll();
+          this.occurrence_storage.removeAll();
           this.setCrashlyticsMetadata(null, null, null, null);
           resolve();
         },

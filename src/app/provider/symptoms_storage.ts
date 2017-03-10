@@ -103,4 +103,9 @@ export class SymptomsStorage {
     this.symptoms.remove(s);
     this.saveAll();
   }
+
+  removeAll() {
+    this.symptoms.clear();
+    this.saveAll();
+  }
 }

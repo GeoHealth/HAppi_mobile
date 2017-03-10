@@ -84,4 +84,8 @@ export class OccurrenceStorage {
     });
   }
 
+  removeAll() {
+    this.occurrences.clear();
+    this.saveAll();
+  }
 }
