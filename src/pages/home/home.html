@@ -4,7 +4,8 @@
     <ion-item-sliding *ngFor="let symptom of symptom_storage.all()" class="symptom-item">
 
       <button ion-item id="{{symptom.id}}" (click)="createOccurrence(symptom)"
-              (press)="createDetailedOccurrence(symptom)" text-wrap>{{translation.gettext(symptom.name)}}
+              (press)="createDetailedOccurrence(symptom)" text-wrap class="symptom-item">
+        {{translation.gettext(symptom.name)}}
       </button>
 
       <ion-item-options>
