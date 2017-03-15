@@ -44,6 +44,7 @@ export class AuthStorage {
         resolve(self.headers);
       }).catch((err) => {
         this.crashlytics.sendNonFatalCrashWithStacktraceCreation('error importing database: ' + err);
+        resolve(null);
       });
     });
   }
