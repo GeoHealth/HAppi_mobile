@@ -25,7 +25,10 @@ export class Occurrence {
 
 
   static convertObjectToInstance(object: any): Occurrence {
-    let instance = new Occurrence(SymptomWithFactor.convertObjectToInstance(object.symptom), object.date, object.gps_coordinate, object.factors);
+    let instance = new Occurrence(object.symptom ? SymptomWithFactor.convertObjectToInstance(object.symptom): null,
+     object.date,
+     object.gps_coordinate ? object.gps_coordinate : null,
+      object.factors ? object.factors : null);
     instance.id = object.id;
     instance.symptom_id = object.symptom_id;
     return instance;

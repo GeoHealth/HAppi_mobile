@@ -3,12 +3,13 @@ import {Injectable} from "@angular/core";
 import {Occurrence} from "../../models/occurrence";
 import {Observable} from "rxjs/Observable";
 import {Http} from "@angular/http";
+import {OccurrenceStorage} from "../provider/occurrence_storage"
 
 @Injectable()
 export class OccurrenceRestService extends RestService {
   occurrencesPath = 'occurrences';
 
-  constructor(http: Http) {
+  constructor(http: Http, private occurrences_storage: OccurrenceStorage) {
     super(http);
   }
 
@@ -22,7 +23,23 @@ export class OccurrenceRestService extends RestService {
     )
       .map(RestService.handlePostResponse)
       .catch(RestService.handleError);
+  }
 
+  getAllOccurrences() {
+    return this.http.get(this.getFullURL(this.occurrencesPath), this.getHeaders())
+      .map(RestService.extractData)
+      .catch(RestService.handleError);
+  }
+
+
+  persistAllOccurencesLocally(): Observable<boolean> {
+    return Observable.create((observer) => {
+      this.getAllOccurrences().subscribe((result) => {
+        this.occurrences_storage.addAll(Occurrence.convertObjectsToInstancesArray(result.occurrences));
+        observer.next(true);
+        observer.complete();
+      })
+    })
   }
 
 

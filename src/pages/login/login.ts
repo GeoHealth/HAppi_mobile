@@ -9,6 +9,7 @@ import {isNullOrUndefined} from "util";
 import {Crashlytics} from "../../app/services/crashlytics";
 import {Observable} from "rxjs";
 import {SymptomsUserRestService} from "../../app/services/symptoms_user_rest_service";
+import {OccurrenceRestService} from "../../app/services/occurrence_rest_service";
 
 @Component({
   selector: 'page-login',
@@ -20,7 +21,7 @@ export class LoginPage {
 
   constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController,
               private loadingCtrl: LoadingController, private auth_storage: AuthStorage,
-              private crashlytics: Crashlytics, private symptoms_user_rest_service: SymptomsUserRestService) {
+              private crashlytics: Crashlytics, private symptoms_user_rest_service: SymptomsUserRestService, private occurrence_rest_service: OccurrenceRestService) {
     this.autoLogin();
   }
 
@@ -34,7 +35,9 @@ export class LoginPage {
       this.loading.dismiss();
       if (allowed) {
         this.retrieveSymptomsForUser().subscribe(() => {
-          this.nav.setRoot(TabsPage);
+          this.retrieveOccurrencesForUser().subscribe(() => {
+            this.nav.setRoot(TabsPage);
+          });
         });
       } else {
         this.showError("Invalid login credentials. Please try again.");
@@ -85,4 +88,11 @@ export class LoginPage {
   private retrieveSymptomsForUser(): Observable<boolean> {
     return this.symptoms_user_rest_service.persistAllSymptomsLocally();
   }
+
+  /**
+   * Read the occurrences from the backend after the user logged in
+   */
+   private retrieveOccurrencesForUser(): Observable<boolean> {
+     return this.occurrence_rest_service.persistAllOccurencesLocally();
+   }
 }

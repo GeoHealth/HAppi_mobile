@@ -2,6 +2,7 @@
 import {SymptomWithFactor} from "../models/symptom_with_factors";
 import {Http} from "@angular/http";
 import {Crashlytics} from "../app/services/crashlytics";
+import {OccurrenceStorage} from "../app/provider/occurrence_storage";
 export class ConfigMock {
 
   public get(): any {
@@ -116,4 +117,12 @@ export class CrashlyticsMock extends Crashlytics {
   protected setup() {
     return;
   }
+}
+
+export class OccurrenceStorageMock extends OccurrenceStorage {
+
+  constructor() {
+    super(new CrashlyticsMock() as any);
+  }
+
 }

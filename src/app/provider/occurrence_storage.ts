@@ -65,6 +65,20 @@ export class OccurrenceStorage {
   };
 
   /**
+   * Add the given occurencces to the database
+   */
+  addAll(occurrences: Array<Occurrence>) {
+    occurrences.forEach((occurrence) => {
+      if (occurrence instanceof Occurrence) {
+        this.occurrences.insert(occurrence);
+      } else {
+        throw new TypeError("Wrong type adding to occurrences_storage");
+      }
+    });
+    this.saveAll();
+  }
+
+  /**
    * Returns the number of occurrences storred in the database
    */
   size(): number {
