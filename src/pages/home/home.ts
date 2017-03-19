@@ -75,10 +75,12 @@ export class HomePage {
     };
     let callback_after_location = (gpsCoordinates) => {
       newOccurrence = new Occurrence(symptom, DateProvider.getCurrentISODateAsString(), gpsCoordinates, null);
-      this.occurrences_storage.add(newOccurrence);
+
       this.occurrence_rest_service.add(newOccurrence).subscribe(
         (res) => {
           callback_success(res);
+          let tmp = Occurrence.convertObjectToInstance(JSON.parse(res['_body']));
+          this.occurrences_storage.add(tmp);
         },
         (err) => {
           callback_error(err);

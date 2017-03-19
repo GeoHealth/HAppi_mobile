@@ -102,4 +102,10 @@ export class OccurrenceStorage {
     this.occurrences.clear();
     this.saveAll();
   }
+
+  remove(occurrence: Occurrence) {
+    let o = this.occurrences.find({'id' : occurrence.id});
+    this.occurrences.remove(o);
+    this.saveAll();
+  }
 }

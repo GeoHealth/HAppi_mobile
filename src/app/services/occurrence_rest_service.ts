@@ -42,5 +42,13 @@ export class OccurrenceRestService extends RestService {
     })
   }
 
+  deleteOccurrence(occurrence: Occurrence): Observable<{}> {
+    let parameters = new Map<String, String>([['occurrence_id', occurrence.id]]);
+    return this.http.delete(
+      this.getFullURL(this.occurrencesPath, parameters),
+      this.getHeaders()
+    ).map(RestService.handlePostResponse).catch(RestService.handleError);
+  }
+
 
 }
