@@ -17,7 +17,7 @@ export class OccurrenceRestService extends RestService {
     occurrence.symptom_id = occurrence.symptom.id;
     let data = JSON.stringify({'occurrence': occurrence});
     return this.http.post(
-      this.getFullURL(this.occurrencesPath, null),
+      this.getFullURLWithVersioning(this.occurrencesPath, null),
       data,
       this.getHeadersForJSON()
     )
@@ -26,7 +26,7 @@ export class OccurrenceRestService extends RestService {
   }
 
   getAllOccurrences() {
-    return this.http.get(this.getFullURL(this.occurrencesPath), this.getHeaders())
+    return this.http.get(this.getFullURLWithVersioning(this.occurrencesPath), this.getHeaders())
       .map(RestService.extractData)
       .catch(RestService.handleError);
   }
@@ -45,7 +45,7 @@ export class OccurrenceRestService extends RestService {
   deleteOccurrence(occurrence: Occurrence): Observable<{}> {
     let parameters = new Map<String, String>([['occurrence_id', occurrence.id]]);
     return this.http.delete(
-      this.getFullURL(this.occurrencesPath, parameters),
+      this.getFullURLWithVersioning(this.occurrencesPath, parameters),
       this.getHeaders()
     ).map(RestService.handlePostResponse).catch(RestService.handleError);
   }
