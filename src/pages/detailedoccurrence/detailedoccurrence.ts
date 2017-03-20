@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {NavParams, NavController} from "ionic-angular";
+import {NavParams, NavController, ToastController} from "ionic-angular";
 import {OccurrenceStorage} from "../../app/provider/occurrence_storage";
 import {Occurrence} from "../../models/occurrence";
 import {DateProvider} from "../../app/provider/date_provider";
@@ -26,7 +26,8 @@ export class DetailedOccurrencePage {
   locationError: boolean;
 
   constructor(public navCtrl: NavController, private navParams: NavParams, occurrence_storage: OccurrenceStorage, public translation: TranslationProvider,
-              public occurrence_rest_service: OccurrenceRestService, private crashlytics: Crashlytics) {
+              public occurrence_rest_service: OccurrenceRestService, private crashlytics: Crashlytics,
+              private toastCtrl: ToastController) {
     let symptom = navParams.get("symptom") as SymptomWithFactor;
     this.occurrence = new Occurrence(symptom, DateProvider.getCurrentISODateAsString(), null, null);
     this.occurrences_storage = occurrence_storage;
@@ -37,12 +38,13 @@ export class DetailedOccurrencePage {
 
   save() {
     let element = DOMHelper.disableElementById(this.save_btn_id);
-    this.occurrences_storage.add(this.occurrence);
     this.occurrence_rest_service.add(this.occurrence).subscribe(
       (res) => {
+        this.occurrences_storage.add(this.occurrence);
         this.navCtrl.pop();
       },
       (err) => {
+        this.presentToastError();
         this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err.message);
         element.disabled = false;
       }
@@ -70,5 +72,15 @@ export class DetailedOccurrencePage {
       this.loadingLocation = false;
       this.locationError = true;
     });
+  }
+
+  private presentToastError() {
+    let toast = this.toastCtrl.create({
+      message: 'Error while adding the occurrence',
+      duration: 10000,
+      position: 'bottom'
+    });
+
+    toast.present();
   }
 }
