@@ -1,5 +1,8 @@
 import {Component} from "@angular/core";
-import {ActionSheetController, Platform, ModalController, MenuController, NavController} from "ionic-angular";
+import {
+  ActionSheetController, Platform, ModalController, MenuController, NavController,
+  ToastController
+} from "ionic-angular";
 import {SymptomsStorage} from "../../app/provider/symptoms_storage";
 import {OccurrenceStorage} from "../../app/provider/occurrence_storage";
 import {Symptom} from "../../models/symptom";
@@ -34,7 +37,8 @@ export class HomePage {
               actionSheetCtrl: ActionSheetController, platform: Platform, occurrence_rest_service: OccurrenceRestService,
               public translation: TranslationProvider, public modalCtrl: ModalController,
               private menu: MenuController, public vars: GlobalVars, private crashlytics: Crashlytics,
-  private symptoms_user_rest_service: SymptomsUserRestService) {
+              private symptoms_user_rest_service: SymptomsUserRestService,
+              private toastCtrl: ToastController) {
     this.symptom_storage = symptoms_storage;
     this.occurrences_storage = occurrence_storage;
     this.actionSheetCtrl = actionSheetCtrl;
@@ -70,6 +74,7 @@ export class HomePage {
       element.disabled = false;
     };
     let callback_error = (err) => {
+      this.presentToastError();
       this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err.message);
       element.disabled = false;
     };
@@ -107,6 +112,16 @@ export class HomePage {
     this.symptoms_user_rest_service.deleteSymptom(symptom).subscribe((result) => {
       this.symptom_storage.remove(symptom);
     });
+  }
+
+  private presentToastError() {
+    let toast = this.toastCtrl.create({
+      message: 'Error while adding the occurrence',
+      duration: 10000,
+      position: 'bottom'
+    });
+
+    toast.present();
   }
 
 }
