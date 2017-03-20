@@ -1,3 +1,4 @@
+global['ENV'] = {protocol: 'http', apiDomainName: 'test.com', apiPort: '80', apiVersion: 'v1'};
 import {RestService} from "../../../app/services/rest_service";
 import {RequestOptions} from "@angular/http";
 
