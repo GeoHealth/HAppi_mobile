@@ -26,8 +26,9 @@ export class AuthRestService extends RestService {
       .catch(RestService.handleError);
   }
 
-  create(email: String, password: String, password_confirmation: String) {
-    let data = {'email': email, 'password': password, 'password_confirmation': password_confirmation};
+  create(email: String, password: String, password_confirmation: String, first_name: String, last_name: String, gender: String) {
+    let data = {'email': email, 'password': password, 'password_confirmation': password_confirmation, 'first_name': first_name, 'last_name': last_name,
+    'gender': gender};
     return this.http.post(
       this.getFullURL(this.createPath, null),
       data,
