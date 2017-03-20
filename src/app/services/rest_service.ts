@@ -9,6 +9,7 @@ export class RestService {
   protocol = 'http://';
   apiDomainName = 'localhost';
   apiPort = '3000';
+  apiVersion = 'v1';
   static headers: Headers;
 
   constructor(http: Http) {
@@ -16,11 +17,19 @@ export class RestService {
   }
 
   /**
-   * Return the URL of the REST API. It always ends with a '/'
-   * @returns {string} example: localhost:3000/v1/
+   * Return the URL of the REST API excluding the version. It always ends with a '/'
+   * @returns {string} example: localhost:3000/
    */
   getBaseURL(): string {
     return this.protocol + this.apiDomainName + ':' + this.apiPort + '/';
+  }
+
+  /**
+   * Return the URL of the REST API. It always ends with a '/'
+   * @returns {string} example: localhost:3000/v1/
+   */
+  getBaseURLWithVersioning(): string {
+    return this.getBaseURL() + this.apiVersion + '/';
   }
 
   /**
@@ -31,13 +40,18 @@ export class RestService {
    */
   getFullURL(path: String, parameters?: Map<String, String>): string {
     let fullURL = this.getBaseURL() + path;
-    if (!isNullOrUndefined(parameters)) {
-      fullURL += '?';
-      parameters.forEach((value: String, key: String) => {
-        fullURL += key + '=' + value + '&';
-      });
-    }
-    return fullURL;
+    return this.appendParametersToURL(parameters, fullURL);
+  }
+
+  /**
+   * Return the base URL, including the version, plus the given path
+   * @param path a path (not starting with a '/')
+   * @param parameters map of parameters
+   * @returns {string}
+   */
+  getFullURLWithVersioning(path: String, parameters?: Map<String, String>): string {
+    let fullURL = this.getBaseURLWithVersioning() + path;
+    return this.appendParametersToURL(parameters, fullURL);
   }
 
   getHeaders(): RequestOptions {
@@ -83,5 +97,14 @@ export class RestService {
     return Observable.throw(error);
   }
 
+  private appendParametersToURL(parameters: Map<String, String>, fullURL: string) {
+    if (!isNullOrUndefined(parameters)) {
+      fullURL += '?';
+      parameters.forEach((value: String, key: String) => {
+        fullURL += key + '=' + value + '&';
+      });
+    }
+    return fullURL;
+  }
 
 }

@@ -15,7 +15,7 @@ export class SymptomsUserRestService extends RestService {
   }
 
   getAllSymptoms() {
-    return this.http.get(this.getFullURL(this.symptoms_user_path, null), this.getHeaders())
+    return this.http.get(this.getFullURLWithVersioning(this.symptoms_user_path, null), this.getHeaders())
       .map(RestService.extractData)
       .catch(RestService.handleError);
   };
@@ -23,7 +23,7 @@ export class SymptomsUserRestService extends RestService {
   addSymptom(symptom: Symptom): Observable<{}> {
     let data = JSON.stringify({'symptom_id': symptom.id});
     return this.http.post(
-      this.getFullURL(this.symptoms_user_path, null),
+      this.getFullURLWithVersioning(this.symptoms_user_path, null),
       data,
       this.getHeadersForJSON()
     ).map(RestService.handlePostResponse).catch(RestService.handleError);
@@ -32,7 +32,7 @@ export class SymptomsUserRestService extends RestService {
   deleteSymptom(symptom: Symptom): Observable<{}> {
     let parameters = new Map<String, String>([['symptom_id', symptom.id]]);
     return this.http.delete(
-      this.getFullURL(this.symptoms_user_path, parameters),
+      this.getFullURLWithVersioning(this.symptoms_user_path, parameters),
       this.getHeaders()
     ).map(RestService.handlePostResponse).catch(RestService.handleError);
   }

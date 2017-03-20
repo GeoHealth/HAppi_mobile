@@ -17,7 +17,7 @@ export class StatsRestService extends RestService {
     data.set("end", end_date);
     data.set("unit", unit);
     return this.http.get(
-      this.getFullURL(this.countPath, data),
+      this.getFullURLWithVersioning(this.countPath, data),
       this.getHeaders()
     )
       .map(RestService.extractData)
