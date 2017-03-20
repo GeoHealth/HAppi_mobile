@@ -11,21 +11,38 @@
       <ion-row>
         <ion-col>
           <ion-list inset>
+            <ion-item>
+              <ion-input type="text" placeholder="First Name" name="first_name" [(ngModel)]="registerCredentials.firstName"
+              required></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-input type="text" placeholder="Last Name" name="last_name" [(ngModel)]="registerCredentials.lastName"
+              required></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label>Gender</ion-label>
+              <ion-select [(ngModel)]="registerCredentials.gender" name="gender" required>
+                <ion-option value="female" selected="true">Female</ion-option>
+                <ion-option value="male">Male</ion-option>
+              </ion-select>
+            </ion-item>
 
             <ion-item>
               <ion-input type="email" placeholder="Email" name="email" [(ngModel)]="registerCredentials.email"
-                         required></ion-input>
+              required></ion-input>
             </ion-item>
 
             <ion-item>
               <ion-input type="password" placeholder="Password" name="password"
-                         [(ngModel)]="registerCredentials.password" required></ion-input>
+              [(ngModel)]="registerCredentials.password" required></ion-input>
             </ion-item>
 
 
             <ion-item>
               <ion-input type="password" placeholder="Password Confirmation" name="password_confirmation"
-                         [(ngModel)]="registerCredentials.password_confirmation" required></ion-input>
+              [(ngModel)]="registerCredentials.password_confirmation" required></ion-input>
             </ion-item>
 
           </ion-list>

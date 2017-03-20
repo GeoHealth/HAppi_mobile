@@ -15,7 +15,7 @@
 <ion-menu side="left" [content]="content">
     <ion-content>
         <ion-toolbar>
-            <ion-title>{{translation.gettext("Menu")}}</ion-title>
+            <ion-title>{{auth_service.getUserInfo().first_name}} {{auth_service.getUserInfo().last_name}}</ion-title>
         </ion-toolbar>
         <ion-list>
             <button ion-item (click)="log_out()">

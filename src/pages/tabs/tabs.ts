@@ -20,7 +20,7 @@ export class TabsPage {
   page_name = "HAppi";
 
   constructor(public translation: TranslationProvider, private nav: NavController,
-              private auth_service: AuthService, public vars: GlobalVars) {
+              public auth_service: AuthService, public vars: GlobalVars) {
   }
 
   log_out() {
