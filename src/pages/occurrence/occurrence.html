@@ -4,7 +4,7 @@
 
       <button ion-item id="{{occurrence.id}}">
         <ion-label>
-          {{ occurrence.id }}
+          {{ occurrence.symptom?.name }}
         </ion-label>
         <ion-datetime displayFormat="MMM DD, YYYY HH:mm" disabled="true" [(ngModel)]="occurrence.date"></ion-datetime>
       </button>

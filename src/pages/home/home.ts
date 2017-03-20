@@ -79,8 +79,8 @@ export class HomePage {
       this.occurrence_rest_service.add(newOccurrence).subscribe(
         (res) => {
           callback_success(res);
-          let tmp = Occurrence.convertObjectToInstance(JSON.parse(res['_body']));
-          this.occurrences_storage.add(tmp);
+          let resultOccurrence = Occurrence.convertObjectToInstance(JSON.parse(res['_body']));
+          this.occurrences_storage.add(resultOccurrence);
         },
         (err) => {
           callback_error(err);
