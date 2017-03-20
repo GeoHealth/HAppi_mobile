@@ -3,13 +3,15 @@ import {Observable} from "rxjs/Observable";
 import {Headers, RequestOptions, Http, Response} from "@angular/http";
 import {isNullOrUndefined} from "util";
 
+declare const ENV;
+
 @Injectable()
 export class RestService {
   http: Http;
-  protocol = 'http://';
-  apiDomainName = 'localhost';
-  apiPort = '3000';
-  apiVersion = 'v1';
+  protocol = ENV.protocol;
+  apiDomainName = ENV.apiDomainName;
+  apiPort = ENV.apiPort;
+  apiVersion = ENV.apiVersion;
   static headers: Headers;
 
   constructor(http: Http) {

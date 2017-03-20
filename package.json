@@ -10,6 +10,9 @@
     "test-travis": "ng test --single-run --code-coverage",
     "build-translation": "po2json resources/locales/fr_BE/fr_BE.po src/assets/locales/fr_BE.json --pretty && po2json resources/locales/en/en.po src/assets/locales/en.json --pretty"
   },
+  "config": {
+    "ionic_webpack": "./config/webpack.config.js"
+  },
   "dependencies": {
     "@angular/common": "2.2.1",
     "@angular/compiler": "2.2.1",
@@ -35,7 +38,7 @@
     "zone.js": "0.6.26"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "1.0.0",
+    "@ionic/app-scripts": "1.1.4",
     "@types/jasmine": "2.5.41",
     "@types/node": "^6.0.50",
     "angular-cli": "1.0.0-beta.21",

@@ -1,0 +1,6 @@
+{
+   "protocol":"\"http://\"",
+   "apiDomainName":"\"localhost\"",
+   "apiPort":"\"3000\"",
+   "apiVersion":"\"v1\""
+}
