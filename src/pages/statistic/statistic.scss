@@ -1,25 +1,22 @@
 .ios, .md {
 
-  page-home {
+  page-statistic {
 
-    .scroll-content {
-      background-color: map-get($colors, light);
+    .stat-title {
+      display: inline-block;
     }
 
-    ion-card-header {
-      font-weight: bold;
+    canvas {
+      width: 100% !important;
+      max-width: 800px;
+      height: auto !important;
+    }
+
+    .stats-canvas-container {
+      min-height: 400px;
     }
 
   }
 
 }
 
-.stat-title {
-  display: inline-block;
-}
-
-canvas {
-  width: 100% !important;
-  max-width: 800px;
-  height: auto !important;
-}
