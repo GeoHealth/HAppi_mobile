@@ -1,8 +1,15 @@
 import {RestService} from "../../../app/services/rest_service";
 import {RequestOptions} from "@angular/http";
 
+declare const ENV;
+
+
 describe('RestService', () => {
   beforeEach(() => {
+    ENV.protocol = "http";
+    ENV.apiDomainName = "localhost";
+    ENV.apiPort = "3000";
+    ENV.apiVersion = "v1";
     this.rest_service = new RestService(null);
   });
 
