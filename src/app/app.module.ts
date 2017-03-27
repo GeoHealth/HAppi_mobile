@@ -24,6 +24,7 @@ import {GlobalVars} from "./provider/global_vars";
 import {FabricErrorHandler} from "../fabric_error_handler";
 import {Crashlytics} from "./services/crashlytics";
 import {SymptomsUserRestService} from "./services/symptoms_user_rest_service";
+import {ShareReportPage} from "../pages/sharereport/sharereport";
 
 const cloudSettings: CloudSettings = {
   'core': {
@@ -42,7 +43,8 @@ const cloudSettings: CloudSettings = {
     FactorPainIntensityComponent,
     AddSymptomPage,
     LoginPage,
-    RegisterPage
+    RegisterPage,
+    ShareReportPage
   ],
   imports: [
     IonicModule.forRoot(HAppiApp),
@@ -58,7 +60,8 @@ const cloudSettings: CloudSettings = {
     DetailedOccurrencePage,
     AddSymptomPage,
     LoginPage,
-    RegisterPage
+    RegisterPage,
+    ShareReportPage
   ],
   providers: [{
     provide: ErrorHandler,
