@@ -55,15 +55,14 @@ export class StatisticPage {
 
 
           for (let line = 0; line < this.symptoms_counts.symptoms.length; line++) {
-            let y = [];
             let symptom = this.symptoms_counts.symptoms[line];
             let data = [];
 
             for (let x = 0; x < symptom.counts.length; x++) {
-              data.push(symptom.counts[x].count)
+              data.push(symptom.counts[x].count);
             }
 
-            let color = this.getRandomColor()
+            let color = this.getRandomColor();
 
             let dataset = {
               label: symptom.name,
@@ -146,7 +145,7 @@ export class StatisticPage {
   getRandomColor() {
     let letters = '0123456789ABCDEF'.split('');
     let color = '#';
-    for (var i = 0; i < 6; i++) {
+    for (let i = 0; i < 6; i++) {
       color += letters[Math.round(Math.random() * 15)];
     }
     return color;
@@ -157,9 +156,9 @@ export class StatisticPage {
   }
 
   disable() {
-    var now = moment(new Date(moment().get('year'), moment().get('month'), moment().get('date'), 23, 59, 59));
-    var duration = moment.duration(now.diff(this.end_date));
-    var days = duration.asDays();
-    return days == 0;
+    let now = moment(new Date(moment().get('year'), moment().get('month'), moment().get('date'), 23, 59, 59));
+    let duration = moment.duration(now.diff(this.end_date));
+    let days = duration.asDays();
+    return days === 0;
   }
 }

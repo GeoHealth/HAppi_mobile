@@ -7,29 +7,29 @@
       Share the historic of your symptoms with your doctor. Select a date range during which you want to show your symptoms to your doctor.
     </ion-row>
 
-    <form (ngSubmit)="sendReport" #reportForm="ngForm">
+    <form (ngSubmit)="sendReport()" #reportForm="ngForm">
       <ion-item>
         <ion-input type="email" placeholder="Doctor Email" name="email" [(ngModel)]="reportInformations.doctor_email" required></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label stacked>Start Date</ion-label>
-        <ion-input type="date" placeholder="Start Date" name="start_date" [(ngModel)]="reportInformations.start_date" required></ion-input>
+        <ion-datetime name="start_date" pickerFormat="DD-MM-YYYY HH:mm" displayFormat="DD-MM-YYYY HH:m" [(ngModel)]="reportInformations.start_date" ></ion-datetime>
       </ion-item>
 
       <ion-item>
         <ion-label stacked>End Date</ion-label>
-        <ion-input type="date" placeholder="End Date" name="end_date" [(ngModel)]="reportInformations.end_date" required></ion-input>
+        <ion-datetime name="end_date" pickerFormat="DD-MM-YYYY HH:mm" displayFormat="DD-MM-YYYY HH:mm" [(ngModel)]="reportInformations.end_date" ></ion-datetime>
       </ion-item>
 
       <ion-item>
         <ion-label stacked>Expiration Date</ion-label>
-        <ion-input type="date" name="expiration_date" [(ngModel)]="reportInformations.expiration_date" required></ion-input>
+         <ion-datetime name="expiration_date" pickerFormat="DD-MM-YYYY HH:mm" displayFormat="DD-MM-YYYY HH:mm" [(ngModel)]="reportInformations.expiration_date" required></ion-datetime>
       </ion-item>
 
       <ion-row>
         <ion-col class="share-col">
-          <button ion-button class="submit-btn" full type="submit" [disabled]="!reportForm.form.valid">Send</button>
+          <button ion-button class="submit-btn" full type="submit" >Send</button>
         </ion-col>
       </ion-row>
     </form>
