@@ -11,4 +11,13 @@ page-home {
   .symptom-item {
     min-height: 60px;
   }
+
+  .scroll-content {
+    background-color: map-get($colors, light);
+  }
+
+  ion-card-header {
+    font-weight: bold;
+  }
+
 }
