@@ -26,13 +26,9 @@ export class ShareReportPage {
   }
 
   public sendReport() {
-    this.reports_rest_service.create(this.reportInformations.start_date, this.reportInformations.end_date, this.reportInformations.doctor_email, this.reportInformations.expiration_date).subscribe((res) => {
-      if (res.success) {
-        this.createSuccess = true;
-        this.showPopup("Success", "Symptoms correctly send");
-      } else {
-        this.showPopup("Error", res.msg);
-      }
+    this.reports_rest_service.create(this.reportInformations.doctor_email, this.reportInformations.start_date, this.reportInformations.end_date, this.reportInformations.expiration_date).subscribe((res) => {
+      this.createSuccess = true;
+      this.showPopup("Success", "Symptoms correctly send");
     }, (err) => {
       this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
       this.showPopup("Error", err);

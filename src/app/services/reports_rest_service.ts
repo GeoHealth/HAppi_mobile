@@ -11,7 +11,7 @@ export class ReportsRestService extends RestService {
     super(http);
   }
 
-  create(email: String, start_date: String, end_date, expiration_date: String) {
+  create(email: string, start_date: string, end_date: string, expiration_date: string) {
     let data = {'start_date': start_date, 'end_date': end_date, 'email': email, 'expiration_date': expiration_date};
     return this.http.post(
       this.getFullURL(this.createPath, null),
