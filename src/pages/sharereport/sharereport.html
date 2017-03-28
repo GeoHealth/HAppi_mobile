@@ -6,25 +6,27 @@
     <ion-row class="share-text" padding>
       Share the historic of your symptoms with your doctor. Select a date range during which you want to show your symptoms to your doctor.
     </ion-row>
-
+    <ion-label class="share-text" stacked>Email Doctor</ion-label>
     <form (ngSubmit)="sendReport()" #reportForm="ngForm">
       <ion-item>
-        <ion-input type="email" placeholder="Doctor Email" name="email" [(ngModel)]="reportInformations.doctor_email" required></ion-input>
+        <ion-input type="email" placeholder="doctor@mail.com" name="email" [(ngModel)]="reportInformations.doctor_email" required></ion-input>
       </ion-item>
 
-      <ion-item>
-        <ion-label stacked>Start Date</ion-label>
-        <ion-datetime name="start_date" pickerFormat="DD-MM-YYYY HH:mm" displayFormat="DD-MM-YYYY HH:m" [(ngModel)]="reportInformations.start_date" ></ion-datetime>
-      </ion-item>
+      <ion-label class="share-text" stacked>Start Date</ion-label>
 
       <ion-item>
-        <ion-label stacked>End Date</ion-label>
-        <ion-datetime name="end_date" pickerFormat="DD-MM-YYYY HH:mm" displayFormat="DD-MM-YYYY HH:mm" [(ngModel)]="reportInformations.end_date" ></ion-datetime>
+        <ion-input type="date" placeholder="Start Date" name="start_date" [(ngModel)]="reportInformations.start_date" required></ion-input>
+
       </ion-item>
 
+      <ion-label class="share-text" stacked>End Date</ion-label>
       <ion-item>
-        <ion-label stacked>Expiration Date</ion-label>
-         <ion-datetime name="expiration_date" pickerFormat="DD-MM-YYYY HH:mm" displayFormat="DD-MM-YYYY HH:mm" [(ngModel)]="reportInformations.expiration_date" required></ion-datetime>
+        <ion-input type="date" placeholder="End Date" name="end_date" [(ngModel)]="reportInformations.end_date" required></ion-input>
+      </ion-item>
+
+      <ion-label class="share-text" stacked>Expiration Date</ion-label>
+      <ion-item>
+        <ion-input type="date" name="expiration_date" [(ngModel)]="reportInformations.expiration_date" required></ion-input>
       </ion-item>
 
       <ion-row>

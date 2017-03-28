@@ -16,8 +16,8 @@ export class ShareReportPage {
   test: any;
 
   constructor(public vars: GlobalVars, private reports_rest_service: ReportsRestService, private alertCtrl: AlertController, private crashlytics: Crashlytics) {
-    this.reportInformations.end_date = moment().format();
-    this.reportInformations.expiration_date = moment().add(14, 'days').format();
+    this.reportInformations.end_date = moment().format('YYYY-MM-DD');
+    this.reportInformations.expiration_date = moment().add(14, 'days').format('YYYY-MM-DD');
 
   }
 
@@ -36,7 +36,7 @@ export class ShareReportPage {
     }, (err) => {
       this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
       this.showPopup("Error", err);
-    });
+     });
   }
 
   showPopup(title, text) {
