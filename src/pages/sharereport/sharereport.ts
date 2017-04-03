@@ -16,7 +16,7 @@ export class ShareReportPage {
   test: any;
 
   constructor(public vars: GlobalVars, private reports_rest_service: ReportsRestService, private alertCtrl: AlertController, private crashlytics: Crashlytics) {
-    this.reportInformations.end_date = moment().format('YYYY-MM-DD');
+    this.reportInformations.end_date = moment().add(1, 'days').format('YYYY-MM-DD');
     this.reportInformations.expiration_date = moment().add(14, 'days').format('YYYY-MM-DD');
 
   }
