@@ -12,6 +12,7 @@ import {TranslationProvider} from "../../app/provider/translation_provider";
 import {isNullOrUndefined} from "util";
 import {OccurrenceRestService} from "../../app/services/occurrence_rest_service";
 import {Crashlytics} from "../../app/services/crashlytics";
+import { GPSAnonymizer } from "../../app/services/gps_anonymizer";
 
 @Component({
   selector: 'page-detailed-occurrence',
@@ -63,8 +64,8 @@ export class DetailedOccurrencePage {
   private retrieveCurrentLocation() {
     this.loadingLocation = true;
     this.locationError = false;
-    Geolocation.getCurrentPosition().then((gps_location) => {
-      this.occurrence.gps_coordinate = new GPSCoordinates(gps_location.coords);
+    Geolocation.getCurrentPosition({maximumAge: 2000, timeout: 5000}).then((gps_location) => {
+      this.occurrence.gps_coordinate = GPSAnonymizer.anonymize_gps_coordinates(new GPSCoordinates(gps_location.coords));
       this.loadingLocation = false;
     }).catch((err) => {
       this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err.message);
