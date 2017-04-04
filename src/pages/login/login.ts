@@ -33,14 +33,15 @@ export class LoginPage {
   public login() {
     this.showLoading();
     this.auth.login(this.registerCredentials).subscribe((allowed) => {
-      this.loading.dismiss();
       if (allowed) {
         this.retrieveSymptomsForUser().subscribe(() => {
           this.retrieveOccurrencesForUser().subscribe(() => {
+            this.loading.dismiss();
             this.nav.setRoot(TabsPage);
           });
         });
       } else {
+        this.loading.dismiss();
         this.showError("Invalid login credentials. Please try again.");
       }
     }, (err) => {

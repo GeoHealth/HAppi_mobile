@@ -1,9 +1,9 @@
-import {RestService} from "./rest_service";
-import {Injectable} from "@angular/core";
-import {Occurrence} from "../../models/occurrence";
-import {Observable} from "rxjs/Observable";
-import {Http} from "@angular/http";
-import {OccurrenceStorage} from "../provider/occurrence_storage"
+import { RestService } from "./rest_service";
+import { Injectable } from "@angular/core";
+import { Occurrence } from "../../models/occurrence";
+import { Observable } from "rxjs/Observable";
+import { Http } from "@angular/http";
+import { OccurrenceStorage } from "../provider/occurrence_storage"
 
 @Injectable()
 export class OccurrenceRestService extends RestService {
@@ -35,9 +35,12 @@ export class OccurrenceRestService extends RestService {
   persistAllOccurencesLocally(): Observable<boolean> {
     return Observable.create((observer) => {
       this.getAllOccurrences().subscribe((result) => {
-        this.occurrences_storage.addAll(Occurrence.convertObjectsToInstancesArray(result.occurrences));
-        observer.next(true);
-        observer.complete();
+        this.occurrences_storage.removeAll().subscribe(() => {
+          this.occurrences_storage.addAll(Occurrence.convertObjectsToInstancesArray(result.occurrences)).subscribe(() => {
+            observer.next(true);
+            observer.complete();
+          });
+        });
       })
     })
   }
@@ -49,6 +52,4 @@ export class OccurrenceRestService extends RestService {
       this.getHeaders()
     ).map(RestService.handlePostResponse).catch(RestService.handleError);
   }
-
-
 }

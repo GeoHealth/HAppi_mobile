@@ -1,10 +1,10 @@
-import {RestService} from "./rest_service";
-import {Injectable} from "@angular/core";
-import {Http} from "@angular/http";
-import {Symptom} from "../../models/symptom";
-import {Observable} from "rxjs";
-import {SymptomsStorage} from "../provider/symptoms_storage";
-import {SymptomWithFactor} from "../../models/symptom_with_factors";
+import { RestService } from "./rest_service";
+import { Injectable } from "@angular/core";
+import { Http } from "@angular/http";
+import { Symptom } from "../../models/symptom";
+import { Observable } from "rxjs";
+import { SymptomsStorage } from "../provider/symptoms_storage";
+import { SymptomWithFactor } from "../../models/symptom_with_factors";
 
 @Injectable()
 export class SymptomsUserRestService extends RestService {
@@ -40,9 +40,12 @@ export class SymptomsUserRestService extends RestService {
   persistAllSymptomsLocally(): Observable<boolean> {
     return Observable.create((observer) => {
       this.getAllSymptoms().subscribe((result) => {
-        this.symptoms_storage.addAll(SymptomWithFactor.convertObjectsToInstancesArray(result.symptoms));
-        observer.next(true);
-        observer.complete();
+        this.symptoms_storage.removeAll().subscribe(() => {
+          this.symptoms_storage.addAll(SymptomWithFactor.convertObjectsToInstancesArray(result.symptoms)).subscribe(() => {
+            observer.next(true);
+            observer.complete();
+          });
+        });
       });
     });
   }

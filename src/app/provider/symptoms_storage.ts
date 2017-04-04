@@ -3,6 +3,7 @@ import {Injectable} from "@angular/core";
 import {SymptomWithFactor} from "../../models/symptom_with_factors";
 import {CachedArray} from "./cached_array";
 import {Crashlytics} from "../services/crashlytics";
+import { Observable } from "rxjs";
 
 declare let require: any;
 let loki = require('lokijs');
@@ -45,24 +46,30 @@ export class SymptomsStorage {
     });
   }
 
-  private saveAll() {
-    this.store.setItem('storeKey', JSON.stringify(this.inMemoryDB)).then((value) => {
-      this.cache_symptoms.invalidateCache();
-    }).catch((err) => {
-      this.crashlytics.sendNonFatalCrashWithStacktraceCreation('error while saving: ' + err);
+  private saveAll(): Observable<boolean> {
+    return Observable.create((observer) => {
+      this.store.setItem('storeKey', JSON.stringify(this.inMemoryDB)).then((value) => {
+        this.cache_symptoms.invalidateCache();
+        observer.next(true);
+        observer.complete();
+      }).catch((err) => {
+        this.crashlytics.sendNonFatalCrashWithStacktraceCreation('error while saving: ' + err);
+        observer.next(false);
+        observer.complete();
+      });
     });
   }
 
-  add(symptom: SymptomWithFactor) {
+  add(symptom: SymptomWithFactor): Observable<boolean> {
     if (symptom instanceof SymptomWithFactor) {
       this.symptoms.insert(symptom);
-      this.saveAll();
+      return this.saveAll();
     } else {
       throw new TypeError("Wrong type adding to symptoms_storage");
     }
   }
 
-  addAll(symptoms: Array<SymptomWithFactor>) {
+  addAll(symptoms: Array<SymptomWithFactor>): Observable<boolean> {
     symptoms.forEach((symptom) => {
       if (symptom instanceof SymptomWithFactor) {
         this.symptoms.insert(symptom);
@@ -70,7 +77,7 @@ export class SymptomsStorage {
         throw new TypeError("Wrong type adding to symptoms_storage");
       }
     });
-    this.saveAll();
+    return this.saveAll();
   }
 
   all(): SymptomWithFactor[] {
@@ -98,14 +105,14 @@ export class SymptomsStorage {
   }
 
 
-  remove(symptom: Symptom) {
+  remove(symptom: Symptom): Observable<boolean> {
     let s = this.symptoms.find(symptom);
     this.symptoms.remove(s);
-    this.saveAll();
+    return this.saveAll();
   }
 
-  removeAll() {
+  removeAll(): Observable<boolean> {
     this.symptoms.clear();
-    this.saveAll();
+    return this.saveAll();
   }
 }

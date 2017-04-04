@@ -1,8 +1,8 @@
-import {Injectable} from "@angular/core";
-import {Headers} from "@angular/http";
-import {Crashlytics} from "../services/crashlytics";
-import {Observable} from "rxjs";
-import {User} from "./auth_service";
+import { Injectable } from "@angular/core";
+import { Headers } from "@angular/http";
+import { Crashlytics } from "../services/crashlytics";
+import { Observable } from "rxjs";
+import { User } from "./auth_service";
 
 declare let require: any;
 let loki = require('lokijs');
@@ -72,7 +72,7 @@ export class AuthStorage {
     });
   }
 
-  saveUser(user: User): Observable<boolean>  {
+  saveUser(user: User): Observable<boolean> {
     return Observable.create((observer) => {
       this.user.clear();
       if (user instanceof User) {
@@ -92,7 +92,7 @@ export class AuthStorage {
     })
   }
 
-  saveHeaders(headers: Headers): Observable<boolean>  {
+  saveHeaders(headers: Headers): Observable<boolean> {
     return Observable.create((observer) => {
       this.headers.clear();
       if (headers instanceof Headers) {
@@ -113,10 +113,10 @@ export class AuthStorage {
   }
 
   deleteUser(): Observable<boolean> {
-    return this.saveUser(new User(" "," "," "," "));
+    return this.saveUser(new User(" ", " ", " ", " "));
   }
 
-  deleteHeaders(): Observable<boolean>  {
+  deleteHeaders(): Observable<boolean> {
     return this.saveHeaders(new Headers());
   }
 }
