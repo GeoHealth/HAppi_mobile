@@ -15,7 +15,7 @@ describe('TranslationProvider', () => {
     beforeEach(() => {
       this.locale = 'locale';
 
-      spyOn(this.translation_provider, 'loadJSONLocale');
+      spyOn(this.translation_provider, 'loadJSONLocale').and.stub();
     });
 
     it('sets current_locale to the given value', () => {
