@@ -143,12 +143,14 @@ export class AuthService {
     return new Promise((resolve, reject) => {
       this.auth_rest_service.disconnection().subscribe(
         (res) => {
-          this.auth_storage.deleteHeaders();
-          this.auth_storage.deleteUser();
-          this.symptoms_storage.removeAll();
-          this.occurrence_storage.removeAll();
-          this.setCrashlyticsMetadata(null, null, null, null);
-          resolve();
+          this.auth_storage.deleteHeaders().subscribe(() => {
+            this.auth_storage.deleteUser().subscribe(() => {
+              this.symptoms_storage.removeAll();
+              this.occurrence_storage.removeAll();
+              this.setCrashlyticsMetadata(null, null, null, null);
+              resolve();
+            });
+          });
         },
         (err) => {
           this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);

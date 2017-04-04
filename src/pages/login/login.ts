@@ -21,7 +21,8 @@ export class LoginPage {
 
   constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController,
               private loadingCtrl: LoadingController, private auth_storage: AuthStorage,
-              private crashlytics: Crashlytics, private symptoms_user_rest_service: SymptomsUserRestService, private occurrence_rest_service: OccurrenceRestService) {
+              private crashlytics: Crashlytics, private symptoms_user_rest_service: SymptomsUserRestService,
+              private occurrence_rest_service: OccurrenceRestService) {
     this.autoLogin();
   }
 
@@ -68,7 +69,7 @@ export class LoginPage {
   private autoLogin() {
     this.showLoading();
     this.auth_storage.getHeaders().then((headers: any) => {
-      if (!isNullOrUndefined(headers) && headers.data.length > 0) {
+      if (!isNullOrUndefined(headers) && headers.data.length > 0 && headers.data[0]['uid']) {
         this.auth.validateToken(new Headers(headers.data[0])).then((res) => {
             if (res) {
               this.nav.setRoot(TabsPage);
