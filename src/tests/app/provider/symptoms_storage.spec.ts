@@ -53,7 +53,7 @@ describe('SymptomsStorage', () => {
     });
 
     it('refuses an object that is not a SymptomWithFactor by throwing a TypeError exception', () => {
-      let wrong_occurrence = {
+      this.wrong_occurrence = {
         id: 'id',
         name: 'name',
         short_description: 'short',
@@ -63,7 +63,7 @@ describe('SymptomsStorage', () => {
         factors: null
       };
       expect(() => {
-        this.symptomsStorage.add(wrong_occurrence);
+        this.symptomsStorage.add(this.wrong_occurrence);
       }).toThrowError(TypeError);
       expect(this.symptomsStorage.size()).toEqual(0);
     });
@@ -79,8 +79,8 @@ describe('SymptomsStorage', () => {
     });
 
     it('returns an instance of SymptomWithFactor', () => {
-      let symptom: SymptomWithFactor = this.symptomsStorage.findByName(this.symptom_name1)[0];
-      expect(symptom instanceof SymptomWithFactor).toBeTruthy();
+      this.symptom = this.symptomsStorage.findByName(this.symptom_name1)[0];
+      expect(this.symptom instanceof SymptomWithFactor).toBeTruthy();
     });
   });
 
@@ -99,9 +99,9 @@ describe('SymptomsStorage', () => {
   describe('#all', () => {
     it('reads all symptoms', () => {
       this.addFewSymptoms();
-      let symptoms = this.symptomsStorage.all();
-      expect(symptoms.length).toEqual(2);
-      expect(symptoms[0].name).toEqual(this.symptom_name1);
+      this.symptoms = this.symptomsStorage.all();
+      expect(this.symptoms.length).toEqual(2);
+      expect(this.symptoms[0].name).toEqual(this.symptom_name1);
     });
   });
 
@@ -110,11 +110,11 @@ describe('SymptomsStorage', () => {
       this.addFewSymptoms();
       expect(this.symptomsStorage.size()).toEqual(2);
 
-      let symptoms = this.symptomsStorage.all();
-      this.symptomsStorage.remove(symptoms[0]);
+      this.symptoms = this.symptomsStorage.all();
+      this.symptomsStorage.remove(this.symptoms[0]);
       expect(this.symptomsStorage.size()).toEqual(1);
 
-      this.symptomsStorage.remove(symptoms[1]);
+      this.symptomsStorage.remove(this.symptoms[1]);
       expect(this.symptomsStorage.size()).toEqual(0);
     });
 

@@ -31,11 +31,11 @@ describe('OccurrenceStorage', () => {
       this.occurrenceStorage.add(newOccurrence);
     };
 
-    let keyValueStore = {};
+    this.keyValueStore = {};
 
     spyOn(this.occurrenceStorage.store, 'getItem').and.callFake((key) => {
       return new Promise((resolve, reject) => {
-        resolve(keyValueStore[key]);
+        resolve(this.keyValueStore[key]);
       });
     });
     spyOn(this.occurrenceStorage.store, 'setItem').and.callFake((key, value) => {
@@ -44,7 +44,7 @@ describe('OccurrenceStorage', () => {
       });
     });
     spyOn(this.occurrenceStorage.store, 'clear').and.callFake(() => {
-      keyValueStore = {};
+      this.keyValueStore = {};
     });
   });
 

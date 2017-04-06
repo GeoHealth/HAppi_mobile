@@ -19,6 +19,9 @@ describe('GPSAnonymizer', () => {
         let {randomLatitude, randomLongitude} = GPSAnonymizer.generate_random_coordinate(50.0, 4.0, 100);
         expect(randomLatitude).toBeCloseTo(50.0, 0.0005);
         expect(randomLongitude).toBeCloseTo(4.0, 0.0005);
+
+        randomLatitude = null;
+        randomLongitude = null;
       });
     });
 
@@ -27,6 +30,9 @@ describe('GPSAnonymizer', () => {
         let {randomLatitude, randomLongitude} = GPSAnonymizer.generate_random_coordinate(undefined, undefined, 0);
         expect(randomLatitude).toBeNaN();
         expect(randomLongitude).toBeNaN();
+
+        randomLatitude = null;
+        randomLongitude = null;
       });
     });
   });
@@ -39,8 +45,8 @@ describe('GPSAnonymizer', () => {
     });
 
     it('returns the same object', () => {
-      let givenObject = this.gps_coordinate;
-      expect(GPSAnonymizer.anonymize_gps_coordinates(givenObject)).toBe(givenObject);
+      this.givenObject = this.gps_coordinate;
+      expect(GPSAnonymizer.anonymize_gps_coordinates(this.givenObject)).toBe(this.givenObject);
     });
 
     it('calls GPSAnonymizer.generate_random_coordinate', () => {
@@ -50,9 +56,9 @@ describe('GPSAnonymizer', () => {
     });
 
     it('updates the latitude and longitude', () => {
-      let actual = GPSAnonymizer.anonymize_gps_coordinates(this.gps_coordinate);
-      expect(actual.latitude).not.toEqual(this.latitude);
-      expect(actual.longitude).not.toEqual(this.longitude);
+      this.actual = GPSAnonymizer.anonymize_gps_coordinates(this.gps_coordinate);
+      expect(this.actual.latitude).not.toEqual(this.latitude);
+      expect(this.actual.longitude).not.toEqual(this.longitude);
     });
   })
 });

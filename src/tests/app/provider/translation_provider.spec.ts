@@ -40,16 +40,16 @@ describe('TranslationProvider', () => {
   });
 
   describe('#loadDevicePreferredLocale', () => {
-    let getPreferredLanguagePromise: any;
 
     beforeEach(() => {
+      this.getPreferredLanguagePromise = null;
       spyOn(Globalization, 'getPreferredLanguage').and.callFake(() => {
-        return getPreferredLanguagePromise;
+        return this.getPreferredLanguagePromise;
       });
     });
 
     it('set the value of the current_locale to the language of the device', (done) => {
-      getPreferredLanguagePromise = new Promise((resolve, reject) => {
+      this.getPreferredLanguagePromise = new Promise((resolve, reject) => {
         resolve({"value": this.locale});
       });
 
@@ -62,7 +62,7 @@ describe('TranslationProvider', () => {
     });
 
     it('set the value of current_locale to the default locale when it cannot be retrieved from the device', (done) => {
-      getPreferredLanguagePromise = new Promise((resolve, reject) => {
+      this.getPreferredLanguagePromise = new Promise((resolve, reject) => {
         reject({});
       });
 
@@ -74,7 +74,7 @@ describe('TranslationProvider', () => {
     });
 
     afterEach(() => {
-      getPreferredLanguagePromise = null;
+      this.getPreferredLanguagePromise = null;
     });
   });
 

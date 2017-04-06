@@ -20,6 +20,15 @@ declare var require: any;
 __karma__.loaded = (): any => { /* no op */
 };
 
+// For the tests, we cannot read those value from a configuration file.
+declare const global;
+declare const ENV;
+global['ENV'] = {protocol: 'http', apiDomainName: 'test.com', apiPort: '80', apiVersion: 'v1'};
+ENV.protocol = "http";
+ENV.apiDomainName = "localhost";
+ENV.apiPort = "3000";
+ENV.apiVersion = "v1";
+
 Promise.all([
   System.import('@angular/core/testing'),
   System.import('@angular/platform-browser-dynamic/testing'),

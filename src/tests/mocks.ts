@@ -128,6 +128,6 @@ export class OccurrenceStorageMock extends OccurrenceStorage {
 
 export class ToastControllerMock extends ToastController {
   constructor(){
-    super(null);
+    super(null, null);
   }
 }
