@@ -1,9 +1,14 @@
 import {RestService} from "../../../app/services/rest_service";
 import {RequestOptions} from "@angular/http";
+import { CrashlyticsMock } from "../../mocks";
 
 describe('RestService', () => {
   beforeEach(() => {
-    this.rest_service = new RestService(null);
+    this.rest_service = new RestService(null, new CrashlyticsMock());
+  });
+
+  afterEach(() => {
+    this.rest_service = null;
   });
 
   describe('#getBaseURL', () => {

@@ -4,13 +4,14 @@ import { Occurrence } from "../../models/occurrence";
 import { Observable } from "rxjs/Observable";
 import { Http } from "@angular/http";
 import { OccurrenceStorage } from "../provider/occurrence_storage"
+import { Crashlytics } from "./crashlytics";
 
 @Injectable()
 export class OccurrenceRestService extends RestService {
   occurrencesPath = 'occurrences';
 
-  constructor(http: Http, private occurrences_storage: OccurrenceStorage) {
-    super(http);
+  constructor(http: Http, private occurrences_storage: OccurrenceStorage, crashlytics: Crashlytics) {
+    super(http, crashlytics);
   }
 
   add(occurrence: Occurrence): Observable<{}> {
@@ -21,14 +22,14 @@ export class OccurrenceRestService extends RestService {
       data,
       this.getHeadersForJSON()
     )
-      .map(RestService.handlePostResponse)
-      .catch(RestService.handleError);
+      .map(this.handlePostResponse)
+      .catch(this.handleError);
   }
 
   getAllOccurrences() {
     return this.http.get(this.getFullURLWithVersioning(this.occurrencesPath), this.getHeaders())
-      .map(RestService.extractData)
-      .catch(RestService.handleError);
+      .map(this.extractData)
+      .catch(this.handleError);
   }
 
 
@@ -50,6 +51,6 @@ export class OccurrenceRestService extends RestService {
     return this.http.delete(
       this.getFullURLWithVersioning(this.occurrencesPath, parameters),
       this.getHeaders()
-    ).map(RestService.handlePostResponse).catch(RestService.handleError);
+    ).map(this.handlePostResponse).catch(this.handleError);
   }
 }

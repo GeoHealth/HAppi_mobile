@@ -2,15 +2,16 @@ import {} from "jasmine";
 import { OccurrenceRestService } from "../../../app/services/occurrence_rest_service";
 import { Http } from "@angular/http";
 import { Occurrence } from "../../../models/occurrence";
-import { HttpMock, OccurrenceStorageMock } from "../../mocks";
+import { CrashlyticsMock, HttpMock, OccurrenceStorageMock } from "../../mocks";
 import { SymptomWithFactor } from "../../../models/symptom_with_factors";
 import { Observable } from "rxjs/Rx";
 import { OccurrenceStorage } from "../../../app/provider/occurrence_storage";
+import { Crashlytics } from "../../../app/services/crashlytics";
 
 describe('Occurence rest service', () => {
   describe('#add', () => {
     beforeEach(() => {
-      this.occurrence_rest_service = new OccurrenceRestService(new HttpMock() as Http, new OccurrenceStorageMock() as OccurrenceStorage);
+      this.occurrence_rest_service = new OccurrenceRestService(new HttpMock() as Http, new OccurrenceStorageMock() as OccurrenceStorage, new CrashlyticsMock() as Crashlytics);
 
       spyOn(this.occurrence_rest_service.http, 'post').and.returnValue(
         Observable.of({"status": 201})

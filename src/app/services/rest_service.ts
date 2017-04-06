@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
 import {Headers, RequestOptions, Http, Response} from "@angular/http";
 import {isNullOrUndefined} from "util";
+import { Crashlytics } from "./crashlytics";
 
 declare const ENV;
 
@@ -14,7 +15,7 @@ export class RestService {
   apiVersion = ENV.apiVersion;
   static headers: Headers;
 
-  constructor(http: Http) {
+  constructor(http: Http, private crashlytics: Crashlytics) {
     this.http = http;
   }
 
@@ -22,7 +23,7 @@ export class RestService {
    * Return the URL of the REST API excluding the version. It always ends with a '/'
    * @returns {string} example: localhost:3000/
    */
-  getBaseURL(): string {
+  public getBaseURL(): string {
     return this.protocol + this.apiDomainName + ':' + this.apiPort + '/';
   }
 
@@ -30,7 +31,7 @@ export class RestService {
    * Return the URL of the REST API. It always ends with a '/'
    * @returns {string} example: localhost:3000/v1/
    */
-  getBaseURLWithVersioning(): string {
+  public getBaseURLWithVersioning(): string {
     return this.getBaseURL() + this.apiVersion + '/';
   }
 
@@ -40,7 +41,7 @@ export class RestService {
    * @param parameters map of parameters
    * @returns {string}
    */
-  getFullURL(path: String, parameters?: Map<String, String>): string {
+  public getFullURL(path: String, parameters?: Map<String, String>): string {
     let fullURL = this.getBaseURL() + path;
     return this.appendParametersToURL(parameters, fullURL);
   }
@@ -51,12 +52,12 @@ export class RestService {
    * @param parameters map of parameters
    * @returns {string}
    */
-  getFullURLWithVersioning(path: String, parameters?: Map<String, String>): string {
+  public getFullURLWithVersioning(path: String, parameters?: Map<String, String>): string {
     let fullURL = this.getBaseURLWithVersioning() + path;
     return this.appendParametersToURL(parameters, fullURL);
   }
 
-  getHeaders(): RequestOptions {
+  public getHeaders(): RequestOptions {
     return new RequestOptions({headers: RestService.headers});
   }
 
@@ -64,21 +65,21 @@ export class RestService {
    * Return a simple headers options for JSON content
    * @returns {Headers}
    */
-  getHeadersForJSON(): RequestOptions {
+  public getHeadersForJSON(): RequestOptions {
     let json_headers = new Headers(RestService.headers);
     json_headers.append('Content-Type', 'application/json');
     return new RequestOptions({headers: json_headers});
   }
 
-  static handlePostResponse(res: Response) {
+  public handlePostResponse(res: Response) {
     return res;
   }
 
-  static extractData(res: Response) {
+  public extractData(res: Response) {
     return res.json() || {};
   }
 
-  static handleError(error: Response | any) {
+  public handleError(error: Response | any) {
     try {
       let errMsg: string;
       if (error instanceof Response) {
@@ -88,14 +89,14 @@ export class RestService {
       } else {
         errMsg = error.message ? error.message : error.toString();
       }
-      (<any>window).fabric.sendNonFatalCrashWithStacktraceCreation(errMsg);
+      this.crashlytics.sendNonFatalCrashWithStacktraceCreation(errMsg);
       return Observable.throw(errMsg);
     } catch (e) {
       return Observable.throw(error);
     }
   }
 
-  static handleErrorWithoutParsing(error: Response | any) {
+  public handleErrorWithoutParsing(error: Response | any) {
     return Observable.throw(error);
   }
 
