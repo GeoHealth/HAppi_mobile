@@ -6,6 +6,7 @@
     <ion-row class="share-text" padding>
       Share the historic of your symptoms with your doctor. Select a date range during which you want to show your symptoms to your doctor.
     </ion-row>
+
     <ion-label class="share-text" stacked>Email Doctor</ion-label>
     <form (ngSubmit)="sendReport()" #reportForm="ngForm">
       <ion-item>
@@ -15,13 +16,13 @@
       <ion-label class="share-text" stacked>Start Date</ion-label>
 
       <ion-item>
-        <ion-input type="date" placeholder="Start Date" name="start_date" [(ngModel)]="reportInformations.start_date" required></ion-input>
+        <ion-input type="date" name="start_date" [(ngModel)]="reportInformations.start_date" required></ion-input>
 
       </ion-item>
 
       <ion-label class="share-text" stacked>End Date</ion-label>
       <ion-item>
-        <ion-input type="date" placeholder="End Date" name="end_date" [(ngModel)]="reportInformations.end_date" required></ion-input>
+        <ion-input type="date" name="end_date" [(ngModel)]="reportInformations.end_date" required></ion-input>
       </ion-item>
 
       <ion-label class="share-text" stacked>Expiration Date</ion-label>

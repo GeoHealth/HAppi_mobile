@@ -1,47 +1,7 @@
 page-sharereport {
-  .share-content {
-    background: #F0FFFF;
-
-    .share-box {
-      background: #6495ED;
-      padding: 20px 20px 0px 20px;
-      margin-top: 30px;
-    }
 
     .share-text {
-      color: white;
       font-weight: bold;
     }
 
-    ion-row {
-      align-items: center;
-      text-align: center;
-    }
-
-    ion-item {
-      border-radius: 30px !important;
-      padding-left: 30px !important;
-      font-size: 0.9em;
-      margin-bottom: 10px;
-      border: 1px solid #ffffff;
-      border-bottom: 0px !important;
-      box-shadow: none !important;
-    }
-
-    .signup-col {
-      margin: 0px 16px 0px 16px;
-      padding-bottom: 20px;
-    }
-
-    .item-inner {
-      border-bottom-color: #ffffff !important;
-      box-shadow: none !important;
-    }
-
-    .submit-btn {
-      background: #5F9EA0;
-      border-radius: 30px !important;
-      border: 1px solid #ffffff;
-    }
-  }
 }
