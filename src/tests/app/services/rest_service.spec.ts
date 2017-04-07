@@ -1,5 +1,5 @@
-import {RestService} from "../../../app/services/rest_service";
-import {RequestOptions} from "@angular/http";
+import { RestService } from "../../../app/services/rest_service";
+import { RequestOptions } from "@angular/http";
 import { CrashlyticsMock } from "../../mocks";
 
 describe('RestService', () => {
@@ -15,6 +15,8 @@ describe('RestService', () => {
     it('returns "protocol" + domain + ":" + port + "/"', () => {
       this.expect_url = this.rest_service.protocol + this.rest_service.apiDomainName + ":" + this.rest_service.apiPort + '/';
       expect(this.rest_service.getBaseURL()).toEqual(this.expect_url);
+
+      this.expect_url = null;
     });
   });
 
@@ -25,6 +27,10 @@ describe('RestService', () => {
         this.path = "path";
         this.expect_url = this.base_url + this.path;
         expect(this.rest_service.getFullURL(this.path)).toEqual(this.expect_url);
+
+        this.base_url = null;
+        this.path = null;
+        this.expect_url = null;
       });
     });
 
@@ -35,6 +41,11 @@ describe('RestService', () => {
         this.parameters = new Map<String, String>([['name', 'test']]);
         this.expect_url = this.base_url + this.path + '?name=test&';
         expect(this.rest_service.getFullURL(this.path, this.parameters)).toEqual(this.expect_url);
+
+        this.base_url = null;
+        this.path = null;
+        this.parameters = null;
+        this.expect_url = null;
       });
     });
   });
@@ -43,6 +54,8 @@ describe('RestService', () => {
     it('returns "protocol" + domain + ":" + port + "/" + version + "/"', () => {
       this.expect_url = this.rest_service.protocol + this.rest_service.apiDomainName + ":" + this.rest_service.apiPort + "/" + this.rest_service.apiVersion + '/';
       expect(this.rest_service.getBaseURLWithVersioning()).toEqual(this.expect_url);
+
+      this.expect_url = null;
     });
   });
 
@@ -53,6 +66,10 @@ describe('RestService', () => {
         this.path = "path";
         this.expect_url = this.base_url + this.path;
         expect(this.rest_service.getFullURLWithVersioning(this.path)).toEqual(this.expect_url);
+
+        this.base_url = null;
+        this.path = null;
+        this.expect_url = null;
       });
     });
 
@@ -63,6 +80,11 @@ describe('RestService', () => {
         this.parameters = new Map<String, String>([['name', 'test']]);
         this.expect_url = this.base_url + this.path + '?name=test&';
         expect(this.rest_service.getFullURLWithVersioning(this.path, this.parameters)).toEqual(this.expect_url);
+
+        this.base_url = null;
+        this.path = null;
+        this.parameters = null;
+        this.expect_url = null;
       });
     });
   });
@@ -75,6 +97,8 @@ describe('RestService', () => {
     it('specifies that Content-Type is JSON', () => {
       this.response_request = this.rest_service.getHeadersForJSON();
       expect(this.response_request.headers.get('Content-Type')).toEqual('application/json');
+
+      this.response_request = null;
     });
   });
 });

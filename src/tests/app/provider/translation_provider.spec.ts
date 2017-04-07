@@ -10,12 +10,19 @@ describe('TranslationProvider', () => {
     this.locale = 'fr-BE';
   });
 
-  describe('#current_locale', () => {
+  afterEach(() => {
+    this.translation_provider = null;
+    this.locale = null;
+  });
 
+  describe('#current_locale', () => {
     beforeEach(() => {
       this.locale = 'locale';
-
       spyOn(this.translation_provider, 'loadJSONLocale').and.stub();
+    });
+
+    afterEach(() => {
+      this.locale = null;
     });
 
     it('sets current_locale to the given value', () => {
@@ -40,12 +47,15 @@ describe('TranslationProvider', () => {
   });
 
   describe('#loadDevicePreferredLocale', () => {
-
     beforeEach(() => {
       this.getPreferredLanguagePromise = null;
       spyOn(Globalization, 'getPreferredLanguage').and.callFake(() => {
         return this.getPreferredLanguagePromise;
       });
+    });
+
+    afterEach(() => {
+      this.getPreferredLanguagePromise = null;
     });
 
     it('set the value of the current_locale to the language of the device', (done) => {
@@ -71,10 +81,6 @@ describe('TranslationProvider', () => {
         expect(this.translation_provider.current_locale).toEqual(TranslationProvider.default_locale);
         done();
       });
-    });
-
-    afterEach(() => {
-      this.getPreferredLanguagePromise = null;
     });
   });
 

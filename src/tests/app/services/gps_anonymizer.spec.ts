@@ -3,7 +3,6 @@ import { GPSAnonymizer } from "../../../app/services/gps_anonymizer";
 import { GPSCoordinates } from "../../../models/coordinate";
 
 describe('GPSAnonymizer', () => {
-
   describe('.generate_random_coordinate', () => {
     describe('when latitude = 50.0, longitude = 4.0 and radius = 0', () => {
       it('returns the same latitude and longitude', () => {
@@ -42,6 +41,12 @@ describe('GPSAnonymizer', () => {
       this.latitude = 50.0;
       this.longitude = 4.0;
       this.gps_coordinate = new GPSCoordinates({"latitude": this.latitude, "longitude": this.longitude} as Coordinates);
+    });
+
+    afterEach(() => {
+      this.latitude = null;
+      this.longitude = null;
+      this.gps_coordinate = null;
     });
 
     it('returns the same object', () => {

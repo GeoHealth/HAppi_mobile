@@ -13,6 +13,16 @@ describe('GPSCoordinates', () => {
       this.heading = 1;
     });
 
+    afterEach(() => {
+      this.latitude = null;
+      this.longitude = null;
+      this.altitude = null;
+      this.accuracy = null;
+      this.altitudeAccuracy = null;
+      this.speed = null;
+      this.heading = null;
+    });
+
     it('initializes the object with all the attributes', () => {
       this.coordinates = {
         "latitude": this.latitude,

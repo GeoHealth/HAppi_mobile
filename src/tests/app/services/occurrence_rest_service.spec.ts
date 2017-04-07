@@ -18,12 +18,19 @@ describe('Occurence rest service', () => {
       );
     });
 
+    afterEach(() => {
+      this.occurrence_rest_service = null;
+    });
+
     it('returns code 201', (done) => {
       this.symptom = new SymptomWithFactor('name');
       this.symptom.id = '3';
       this.occurrence = new Occurrence(this.symptom, "2016-12-15", null, null);
       this.occurrence_rest_service.add(this.occurrence).subscribe((res) => {
         expect(res.status).toEqual(201);
+
+        this.symptom = null;
+        this.occurrence = null;
         done();
       });
     });

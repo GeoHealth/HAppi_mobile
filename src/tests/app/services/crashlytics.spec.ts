@@ -8,6 +8,10 @@ describe('Crashlytics', () => {
     this.crashlytics = new Crashlytics(new PlatformMock() as Platform);
   });
 
+  afterEach(() => {
+    this.crashlytics = null;
+  });
+
   xdescribe('#sendNonFatalCrashWithStacktraceCreation', () => {
     it('calls sendNonFatalCrash', (done) => {
       spyOn(this.crashlytics, 'sendNonFatalCrash').and.stub();
@@ -157,6 +161,10 @@ describe('Crashlytics', () => {
         }
       };
       this.crashlytics['handler'] = this.handler;
+    });
+
+    afterEach(() => {
+      this.handler = null;
     });
 
     describe('#setUserIdentifier', () => {

@@ -1,6 +1,6 @@
-import {SymptomsStorage} from "../../../app/provider/symptoms_storage";
-import {SymptomWithFactor} from "../../../models/symptom_with_factors";
-import {CrashlyticsMock} from "../../mocks";
+import { SymptomsStorage } from "../../../app/provider/symptoms_storage";
+import { SymptomWithFactor } from "../../../models/symptom_with_factors";
+import { CrashlyticsMock } from "../../mocks";
 
 describe('SymptomsStorage', () => {
   beforeEach(() => {
@@ -41,6 +41,19 @@ describe('SymptomsStorage', () => {
     });
   });
 
+  afterEach(() => {
+    this.symptomsStorage = null;
+    this.keyValueStore = null;
+    this.symptom_name1 = null;
+    this.symptom_id1 = null;
+    this.symptom_name2 = null;
+    this.symptom_id2 = null;
+    this.symptom1 = null;
+    this.symptom2 = null;
+    this.addSymptom = null;
+    this.addFewSymptoms = null;
+  });
+
   it('starts with an empty database', () => {
     expect(this.symptomsStorage.size()).toEqual(0);
   });
@@ -66,6 +79,8 @@ describe('SymptomsStorage', () => {
         this.symptomsStorage.add(this.wrong_occurrence);
       }).toThrowError(TypeError);
       expect(this.symptomsStorage.size()).toEqual(0);
+
+      this.wrong_occurrence = null;
     });
   });
 
@@ -81,6 +96,8 @@ describe('SymptomsStorage', () => {
     it('returns an instance of SymptomWithFactor', () => {
       this.symptom = this.symptomsStorage.findByName(this.symptom_name1)[0];
       expect(this.symptom instanceof SymptomWithFactor).toBeTruthy();
+
+      this.symptom = null;
     });
   });
 
@@ -102,6 +119,8 @@ describe('SymptomsStorage', () => {
       this.symptoms = this.symptomsStorage.all();
       expect(this.symptoms.length).toEqual(2);
       expect(this.symptoms[0].name).toEqual(this.symptom_name1);
+
+      this.symptoms = null;
     });
   });
 
@@ -116,6 +135,8 @@ describe('SymptomsStorage', () => {
 
       this.symptomsStorage.remove(this.symptoms[1]);
       expect(this.symptomsStorage.size()).toEqual(0);
+
+      this.symptoms = null;
     });
 
     it('does nothing when the given symptom does not exist', () => {
