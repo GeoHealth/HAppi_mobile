@@ -2,24 +2,27 @@ import {} from "jasmine";
 import { Crashlytics } from "../../../app/services/crashlytics";
 import { PlatformMock } from "../../mocks";
 import { Platform } from "ionic-angular";
+import * as stacktrace from "stacktrace-js";
+
 
 describe('Crashlytics', () => {
-  beforeEach(() => {
+  beforeAll(() => {
     this.crashlytics = new Crashlytics(new PlatformMock() as Platform);
   });
 
-  afterEach(() => {
+  afterAll(() => {
     this.crashlytics = null;
   });
 
-  xdescribe('#sendNonFatalCrashWithStacktraceCreation', () => {
+  describe('#sendNonFatalCrashWithStacktraceCreation', () => {
     it('calls sendNonFatalCrash', (done) => {
       spyOn(this.crashlytics, 'sendNonFatalCrash').and.stub();
+      spyOn(stacktrace, 'get').and.returnValue(new Promise((resolve, reject) => {resolve(null);}));
       this.crashlytics.sendNonFatalCrashWithStacktraceCreation();
       setTimeout(() => {
         expect(this.crashlytics.sendNonFatalCrash).toHaveBeenCalled();
         done();
-      }, 50);
+      }, 100);
     });
   });
 

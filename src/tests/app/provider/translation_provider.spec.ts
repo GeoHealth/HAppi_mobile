@@ -93,11 +93,11 @@ describe('TranslationProvider', () => {
     });
   });
 
-  // describe('#gettext', () => {
-  //   it('returns "loading..." if the translator is null or undefined', () => {
-  //     expect(translation_provider.gettext('any')).toEqual(TranslationProvider.loadingText);
-  //   });
-  // });
+  describe('#gettext', () => {
+    it('returns "loading..." if the translator is null or undefined', () => {
+      expect(translation_provider.gettext('any')).toEqual(TranslationProvider.loadingText);
+    });
+  });
 
   xdescribe('#loadJSONLocale', () => {
 
@@ -107,4 +107,5 @@ describe('TranslationProvider', () => {
 
   });
 });
+
 
