@@ -1,13 +1,13 @@
-import {Injectable} from "@angular/core";
-import {Observable} from "rxjs/Observable";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs/Observable";
 import "rxjs/add/operator/map";
-import {AuthRestService} from "../services/auth_rest_service";
-import {RestService} from "../services/rest_service";
-import {Headers, Response} from "@angular/http";
-import {AuthStorage} from "./auth_storage";
-import {Crashlytics} from "../services/crashlytics";
-import {SymptomsStorage} from "./symptoms_storage";
-import {OccurrenceStorage} from "./occurrence_storage";
+import { AuthRestService } from "../services/auth_rest_service";
+import { RestService } from "../services/rest_service";
+import { Headers, Response } from "@angular/http";
+import { AuthStorage } from "./auth_storage";
+import { Crashlytics } from "../services/crashlytics";
+import { SymptomsStorage } from "./symptoms_storage";
+import { OccurrenceStorage } from "./occurrence_storage";
 
 export class User {
   email: string;
@@ -63,7 +63,7 @@ export class AuthService {
           (res: Response) => {
             this.extractAndSaveHeaders(res).subscribe((success) => {
               let user_data = JSON.parse(res['_body']).data;
-              this.currentUser = new User(credentials.email,user_data['first_name'],user_data['last_name'],user_data['gender']);
+              this.currentUser = new User(credentials.email, user_data['first_name'], user_data['last_name'], user_data['gender']);
               this.auth_storage.saveUser(this.currentUser).subscribe((success) => {
                 this.setCrashlyticsMetadata(res.headers.get('uid'), res.headers.get('uid'), res.headers.get('uid'), res.headers.get('client'));
                 this.crashlytics.sendLogin("Direct", true);
@@ -93,7 +93,7 @@ export class AuthService {
           (res) => {
             this.extractAndSaveHeaders(res).subscribe((success) => {
               let user_data = JSON.parse(res['_body']).data;
-              this.currentUser = new User(credentials.email,user_data['first_name'],user_data['last_name'],user_data['gender']);
+              this.currentUser = new User(credentials.email, user_data['first_name'], user_data['last_name'], user_data['gender']);
               this.auth_storage.saveUser(this.currentUser).subscribe((success) => {
                 this.setCrashlyticsMetadata(res.headers.get('uid'), res.headers.get('uid'), res.headers.get('uid'), res.headers.get('client'));
                 this.crashlytics.sendSignUp("Direct", true);
@@ -143,22 +143,25 @@ export class AuthService {
     return new Promise((resolve, reject) => {
       this.auth_rest_service.disconnection().subscribe(
         (res) => {
-          this.auth_storage.deleteHeaders();
-          this.auth_storage.deleteUser();
-          this.symptoms_storage.removeAll();
-          this.occurrence_storage.removeAll();
-          this.setCrashlyticsMetadata(null, null, null, null);
-          resolve();
+          this.auth_storage.deleteHeaders().subscribe(() => {
+            this.auth_storage.deleteUser().subscribe(() => {
+              this.symptoms_storage.removeAll().subscribe(() => {
+                this.occurrence_storage.removeAll().subscribe(() => {
+                  this.setCrashlyticsMetadata(null, null, null, null);
+                  resolve();
+                });
+              });
+            });
+          });
         },
         (err) => {
           this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
-        }
-      )
+        })
     });
   }
 
   public getUserInfo(): User {
-    if(!this.currentUser) return new User('loading', 'loading', 'loading', 'loading');
+    if (!this.currentUser) return new User('loading', 'loading', 'loading', 'loading');
     else return this.currentUser;
   }
 

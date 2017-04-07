@@ -13,8 +13,18 @@ describe('GPSCoordinates', () => {
       this.heading = 1;
     });
 
+    afterEach(() => {
+      this.latitude = null;
+      this.longitude = null;
+      this.altitude = null;
+      this.accuracy = null;
+      this.altitudeAccuracy = null;
+      this.speed = null;
+      this.heading = null;
+    });
+
     it('initializes the object with all the attributes', () => {
-      let coordinates = {
+      this.coordinates = {
         "latitude": this.latitude,
         "longitude": this.longitude,
         "altitude": this.altitude,
@@ -23,15 +33,15 @@ describe('GPSCoordinates', () => {
         "speed": this.speed,
         "heading": this.heading
       };
-      let gps_coordinates = new GPSCoordinates(coordinates);
+      this.gps_coordinates = new GPSCoordinates(this.coordinates);
 
-      expect(gps_coordinates.latitude).toEqual(coordinates.latitude);
-      expect(gps_coordinates.longitude).toEqual(coordinates.longitude);
-      expect(gps_coordinates.altitude).toEqual(coordinates.altitude);
-      expect(gps_coordinates.accuracy).toEqual(coordinates.accuracy);
-      expect(gps_coordinates.altitude_accuracy).toEqual(coordinates.altitudeAccuracy);
-      expect(gps_coordinates.speed).toEqual(coordinates.speed);
-      expect(gps_coordinates.heading).toEqual(coordinates.heading);
+      expect(this.gps_coordinates.latitude).toEqual(this.coordinates.latitude);
+      expect(this.gps_coordinates.longitude).toEqual(this.coordinates.longitude);
+      expect(this.gps_coordinates.altitude).toEqual(this.coordinates.altitude);
+      expect(this.gps_coordinates.accuracy).toEqual(this.coordinates.accuracy);
+      expect(this.gps_coordinates.altitude_accuracy).toEqual(this.coordinates.altitudeAccuracy);
+      expect(this.gps_coordinates.speed).toEqual(this.coordinates.speed);
+      expect(this.gps_coordinates.heading).toEqual(this.coordinates.heading);
     });
   });
 

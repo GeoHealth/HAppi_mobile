@@ -19,6 +19,7 @@ import {AddSymptomPage} from "../addsymptom/addsymptom";
 import {GlobalVars} from "../../app/provider/global_vars";
 import {Crashlytics} from "../../app/services/crashlytics";
 import {SymptomsUserRestService} from "../../app/services/symptoms_user_rest_service";
+import { GPSAnonymizer } from "../../app/services/gps_anonymizer";
 
 
 @Component({
@@ -93,8 +94,8 @@ export class HomePage {
       );
     };
 
-    Geolocation.getCurrentPosition().then((gps_location) => {
-      let gpsCoordinates = new GPSCoordinates(gps_location.coords);
+    Geolocation.getCurrentPosition({maximumAge: 2000, timeout: 5000}).then((gps_location) => {
+      let gpsCoordinates = GPSAnonymizer.anonymize_gps_coordinates(new GPSCoordinates(gps_location.coords));
       callback_after_location.call(this, gpsCoordinates);
     }).catch((err) => {
       this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err.message + ': Cannot retrieve current GPS position');

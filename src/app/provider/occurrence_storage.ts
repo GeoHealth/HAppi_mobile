@@ -1,7 +1,8 @@
-import {Injectable} from "@angular/core";
-import {Occurrence} from "../../models/occurrence";
-import {CachedArray} from "./cached_array";
-import {Crashlytics} from "../services/crashlytics";
+import { Injectable, Optional } from "@angular/core";
+import { Occurrence } from "../../models/occurrence";
+import { CachedArray } from "./cached_array";
+import { Crashlytics } from "../services/crashlytics";
+import { Observable } from "rxjs";
 
 declare let require: any;
 let loki = require('lokijs');
@@ -14,11 +15,11 @@ export class OccurrenceStorage {
   private occurrences: any;
   private cache_occurrences: CachedArray<Occurrence>;
 
-  constructor(private crashlytics: Crashlytics) {
+  constructor(private crashlytics: Crashlytics, @Optional() callback?: (success: Boolean) => void) {
     this.initStore();
     this.initInMemoryDB();
-    this.importAll();
     this.cache_occurrences = new CachedArray<Occurrence>();
+    this.importAll().subscribe(callback);
   };
 
   private initStore() {
@@ -33,32 +34,44 @@ export class OccurrenceStorage {
     this.occurrences = this.inMemoryDB.addCollection('occurrences');
   };
 
-  private importAll() {
+  private importAll(): Observable<boolean> {
     let self = this;
-    this.store.getItem('occurrences').then((value) => {
-      self.inMemoryDB.loadJSON(value);
-      self.occurrences = self.inMemoryDB.getCollection('occurrences');        // slight hack! we're manually reconnecting the collection variable :-)
-      this.cache_occurrences.invalidateCache();
-    }).catch((err) => {
-      this.crashlytics.sendNonFatalCrashWithStacktraceCreation('error importing database: ' + err);
+    return Observable.create((observer) => {
+      this.store.getItem('occurrences').then((value) => {
+        self.inMemoryDB.loadJSON(value);
+        self.occurrences = self.inMemoryDB.getCollection('occurrences');        // slight hack! we're manually reconnecting the collection variable :-)
+        this.cache_occurrences.invalidateCache();
+        observer.next(true);
+        observer.complete();
+      }).catch((err) => {
+        this.crashlytics.sendNonFatalCrashWithStacktraceCreation('error importing database: ' + err);
+        observer.next(false);
+        observer.complete();
+      });
     });
   };
 
-  private saveAll() {
-    this.store.setItem('occurrences', JSON.stringify(this.inMemoryDB)).then((value) => {
-      this.cache_occurrences.invalidateCache();
-    }).catch((err) => {
-      this.crashlytics.sendNonFatalCrashWithStacktraceCreation('error saving database: ' + err);
+  private saveAll(): Observable<boolean> {
+    return Observable.create((observer) => {
+      this.store.setItem('occurrences', JSON.stringify(this.inMemoryDB)).then((value) => {
+        this.cache_occurrences.invalidateCache();
+        observer.next(true);
+        observer.complete();
+      }).catch((err) => {
+        this.crashlytics.sendNonFatalCrashWithStacktraceCreation('error saving database: ' + err);
+        observer.next(false);
+        observer.complete();
+      });
     });
   };
 
   /**
    * Add the given occurrence to the database
    */
-  add(occurrence: Occurrence) {
+  add(occurrence: Occurrence): Observable<boolean> {
     if (occurrence instanceof Occurrence) {
       this.occurrences.insert(occurrence);
-      this.saveAll();
+      return this.saveAll();
     } else {
       throw new TypeError("Wrong type adding to occurrences_storage");
     }
@@ -67,7 +80,7 @@ export class OccurrenceStorage {
   /**
    * Add the given occurencces to the database
    */
-  addAll(occurrences: Array<Occurrence>) {
+  addAll(occurrences: Array<Occurrence>): Observable<boolean> {
     occurrences.forEach((occurrence) => {
       if (occurrence instanceof Occurrence) {
         this.occurrences.insert(occurrence);
@@ -75,7 +88,7 @@ export class OccurrenceStorage {
         throw new TypeError("Wrong type adding to occurrences_storage");
       }
     });
-    this.saveAll();
+    return this.saveAll();
   }
 
   /**
@@ -98,14 +111,14 @@ export class OccurrenceStorage {
     });
   }
 
-  removeAll() {
+  removeAll(): Observable<boolean> {
     this.occurrences.clear();
-    this.saveAll();
+    return this.saveAll();
   }
 
-  remove(occurrence: Occurrence) {
-    let o = this.occurrences.find({'id' : occurrence.id});
+  remove(occurrence: Occurrence): Observable<boolean> {
+    let o = this.occurrences.find({'id': occurrence.id});
     this.occurrences.remove(o);
-    this.saveAll();
+    return this.saveAll();
   }
 }

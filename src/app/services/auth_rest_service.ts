@@ -2,6 +2,7 @@ import {RestService} from "./rest_service";
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
 import {Http, Headers, RequestOptions} from "@angular/http";
+import { Crashlytics } from "./crashlytics";
 
 @Injectable()
 export class AuthRestService extends RestService {
@@ -11,8 +12,8 @@ export class AuthRestService extends RestService {
   validateTokenPath = 'auth/validate_token';
   disconnectionPath = 'auth/sign_out';
 
-  constructor(http: Http) {
-    super(http);
+  constructor(http: Http, crashlytics: Crashlytics) {
+    super(http, crashlytics);
   }
 
   auth(email: String, password: String): Observable<{}> {
@@ -22,8 +23,8 @@ export class AuthRestService extends RestService {
       data,
       this.getHeadersForJSON()
     )
-      .map(RestService.handlePostResponse)
-      .catch(RestService.handleError);
+      .map(this.handlePostResponse)
+      .catch(this.handleError);
   }
 
   create(email: String, password: String, password_confirmation: String, first_name: String, last_name: String, gender: String) {
@@ -34,8 +35,8 @@ export class AuthRestService extends RestService {
       data,
       this.getHeadersForJSON()
     )
-      .map(RestService.handlePostResponse)
-      .catch(RestService.handleErrorWithoutParsing);
+      .map(this.handlePostResponse)
+      .catch(this.handleErrorWithoutParsing);
   }
 
   validate(headers: Headers) {
@@ -43,8 +44,8 @@ export class AuthRestService extends RestService {
       this.getFullURL(this.validateTokenPath, null),
       new RequestOptions({headers: headers})
     )
-      .map(RestService.handlePostResponse)
-      .catch(RestService.handleError);
+      .map(this.handlePostResponse)
+      .catch(this.handleError);
   }
 
   disconnection() {
@@ -52,8 +53,8 @@ export class AuthRestService extends RestService {
       this.getFullURL(this.disconnectionPath, null),
       this.getHeadersForJSON()
     )
-      .map(RestService.handlePostResponse)
-      .catch(RestService.handleError);
+      .map(this.handlePostResponse)
+      .catch(this.handleError);
   }
 
 }

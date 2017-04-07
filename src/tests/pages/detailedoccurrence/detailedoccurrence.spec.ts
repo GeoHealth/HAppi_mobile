@@ -2,11 +2,11 @@ import {DetailedOccurrencePage} from "../../../pages/detailedoccurrence/detailed
 import {NavMock, NavParamsMock, CrashlyticsMock, OccurrenceStorageMock, ToastControllerMock} from "../../mocks";
 import {OccurrenceStorage} from "../../../app/provider/occurrence_storage";
 import {OccurrenceRestService} from "../../../app/services/occurrence_rest_service";
+import { Crashlytics } from "../../../app/services/crashlytics";
 
 describe('DetailedOccurrencePage', () => {
-
   beforeEach(() => {
-    this.detailed_occurrence = new DetailedOccurrencePage(new NavMock() as any, new NavParamsMock() as any, new OccurrenceStorage(new CrashlyticsMock() as any), null, new OccurrenceRestService(null, new OccurrenceStorageMock() as OccurrenceStorage), new CrashlyticsMock() as any, new ToastControllerMock() as any);
+    this.detailed_occurrence = new DetailedOccurrencePage(new NavMock() as any, new NavParamsMock() as any, new OccurrenceStorage(new CrashlyticsMock() as any), null, new OccurrenceRestService(null, new OccurrenceStorageMock() as OccurrenceStorage, new CrashlyticsMock() as Crashlytics), new CrashlyticsMock() as any, new ToastControllerMock() as any);
   });
 
   describe('#constructor', () => {

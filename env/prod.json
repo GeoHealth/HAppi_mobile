@@ -1,6 +1,6 @@
 {
    "protocol":"\"https://\"",
-   "apiDomainName":"\"geohealth-happibackend-master.yxvj.flynnhub.com\"",
+   "apiDomainName":"\"geohealth-happibackend-prod.happi-doctor.be\"",
    "apiPort":"\"443\"",
    "apiVersion":"\"v1\""
 }

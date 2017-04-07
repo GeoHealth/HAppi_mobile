@@ -1,14 +1,15 @@
 import {RestService} from "./rest_service";
 import {Injectable} from "@angular/core";
 import {Http, Headers, RequestOptions} from "@angular/http";
+import { Crashlytics } from "./crashlytics";
 
 @Injectable()
 export class ReportsRestService extends RestService {
 
   createPath = 'reports';
 
-  constructor(http: Http) {
-    super(http);
+  constructor(http: Http, crashlytics: Crashlytics) {
+    super(http, crashlytics);
   }
 
   create(email: string, start_date: string, end_date: string, expiration_date: string) {
@@ -18,7 +19,7 @@ export class ReportsRestService extends RestService {
       data,
       this.getHeadersForJSON()
     )
-      .map(RestService.handlePostResponse)
-      .catch(RestService.handleErrorWithoutParsing);
+      .map(this.handlePostResponse)
+      .catch(this.handleErrorWithoutParsing);
   }
 }

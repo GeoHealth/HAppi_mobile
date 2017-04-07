@@ -12,6 +12,11 @@ describe('CachedArray', () => {
     };
   });
 
+  afterEach(() => {
+    this.cached_array = null;
+    this.cache_builder = null;
+  });
+
   it('starts with a dirty cache', () => {
     expect(this.cached_array.isDirty()).toBeTruthy();
   });

@@ -20,6 +20,15 @@ declare var require: any;
 __karma__.loaded = (): any => { /* no op */
 };
 
+// For the tests, we cannot read those value from a configuration file.
+declare const global;
+declare const ENV;
+global['ENV'] = {protocol: 'http', apiDomainName: 'test.com', apiPort: '80', apiVersion: 'v1'};
+ENV.protocol = "http";
+ENV.apiDomainName = "localhost";
+ENV.apiPort = "3000";
+ENV.apiVersion = "v1";
+
 Promise.all([
   System.import('@angular/core/testing'),
   System.import('@angular/platform-browser-dynamic/testing'),
@@ -37,45 +46,3 @@ Promise.all([
   .then((context) => context.keys().map(context))
   // Finally, start Karma to run the tests.
   .then(__karma__.start, __karma__.error);
-
-export class TestUtils {
-
-  public static beforeEachCompiler(components: Array<any>): Promise<{fixture: any, instance: any}> {
-    return TestUtils.configureIonicTestingModule(components)
-      .compileComponents().then(() => {
-        let fixture: any = TestBed.createComponent(components[0]);
-        return {
-          fixture: fixture,
-          instance: fixture.debugElement.componentInstance,
-        };
-      });
-  }
-
-  public static configureIonicTestingModule(components: Array<any>): typeof TestBed {
-    return TestBed.configureTestingModule({
-      declarations: [
-        ...components,
-      ],
-      providers: [
-        App, Platform, Form, Keyboard, MenuController, NavController,
-        {provide: Config, useClass: ConfigMock},
-      ],
-      imports: [
-        FormsModule,
-        IonicModule,
-        ReactiveFormsModule,
-      ],
-    });
-  }
-
-  // http://stackoverflow.com/questions/2705583/how-to-simulate-a-click-with-javascript
-  public static eventFire(el: any, etype: string): void {
-    if (el.fireEvent) {
-      el.fireEvent('on' + etype);
-    } else {
-      let evObj: any = document.createEvent('Events');
-      evObj.initEvent(etype, true, false);
-      el.dispatchEvent(evObj);
-    }
-  }
-}

@@ -1,5 +1,5 @@
-import {Platform} from "ionic-angular";
-import {Injectable} from "@angular/core";
+import { Platform } from "ionic-angular";
+import { Injectable } from "@angular/core";
 import * as stacktrace from "stacktrace-js";
 
 @Injectable()
@@ -66,9 +66,9 @@ export class Crashlytics {
   }
 
   sendNonFatalCrashWithStacktraceCreation(message: string) {
-    stacktrace.get().then(
-      (trace) => this.sendNonFatalCrash(message, trace)
-    );
+    stacktrace.get().then((trace) => {
+      this.sendNonFatalCrash(message, trace);
+    });
   }
 
   setStringValueForKey(key: string, value: string) {

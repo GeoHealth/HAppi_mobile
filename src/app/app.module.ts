@@ -1,10 +1,10 @@
 import {NgModule, ErrorHandler} from "@angular/core";
-import {IonicApp, IonicModule} from "ionic-angular";
+import {IonicApp, IonicModule, IonicErrorHandler} from "ionic-angular";
 import {HAppiApp} from "./app.component";
-import {HomePage} from "../pages/home/home";
-import {StatisticPage} from "../pages/statistic/statistic";
 import {OccurrenceStorage} from "./provider/occurrence_storage";
 import {SymptomsStorage} from "./provider/symptoms_storage";
+import {HomePage} from "../pages/home/home";
+import {StatisticPage} from "../pages/statistic/statistic";
 import {OccurrencePage} from "../pages/occurrence/occurrence";
 import {TabsPage} from "../pages/tabs/tabs";
 import {DetailedOccurrencePage} from "../pages/detailedoccurrence/detailedoccurrence";
@@ -21,7 +21,6 @@ import {AuthRestService} from "./services/auth_rest_service";
 import {AuthStorage} from "./provider/auth_storage";
 import {StatsRestService} from "./services/stats_rest_service";
 import {GlobalVars} from "./provider/global_vars";
-import {FabricErrorHandler} from "../fabric_error_handler";
 import {Crashlytics} from "./services/crashlytics";
 import {SymptomsUserRestService} from "./services/symptoms_user_rest_service";
 import {ShareReportPage} from "../pages/sharereport/sharereport";
@@ -66,7 +65,7 @@ const cloudSettings: CloudSettings = {
   ],
   providers: [{
     provide: ErrorHandler,
-    useClass: FabricErrorHandler
+    useClass: IonicErrorHandler
   }, OccurrenceStorage, SymptomsStorage, OccurrenceRestService, SymptomRestService, TranslationProvider, GlobalVars,
     AuthRestService, AuthService, AuthStorage, StatsRestService, Crashlytics, SymptomsUserRestService, ReportsRestService]
 

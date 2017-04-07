@@ -1,12 +1,12 @@
-import {Component, ViewChild} from "@angular/core";
-import {Chart} from "chart.js";
-import {TranslationProvider} from "../../app/provider/translation_provider";
-import {StatsRestService} from "../../app/services/stats_rest_service";
-import {SymptomsCounts} from "../../models/symptoms_counts";
-import {GlobalVars} from "../../app/provider/global_vars";
-import {isNullOrUndefined} from "util";
+import { Component, ViewChild } from "@angular/core";
+import { Chart } from "chart.js";
+import { TranslationProvider } from "../../app/provider/translation_provider";
+import { StatsRestService } from "../../app/services/stats_rest_service";
+import { SymptomsCounts } from "../../models/symptoms_counts";
+import { GlobalVars } from "../../app/provider/global_vars";
+import { isNullOrUndefined } from "util";
 import * as moment from "moment";
-import {Crashlytics} from "../../app/services/crashlytics";
+import { Crashlytics } from "../../app/services/crashlytics";
 
 @Component({
   selector: 'page-statistic',
@@ -27,8 +27,10 @@ export class StatisticPage {
   }
 
   ionViewDidEnter() {
-    this.end_date = moment(new Date(moment().get('year'), moment().get('month'), moment().get('date'), 23, 59, 59));
+    this.end_date = moment().utc();
+    this.end_date.set({'hour': 23, 'minutes': 59, 'seconds': 59});
     this.start_date = moment(this.end_date).subtract(7, 'days');
+    this.start_date.set({'hour': 0, 'minutes': 0, 'seconds': 0});
     this.draw("days");
     this.vars.setTitle("Statistics");
   }
@@ -38,21 +40,20 @@ export class StatisticPage {
   }
 
   draw(unit: string) {
-    this.stats_rest_service.getCount(moment(this.start_date).format(), moment(this.end_date).format(), unit).subscribe((success) => {
+    let startDateFormated = moment(this.start_date).format();
+    let endDateFormated = moment(this.end_date).format();
+    this.stats_rest_service.getCount(startDateFormated, endDateFormated, unit).subscribe((success) => {
       if (success) {
         this.symptoms_counts = success;
-
         let datasets = [];
-
         let labels = [];
 
         if (this.symptoms_counts.symptoms.length > 0) {
           let symptom = this.symptoms_counts.symptoms[0];
 
           for (let x = 0; x < symptom.counts.length; x++) {
-            labels.push(moment(symptom.counts[x].date).format('MM-DD-YYYY'));
+            labels.push(moment(symptom.counts[x].date).format('DD-MM-YYYY'));
           }
-
 
           for (let line = 0; line < this.symptoms_counts.symptoms.length; line++) {
             let symptom = this.symptoms_counts.symptoms[line];
@@ -132,7 +133,6 @@ export class StatisticPage {
     this.draw("days");
   }
 
-
   public getStartDate() {
     return moment(this.start_date).format('DD/MM/YYYY');
   }
@@ -140,7 +140,6 @@ export class StatisticPage {
   public getEndDate() {
     return moment(this.end_date).format(' DD/MM/YYYY');
   }
-
 
   getRandomColor() {
     let letters = '0123456789ABCDEF'.split('');
