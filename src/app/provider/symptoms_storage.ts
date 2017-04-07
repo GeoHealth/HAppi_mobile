@@ -1,5 +1,5 @@
 import {Symptom} from "../../models/symptom";
-import {Injectable} from "@angular/core";
+import { Injectable, Optional } from "@angular/core";
 import {SymptomWithFactor} from "../../models/symptom_with_factors";
 import {CachedArray} from "./cached_array";
 import {Crashlytics} from "../services/crashlytics";
@@ -16,11 +16,11 @@ export class SymptomsStorage {
   private symptoms: any;
   private cache_symptoms: CachedArray<SymptomWithFactor>;
 
-  constructor(private crashlytics: Crashlytics) {
+  constructor(private crashlytics: Crashlytics, @Optional() callback?: (success: Boolean) => void) {
     this.initStore();
     this.initInMemoryDB();
-    this.importAll();
     this.cache_symptoms = new CachedArray<SymptomWithFactor>();
+    this.importAll().subscribe(callback);
   }
 
   private initStore() {
@@ -35,14 +35,20 @@ export class SymptomsStorage {
     this.symptoms = this.inMemoryDB.addCollection('symptoms');
   }
 
-  private importAll() {
+  private importAll(): Observable<boolean> {
     let self = this;
-    this.store.getItem('storeKey').then((value) => {
-      self.inMemoryDB.loadJSON(value);
-      self.symptoms = self.inMemoryDB.getCollection('symptoms');        // slight hack! we're manually reconnecting the collection variable :-)
-      this.cache_symptoms.invalidateCache();
-    }).catch((err) => {
-      this.crashlytics.sendNonFatalCrashWithStacktraceCreation('error importing database: ' + err);
+    return Observable.create((observer) => {
+      this.store.getItem('storeKey').then((value) => {
+        self.inMemoryDB.loadJSON(value);
+        self.symptoms = self.inMemoryDB.getCollection('symptoms');        // slight hack! we're manually reconnecting the collection variable :-)
+        this.cache_symptoms.invalidateCache();
+        observer.next(true);
+        observer.complete();
+      }).catch((err) => {
+        this.crashlytics.sendNonFatalCrashWithStacktraceCreation('error importing database: ' + err);
+        observer.next(false);
+        observer.complete();
+      });
     });
   }
 

@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, Optional } from "@angular/core";
 import { Occurrence } from "../../models/occurrence";
 import { CachedArray } from "./cached_array";
 import { Crashlytics } from "../services/crashlytics";
@@ -15,11 +15,11 @@ export class OccurrenceStorage {
   private occurrences: any;
   private cache_occurrences: CachedArray<Occurrence>;
 
-  constructor(private crashlytics: Crashlytics) {
+  constructor(private crashlytics: Crashlytics, @Optional() callback?: (success: Boolean) => void) {
     this.initStore();
     this.initInMemoryDB();
-    this.importAll();
     this.cache_occurrences = new CachedArray<Occurrence>();
+    this.importAll().subscribe(callback);
   };
 
   private initStore() {
@@ -34,14 +34,20 @@ export class OccurrenceStorage {
     this.occurrences = this.inMemoryDB.addCollection('occurrences');
   };
 
-  private importAll() {
+  private importAll(): Observable<boolean> {
     let self = this;
-    this.store.getItem('occurrences').then((value) => {
-      self.inMemoryDB.loadJSON(value);
-      self.occurrences = self.inMemoryDB.getCollection('occurrences');        // slight hack! we're manually reconnecting the collection variable :-)
-      this.cache_occurrences.invalidateCache();
-    }).catch((err) => {
-      this.crashlytics.sendNonFatalCrashWithStacktraceCreation('error importing database: ' + err);
+    return Observable.create((observer) => {
+      this.store.getItem('occurrences').then((value) => {
+        self.inMemoryDB.loadJSON(value);
+        self.occurrences = self.inMemoryDB.getCollection('occurrences');        // slight hack! we're manually reconnecting the collection variable :-)
+        this.cache_occurrences.invalidateCache();
+        observer.next(true);
+        observer.complete();
+      }).catch((err) => {
+        this.crashlytics.sendNonFatalCrashWithStacktraceCreation('error importing database: ' + err);
+        observer.next(false);
+        observer.complete();
+      });
     });
   };
 

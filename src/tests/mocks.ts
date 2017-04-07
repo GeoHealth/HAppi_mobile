@@ -118,6 +118,18 @@ export class CrashlyticsMock extends Crashlytics {
   protected setup() {
     return;
   }
+
+  public setUserIdentifier(id) {return;}
+  public setUserName(name) {return;}
+  public setUserEmail(email) {return;}
+  public addLog(log) {return;}
+  public sendNonFatalCrash(msg, stacktrace) {return;}
+  public setStringValueForKey(key, value) {return;}
+  public sendSignUp (type, success, attributes) {return;}
+  public sendLogin (type, success, attributes) {return;}
+  public sendCustomEvent (name, attr) {return;}
+  public sendStartCheckout (totalPrice, currency, itemCount, attributes) {return;}
+  public sendContentView (name, type, id, attributes) {return;}
 }
 
 export class OccurrenceStorageMock extends OccurrenceStorage {
