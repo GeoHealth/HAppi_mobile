@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar color="dark">
-    <ion-title>Register</ion-title>
+    <ion-title>{{translation.gettext("Register")}}</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -12,37 +12,38 @@
         <ion-col>
           <ion-list inset>
             <ion-item class="field">
-              <ion-input type="text" placeholder="First Name" name="first_name" [(ngModel)]="registerCredentials.firstName"
-              required></ion-input>
+              <ion-input type="text" placeholder="First Name" name="first_name"
+                         [(ngModel)]="registerCredentials.firstName"
+                         required></ion-input>
             </ion-item>
 
             <ion-item class="field">
               <ion-input type="text" placeholder="Last Name" name="last_name" [(ngModel)]="registerCredentials.lastName"
-              required></ion-input>
+                         required></ion-input>
             </ion-item>
 
             <ion-item class="field">
               <ion-label>Gender</ion-label>
               <ion-select [(ngModel)]="registerCredentials.gender" name="gender" required>
-                <ion-option value="female" selected="true">Female</ion-option>
-                <ion-option value="male">Male</ion-option>
+                <ion-option value="female" selected="true">{{translation.gettext("Female")}}</ion-option>
+                <ion-option value="male">{{translation.gettext("Male")}}</ion-option>
               </ion-select>
             </ion-item>
 
             <ion-item class="field">
               <ion-input type="email" placeholder="Email" name="email" [(ngModel)]="registerCredentials.email"
-              required></ion-input>
+                         required></ion-input>
             </ion-item>
 
             <ion-item class="field">
               <ion-input type="password" placeholder="Password" name="password"
-              [(ngModel)]="registerCredentials.password" required></ion-input>
+                         [(ngModel)]="registerCredentials.password" required></ion-input>
             </ion-item>
 
 
             <ion-item class="field">
               <ion-input type="password" placeholder="Password Confirmation" name="password_confirmation"
-              [(ngModel)]="registerCredentials.password_confirmation" required></ion-input>
+                         [(ngModel)]="registerCredentials.password_confirmation" required></ion-input>
             </ion-item>
 
 
@@ -60,7 +61,8 @@
 
       <ion-row>
         <ion-col class="signup-col">
-          <button ion-button class="submit-btn" full type="submit" [disabled]="!registerForm.form.valid">Register
+          <button ion-button class="submit-btn" full type="submit" [disabled]="!registerForm.form.valid">
+            {{translation.gettext("Register")}}
           </button>
         </ion-col>
       </ion-row>
