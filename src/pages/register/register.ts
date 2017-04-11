@@ -10,23 +10,31 @@ import {Crashlytics} from "../../app/services/crashlytics";
 })
 export class RegisterPage {
   createSuccess = false;
-  registerCredentials = {email: '', password: ''};
+  registerCredentials = {email: '', password: '', condition: false};
 
   constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController, private crashlytics: Crashlytics) {
   }
 
   public register() {
-    this.auth.register(this.registerCredentials).subscribe((res) => {
-      if (res.success) {
-        this.createSuccess = true;
-        this.showPopup("Success", "Account created.");
-      } else {
-        this.showPopup("Error", res.msg);
-      }
-    }, (err) => {
-      this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
-      this.showPopup("Error", err);
-    });
+    if (this.registerCredentials.condition) {
+      this.auth.register(this.registerCredentials).subscribe((res) => {
+        if (res.success) {
+          this.createSuccess = true;
+          this.showPopup("Success", "Account created.");
+        } else {
+          this.showPopup("Error", res.msg);
+        }
+      }, (err) => {
+        this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
+        this.showPopup("Error", err);
+      });
+    } else {
+      this.showPopup("Error", "You must accept the conditions to use the application !");
+    }
+  }
+
+  showCondition() {
+    this.showPopup("Conditions", "J'accepte que mes données personnelles soient enregistrer et utilisées");
   }
 
   showPopup(title, text) {
