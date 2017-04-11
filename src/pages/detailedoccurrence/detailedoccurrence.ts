@@ -1,17 +1,17 @@
-import {Component} from "@angular/core";
-import {NavParams, NavController, ToastController} from "ionic-angular";
-import {OccurrenceStorage} from "../../app/provider/occurrence_storage";
-import {Occurrence} from "../../models/occurrence";
-import {DateProvider} from "../../app/provider/date_provider";
-import {GPSCoordinates} from "../../models/coordinate";
-import {Geolocation} from "ionic-native";
-import {DOMHelper} from "../../app/domhelper/domhelper";
-import {FactorInstance} from "../../models/factor_instance";
-import {SymptomWithFactor} from "../../models/symptom_with_factors";
-import {TranslationProvider} from "../../app/provider/translation_provider";
-import {isNullOrUndefined} from "util";
-import {OccurrenceRestService} from "../../app/services/occurrence_rest_service";
-import {Crashlytics} from "../../app/services/crashlytics";
+import { Component } from "@angular/core";
+import { NavParams, NavController, ToastController } from "ionic-angular";
+import { OccurrenceStorage } from "../../app/provider/occurrence_storage";
+import { Occurrence } from "../../models/occurrence";
+import { DateProvider } from "../../app/provider/date_provider";
+import { GPSCoordinates } from "../../models/coordinate";
+import { Geolocation } from "ionic-native";
+import { DOMHelper } from "../../app/domhelper/domhelper";
+import { FactorInstance } from "../../models/factor_instance";
+import { SymptomWithFactor } from "../../models/symptom_with_factors";
+import { TranslationProvider } from "../../app/provider/translation_provider";
+import { isNullOrUndefined } from "util";
+import { OccurrenceRestService } from "../../app/services/occurrence_rest_service";
+import { Crashlytics } from "../../app/services/crashlytics";
 import { GPSAnonymizer } from "../../app/services/gps_anonymizer";
 
 @Component({
@@ -40,9 +40,11 @@ export class DetailedOccurrencePage {
   save() {
     let element = DOMHelper.disableElementById(this.save_btn_id);
     this.occurrence_rest_service.add(this.occurrence).subscribe(
-      (res) => {
-        this.occurrences_storage.add(this.occurrence);
-        this.navCtrl.pop();
+      (res: any) => {
+        let resultOccurrence = Occurrence.convertObjectToInstance(JSON.parse(res['_body']));
+        this.occurrences_storage.add(resultOccurrence).subscribe(() => {
+          this.navCtrl.pop();
+        });
       },
       (err) => {
         this.presentToastError();
@@ -50,7 +52,6 @@ export class DetailedOccurrencePage {
         element.disabled = false;
       }
     );
-
   }
 
   private addFactorsToOccurrence() {

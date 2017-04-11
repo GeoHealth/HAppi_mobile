@@ -1,11 +1,11 @@
-import {Component} from "@angular/core";
-import {OccurrenceStorage} from "../../app/provider/occurrence_storage";
-import {TranslationProvider} from "../../app/provider/translation_provider";
-import {GlobalVars} from "../../app/provider/global_vars";
-import {Occurrence} from "../../models/occurrence";
-import {OccurrenceRestService} from "../../app/services/occurrence_rest_service";
-import {ToastController} from "ionic-angular";
-import {Crashlytics} from "../../app/services/crashlytics";
+import { Component } from "@angular/core";
+import { OccurrenceStorage } from "../../app/provider/occurrence_storage";
+import { TranslationProvider } from "../../app/provider/translation_provider";
+import { GlobalVars } from "../../app/provider/global_vars";
+import { Occurrence } from "../../models/occurrence";
+import { OccurrenceRestService } from "../../app/services/occurrence_rest_service";
+import { ToastController } from "ionic-angular";
+import { Crashlytics } from "../../app/services/crashlytics";
 
 @Component({
   selector: 'page-occurrence',
@@ -27,7 +27,7 @@ export class OccurrencePage {
 
   deleteOccurrence(occurrence: Occurrence) {
     this.occurrences_rest_service.deleteOccurrence(occurrence).subscribe((result) => {
-      this.occurrences_storage.remove(occurrence);
+      this.occurrences_storage.remove(occurrence).subscribe();
     }, (err) => {
       this.presentToastError();
       this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err.message);

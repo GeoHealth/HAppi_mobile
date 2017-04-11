@@ -1,24 +1,24 @@
-import {Component} from "@angular/core";
+import { Component } from "@angular/core";
 import {
   ActionSheetController, Platform, ModalController, MenuController, NavController,
   ToastController
 } from "ionic-angular";
-import {SymptomsStorage} from "../../app/provider/symptoms_storage";
-import {OccurrenceStorage} from "../../app/provider/occurrence_storage";
-import {Symptom} from "../../models/symptom";
-import {Occurrence} from "../../models/occurrence";
-import {Geolocation} from "ionic-native";
-import {GPSCoordinates} from "../../models/coordinate";
-import {DetailedOccurrencePage} from "../detailedoccurrence/detailedoccurrence";
-import {DateProvider} from "../../app/provider/date_provider";
-import {DOMHelper} from "../../app/domhelper/domhelper";
-import {OccurrenceRestService} from "../../app/services/occurrence_rest_service";
-import {SymptomWithFactor} from "../../models/symptom_with_factors";
-import {TranslationProvider} from "../../app/provider/translation_provider";
-import {AddSymptomPage} from "../addsymptom/addsymptom";
-import {GlobalVars} from "../../app/provider/global_vars";
-import {Crashlytics} from "../../app/services/crashlytics";
-import {SymptomsUserRestService} from "../../app/services/symptoms_user_rest_service";
+import { SymptomsStorage } from "../../app/provider/symptoms_storage";
+import { OccurrenceStorage } from "../../app/provider/occurrence_storage";
+import { Symptom } from "../../models/symptom";
+import { Occurrence } from "../../models/occurrence";
+import { Geolocation } from "ionic-native";
+import { GPSCoordinates } from "../../models/coordinate";
+import { DetailedOccurrencePage } from "../detailedoccurrence/detailedoccurrence";
+import { DateProvider } from "../../app/provider/date_provider";
+import { DOMHelper } from "../../app/domhelper/domhelper";
+import { OccurrenceRestService } from "../../app/services/occurrence_rest_service";
+import { SymptomWithFactor } from "../../models/symptom_with_factors";
+import { TranslationProvider } from "../../app/provider/translation_provider";
+import { AddSymptomPage } from "../addsymptom/addsymptom";
+import { GlobalVars } from "../../app/provider/global_vars";
+import { Crashlytics } from "../../app/services/crashlytics";
+import { SymptomsUserRestService } from "../../app/services/symptoms_user_rest_service";
 import { GPSAnonymizer } from "../../app/services/gps_anonymizer";
 
 
@@ -58,7 +58,7 @@ export class HomePage {
         try {
           let symptom = SymptomWithFactor.convertObjectToInstance(data);
           this.symptoms_user_rest_service.addSymptom(symptom).subscribe((result) => {
-            this.symptom_storage.add(symptom);
+            this.symptom_storage.add(symptom).subscribe();
           });
         } catch (err) {
           this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err.message);
@@ -86,7 +86,7 @@ export class HomePage {
         (res) => {
           callback_success(res);
           let resultOccurrence = Occurrence.convertObjectToInstance(JSON.parse(res['_body']));
-          this.occurrences_storage.add(resultOccurrence);
+          this.occurrences_storage.add(resultOccurrence).subscribe();
         },
         (err) => {
           callback_error(err);
@@ -111,7 +111,7 @@ export class HomePage {
 
   deleteSymptom(symptom: Symptom) {
     this.symptoms_user_rest_service.deleteSymptom(symptom).subscribe((result) => {
-      this.symptom_storage.remove(symptom);
+      this.symptom_storage.remove(symptom).subscribe();
     });
   }
 
