@@ -1,5 +1,9 @@
 <ion-content>
   <ion-list inset>
+    <p *ngIf="occurrences_storage.size() == 0" class="empty-text">
+      {{translation.gettext("It's empty here, start by registering an occurrence")}}
+    </p>
+
     <ion-item-sliding *ngFor="let occurrence of occurrences_storage.all()">
 
       <button ion-item id="{{occurrence.id}}">
