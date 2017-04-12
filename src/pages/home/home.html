@@ -1,6 +1,10 @@
 <ion-content>
 
   <ion-list inset>
+    <p *ngIf="symptom_storage.size() == 0" class="empty-text">
+      {{translation.gettext("It's empty here, start by adding a symptom")}}
+    </p>
+
     <ion-item-sliding *ngFor="let symptom of symptom_storage.all()" class="symptom-item">
 
       <button ion-item id="{{symptom.id}}" (click)="createOccurrence(symptom)"
