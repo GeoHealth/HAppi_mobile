@@ -16,11 +16,11 @@ export class SymptomsStorage {
   private symptoms: any;
   private cache_symptoms: CachedArray<SymptomWithFactor>;
 
-  constructor(private crashlytics: Crashlytics, @Optional() callback?: (success: Boolean) => void) {
+  constructor(private crashlytics: Crashlytics) {
     this.initStore();
     this.initInMemoryDB();
     this.cache_symptoms = new CachedArray<SymptomWithFactor>();
-    this.importAll().subscribe(callback);
+    this.importAll().subscribe();
   }
 
   private initStore() {

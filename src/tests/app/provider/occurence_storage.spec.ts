@@ -9,9 +9,10 @@ let occurrenceStorage: OccurrenceStorage;
 
 describe('OccurrenceStorage', () => {
   beforeAll((done) => {
-    occurrenceStorage = new OccurrenceStorage(new CrashlyticsMock() as any, (success: Boolean) => {
+    occurrenceStorage = new OccurrenceStorage(new CrashlyticsMock() as any);
+    setTimeout(() => {
       done();
-    });
+    }, 100);
   }, 10000);
 
   afterAll(() => {

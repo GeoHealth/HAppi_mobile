@@ -15,11 +15,11 @@ export class OccurrenceStorage {
   private occurrences: any;
   private cache_occurrences: CachedArray<Occurrence>;
 
-  constructor(private crashlytics: Crashlytics, @Optional() callback?: (success: Boolean) => void) {
+  constructor(private crashlytics: Crashlytics) {
     this.initStore();
     this.initInMemoryDB();
     this.cache_occurrences = new CachedArray<Occurrence>();
-    this.importAll().subscribe(callback);
+    this.importAll().subscribe();
   };
 
   private initStore() {
