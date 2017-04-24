@@ -12,6 +12,9 @@ engines:
       - .es6
       - .js
       - .jsx
+  tslint:
+    enabled: true
+    channel: beta
   fixme:
     enabled: true
   stylelint:
