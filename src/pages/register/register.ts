@@ -36,7 +36,7 @@ export class RegisterPage {
   }
 
   showCondition() {
-    this.showPopup(this.translation.gettext("Conditions"), this.translation.gettext("By registering to this product, I agree that my personal information will be stored and used for an undefined time. I am aware that this service is not yet finished and my data might be lost at any time, without any warning."));
+    this.showPopup(this.translation.gettext("Conditions"), this.translation.gettext("By registering to this product, I agree that my personal information will be stored and used for an undefined time. I am aware that this service is not yet finished and my data might be lost at any time, without any warning. I'm aware that no computer system is totally secure and that my data might be accessed by unauthorized people."));
   }
 
   showPopup(title, text) {
