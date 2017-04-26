@@ -1,5 +1,5 @@
 import {Symptom} from "../../models/symptom";
-import { Injectable, Optional } from "@angular/core";
+import { Injectable } from "@angular/core";
 import {SymptomWithFactor} from "../../models/symptom_with_factors";
 import {CachedArray} from "./cached_array";
 import {Crashlytics} from "../services/crashlytics";
@@ -11,8 +11,8 @@ let localForage = require('localforage');
 
 @Injectable()
 export class SymptomsStorage {
-  private inMemoryDB: any;
   store: any;
+  private inMemoryDB: any;
   private symptoms: any;
   private cache_symptoms: CachedArray<SymptomWithFactor>;
 
@@ -21,49 +21,6 @@ export class SymptomsStorage {
     this.initInMemoryDB();
     this.cache_symptoms = new CachedArray<SymptomWithFactor>();
     this.importAll().subscribe();
-  }
-
-  private initStore() {
-    this.store = localForage.createInstance({
-      name: 'symptom happi'
-    });
-    this.store.setDriver([localForage.INDEXEDDB, localForage.WEBSQL, localForage.LOCALSTORAGE]);
-  }
-
-  private initInMemoryDB() {
-    this.inMemoryDB = new loki('symptoms');
-    this.symptoms = this.inMemoryDB.addCollection('symptoms');
-  }
-
-  private importAll(): Observable<boolean> {
-    let self = this;
-    return Observable.create((observer) => {
-      this.store.getItem('storeKey').then((value) => {
-        self.inMemoryDB.loadJSON(value);
-        self.symptoms = self.inMemoryDB.getCollection('symptoms');        // slight hack! we're manually reconnecting the collection variable :-)
-        this.cache_symptoms.invalidateCache();
-        observer.next(true);
-        observer.complete();
-      }).catch((err) => {
-        this.crashlytics.sendNonFatalCrashWithStacktraceCreation('error importing database: ' + err);
-        observer.next(false);
-        observer.complete();
-      });
-    });
-  }
-
-  private saveAll(): Observable<boolean> {
-    return Observable.create((observer) => {
-      this.store.setItem('storeKey', JSON.stringify(this.inMemoryDB)).then((value) => {
-        this.cache_symptoms.invalidateCache();
-        observer.next(true);
-        observer.complete();
-      }).catch((err) => {
-        this.crashlytics.sendNonFatalCrashWithStacktraceCreation('error while saving: ' + err);
-        observer.next(false);
-        observer.complete();
-      });
-    });
   }
 
   add(symptom: SymptomWithFactor): Observable<boolean> {
@@ -120,5 +77,48 @@ export class SymptomsStorage {
   removeAll(): Observable<boolean> {
     this.symptoms.clear();
     return this.saveAll();
+  }
+
+  private initStore() {
+    this.store = localForage.createInstance({
+      name: 'symptom happi'
+    });
+    this.store.setDriver([localForage.INDEXEDDB, localForage.WEBSQL, localForage.LOCALSTORAGE]);
+  }
+
+  private initInMemoryDB() {
+    this.inMemoryDB = new loki('symptoms');
+    this.symptoms = this.inMemoryDB.addCollection('symptoms');
+  }
+
+  private importAll(): Observable<boolean> {
+    let self = this;
+    return Observable.create((observer) => {
+      this.store.getItem('storeKey').then((value) => {
+        self.inMemoryDB.loadJSON(value);
+        self.symptoms = self.inMemoryDB.getCollection('symptoms');        // slight hack! we're manually reconnecting the collection variable :-)
+        this.cache_symptoms.invalidateCache();
+        observer.next(true);
+        observer.complete();
+      }).catch((err) => {
+        this.crashlytics.sendNonFatalCrashWithStacktraceCreation('error importing database: ' + err);
+        observer.next(false);
+        observer.complete();
+      });
+    });
+  }
+
+  private saveAll(): Observable<boolean> {
+    return Observable.create((observer) => {
+      this.store.setItem('storeKey', JSON.stringify(this.inMemoryDB)).then((value) => {
+        this.cache_symptoms.invalidateCache();
+        observer.next(true);
+        observer.complete();
+      }).catch((err) => {
+        this.crashlytics.sendNonFatalCrashWithStacktraceCreation('error while saving: ' + err);
+        observer.next(false);
+        observer.complete();
+      });
+    });
   }
 }
