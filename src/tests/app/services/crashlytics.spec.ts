@@ -1,4 +1,3 @@
-import {} from "jasmine";
 import { Crashlytics } from "../../../app/services/crashlytics";
 import { PlatformMock } from "../../mocks";
 import { Platform } from "ionic-angular";
@@ -17,12 +16,16 @@ describe('Crashlytics', () => {
   describe('#sendNonFatalCrashWithStacktraceCreation', () => {
     it('calls sendNonFatalCrash', (done) => {
       spyOn(this.crashlytics, 'sendNonFatalCrash').and.stub();
-      spyOn(stacktrace, 'get').and.returnValue(new Promise((resolve, reject) => {resolve(null);}));
+      spyOn(stacktrace, 'get').and.returnValue(new Promise((resolve, reject) => {
+        resolve(null);
+      }));
       this.crashlytics.sendNonFatalCrashWithStacktraceCreation();
-      setTimeout(() => {
-        expect(this.crashlytics.sendNonFatalCrash).toHaveBeenCalled();
-        done();
-      }, 100);
+      setTimeout(
+        () => {
+          expect(this.crashlytics.sendNonFatalCrash).toHaveBeenCalled();
+          done();
+        },
+        100);
     });
   });
 
@@ -39,7 +42,7 @@ describe('Crashlytics', () => {
 
       it('calls console.warn', () => {
         expect(console.warn).toHaveBeenCalled();
-      })
+      });
     });
 
     describe('#setUserName', () => {
@@ -49,7 +52,7 @@ describe('Crashlytics', () => {
 
       it('calls console.warn', () => {
         expect(console.warn).toHaveBeenCalled();
-      })
+      });
     });
 
     describe('#setUserEmail', () => {
@@ -59,7 +62,7 @@ describe('Crashlytics', () => {
 
       it('calls console.warn', () => {
         expect(console.warn).toHaveBeenCalled();
-      })
+      });
     });
 
     describe('#addLog', () => {
@@ -69,7 +72,7 @@ describe('Crashlytics', () => {
 
       it('calls console.warn', () => {
         expect(console.warn).toHaveBeenCalled();
-      })
+      });
     });
 
     describe('#sendNonFatalCrash', () => {
@@ -79,7 +82,7 @@ describe('Crashlytics', () => {
 
       it('calls console.warn', () => {
         expect(console.warn).toHaveBeenCalled();
-      })
+      });
     });
 
     describe('#setStringValueForKey', () => {
@@ -89,7 +92,7 @@ describe('Crashlytics', () => {
 
       it('calls console.warn', () => {
         expect(console.warn).toHaveBeenCalled();
-      })
+      });
     });
 
     describe('#sendSignUp', () => {
@@ -99,7 +102,7 @@ describe('Crashlytics', () => {
 
       it('calls console.warn', () => {
         expect(console.warn).toHaveBeenCalled();
-      })
+      });
     });
 
     describe('#sendLogin', () => {
@@ -109,7 +112,7 @@ describe('Crashlytics', () => {
 
       it('calls console.warn', () => {
         expect(console.warn).toHaveBeenCalled();
-      })
+      });
     });
 
     describe('#sendCustomEvent', () => {
@@ -119,7 +122,7 @@ describe('Crashlytics', () => {
 
       it('calls console.warn', () => {
         expect(console.warn).toHaveBeenCalled();
-      })
+      });
     });
 
     describe('#sendStartCheckout', () => {
@@ -129,7 +132,7 @@ describe('Crashlytics', () => {
 
       it('calls console.warn', () => {
         expect(console.warn).toHaveBeenCalled();
-      })
+      });
     });
 
     describe('#sendContentView', () => {
@@ -139,7 +142,7 @@ describe('Crashlytics', () => {
 
       it('calls console.warn', () => {
         expect(console.warn).toHaveBeenCalled();
-      })
+      });
     });
   });
 
@@ -147,20 +150,31 @@ describe('Crashlytics', () => {
     beforeEach(() => {
       this.handler = {
         Crashlytics: {
-          setUserIdentifier: (id) => {},
-          setUserName: (name) => {},
-          setUserEmail: (email) => {},
-          addLog: (log) => {},
-          sendNonFatalCrash: (msg, stacktrace) => {},
-          setStringValueForKey: (key, value) => {},
+          setUserIdentifier: (id) => {
+          },
+          setUserName: (name) => {
+          },
+          setUserEmail: (email) => {
+          },
+          addLog: (log) => {
+          },
+          sendNonFatalCrash: (msg, stacktrace) => {
+          },
+          setStringValueForKey: (key, value) => {
+          },
 
         },
         Answers: {
-          sendSignUp: (type, success, attributes) => {},
-          sendLogIn: (type, success, attributes) => {},
-          sendCustomEvent: (name, attr) => {},
-          sendStartCheckout: (totalPrice, currency, itemCount, attributes) => {},
-          sendContentView: (name, type, id, attributes) => {}
+          sendSignUp: (type, success, attributes) => {
+          },
+          sendLogIn: (type, success, attributes) => {
+          },
+          sendCustomEvent: (name, attr) => {
+          },
+          sendStartCheckout: (totalPrice, currency, itemCount, attributes) => {
+          },
+          sendContentView: (name, type, id, attributes) => {
+          }
         }
       };
       this.crashlytics['handler'] = this.handler;
@@ -178,7 +192,7 @@ describe('Crashlytics', () => {
 
       it('calls this.handler.Crashlytics.setUserIdentifier', () => {
         expect(this.handler.Crashlytics.setUserIdentifier).toHaveBeenCalled();
-      })
+      });
     });
 
     describe('#setUserName', () => {
@@ -189,7 +203,7 @@ describe('Crashlytics', () => {
 
       it('calls this.handler.Crashlytics.setUserName', () => {
         expect(this.handler.Crashlytics.setUserName).toHaveBeenCalled();
-      })
+      });
     });
 
     describe('#setUserEmail', () => {
@@ -200,7 +214,7 @@ describe('Crashlytics', () => {
 
       it('calls this.handler.Crashlytics.setUserEmail', () => {
         expect(this.handler.Crashlytics.setUserEmail).toHaveBeenCalled();
-      })
+      });
     });
 
     describe('#addLog', () => {
@@ -211,7 +225,7 @@ describe('Crashlytics', () => {
 
       it('calls this.handler.Crashlytics.addLog', () => {
         expect(this.handler.Crashlytics.addLog).toHaveBeenCalled();
-      })
+      });
     });
 
     describe('#sendNonFatalCrash', () => {
@@ -222,7 +236,7 @@ describe('Crashlytics', () => {
 
       it('calls this.handler.Crashlytics.sendNonFatalCrash', () => {
         expect(this.handler.Crashlytics.sendNonFatalCrash).toHaveBeenCalled();
-      })
+      });
     });
 
     describe('#setStringValueForKey', () => {
@@ -233,7 +247,7 @@ describe('Crashlytics', () => {
 
       it('calls this.handler.Crashlytics.setStringValueForKey', () => {
         expect(this.handler.Crashlytics.setStringValueForKey).toHaveBeenCalled();
-      })
+      });
     });
 
     describe('#sendSignUp', () => {
@@ -244,7 +258,7 @@ describe('Crashlytics', () => {
 
       it('calls this.handler.Answers.sendSignUp', () => {
         expect(this.handler.Answers.sendSignUp).toHaveBeenCalled();
-      })
+      });
     });
 
     describe('#sendLogIn', () => {
@@ -255,7 +269,7 @@ describe('Crashlytics', () => {
 
       it('calls this.handler.Answers.sendLogIn', () => {
         expect(this.handler.Answers.sendLogIn).toHaveBeenCalled();
-      })
+      });
     });
 
     describe('#sendCustomEvent', () => {
@@ -266,7 +280,7 @@ describe('Crashlytics', () => {
 
       it('calls this.handler.Answers.sendCustomEvent', () => {
         expect(this.handler.Answers.sendCustomEvent).toHaveBeenCalled();
-      })
+      });
     });
 
     describe('#sendStartCheckout', () => {
@@ -277,7 +291,7 @@ describe('Crashlytics', () => {
 
       it('calls this.handler.Answers.sendStartCheckout', () => {
         expect(this.handler.Answers.sendStartCheckout).toHaveBeenCalled();
-      })
+      });
     });
 
     describe('#sendContentView', () => {
@@ -288,7 +302,7 @@ describe('Crashlytics', () => {
 
       it('calls this.handler.Answers.sendContentView', () => {
         expect(this.handler.Answers.sendContentView).toHaveBeenCalled();
-      })
+      });
     });
   });
 });
