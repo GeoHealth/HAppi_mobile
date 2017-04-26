@@ -1,9 +1,9 @@
-import {Component} from "@angular/core";
-import {GlobalVars} from "../../app/provider/global_vars";
+import { Component } from "@angular/core";
+import { GlobalVars } from "../../app/provider/global_vars";
 import * as moment from "moment";
-import {ReportsRestService} from "../../app/services/reports_rest_service";
-import {AlertController} from "ionic-angular";
-import {Crashlytics} from "../../app/services/crashlytics";
+import { ReportsRestService } from "../../app/services/reports_rest_service";
+import { AlertController } from "ionic-angular";
+import { Crashlytics } from "../../app/services/crashlytics";
 
 @Component({
   selector: 'page-sharereport',
@@ -26,13 +26,20 @@ export class ShareReportPage {
   }
 
   public sendReport() {
-    this.reports_rest_service.create(this.reportInformations.doctor_email, this.reportInformations.start_date, this.reportInformations.end_date, this.reportInformations.expiration_date).subscribe((res) => {
-      this.createSuccess = true;
-      this.showPopup("Success", "Symptoms correctly send");
-    }, (err) => {
-      this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
-      this.showPopup("Error", err);
-     });
+    this.reports_rest_service.create(
+      this.reportInformations.doctor_email,
+      this.reportInformations.start_date,
+      this.reportInformations.end_date,
+      this.reportInformations.expiration_date
+    ).subscribe(
+      (res) => {
+        this.createSuccess = true;
+        this.showPopup("Success", "Symptoms correctly send");
+      },
+      (err) => {
+        this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
+        this.showPopup("Error", err);
+      });
   }
 
   showPopup(title, text) {
