@@ -1,4 +1,3 @@
-import {} from "jasmine";
 import { OccurrenceStorage } from "../../../app/provider/occurrence_storage";
 import { Occurrence } from "../../../models/occurrence";
 import { DateProvider } from "../../../app/provider/date_provider";
@@ -8,12 +7,16 @@ import { CrashlyticsMock } from "../../mocks";
 let occurrenceStorage: OccurrenceStorage;
 
 describe('OccurrenceStorage', () => {
-  beforeAll((done) => {
-    occurrenceStorage = new OccurrenceStorage(new CrashlyticsMock() as any);
-    setTimeout(() => {
-      done();
-    }, 100);
-  }, 10000);
+  beforeAll(
+    (done) => {
+      occurrenceStorage = new OccurrenceStorage(new CrashlyticsMock() as any);
+      setTimeout(
+        () => {
+          done();
+        },
+        100);
+    },
+    10000);
 
   afterAll(() => {
     occurrenceStorage = null;
