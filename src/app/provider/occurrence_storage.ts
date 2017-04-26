@@ -1,4 +1,4 @@
-import { Injectable, Optional } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { Occurrence } from "../../models/occurrence";
 import { CachedArray } from "./cached_array";
 import { Crashlytics } from "../services/crashlytics";
@@ -10,8 +10,8 @@ let localForage = require('localforage');
 
 @Injectable()
 export class OccurrenceStorage {
-  private inMemoryDB: any;
   store: any;
+  private inMemoryDB: any;
   private occurrences: any;
   private cache_occurrences: CachedArray<Occurrence>;
 
@@ -20,49 +20,6 @@ export class OccurrenceStorage {
     this.initInMemoryDB();
     this.cache_occurrences = new CachedArray<Occurrence>();
     this.importAll().subscribe();
-  };
-
-  private initStore() {
-    this.store = localForage.createInstance({
-      name: 'symptom occurrence happi'
-    });
-    this.store.setDriver([localForage.INDEXEDDB, localForage.WEBSQL, localForage.LOCALSTORAGE]);
-  };
-
-  private initInMemoryDB() {
-    this.inMemoryDB = new loki('occurrences');
-    this.occurrences = this.inMemoryDB.addCollection('occurrences');
-  };
-
-  private importAll(): Observable<boolean> {
-    let self = this;
-    return Observable.create((observer) => {
-      this.store.getItem('occurrences').then((value) => {
-        self.inMemoryDB.loadJSON(value);
-        self.occurrences = self.inMemoryDB.getCollection('occurrences');        // slight hack! we're manually reconnecting the collection variable :-)
-        this.cache_occurrences.invalidateCache();
-        observer.next(true);
-        observer.complete();
-      }).catch((err) => {
-        this.crashlytics.sendNonFatalCrashWithStacktraceCreation('error importing database: ' + err);
-        observer.next(false);
-        observer.complete();
-      });
-    });
-  };
-
-  private saveAll(): Observable<boolean> {
-    return Observable.create((observer) => {
-      this.store.setItem('occurrences', JSON.stringify(this.inMemoryDB)).then((value) => {
-        this.cache_occurrences.invalidateCache();
-        observer.next(true);
-        observer.complete();
-      }).catch((err) => {
-        this.crashlytics.sendNonFatalCrashWithStacktraceCreation('error saving database: ' + err);
-        observer.next(false);
-        observer.complete();
-      });
-    });
   };
 
   /**
@@ -121,4 +78,47 @@ export class OccurrenceStorage {
     this.occurrences.remove(o);
     return this.saveAll();
   }
+
+  private initStore() {
+    this.store = localForage.createInstance({
+      name: 'symptom occurrence happi'
+    });
+    this.store.setDriver([localForage.INDEXEDDB, localForage.WEBSQL, localForage.LOCALSTORAGE]);
+  };
+
+  private initInMemoryDB() {
+    this.inMemoryDB = new loki('occurrences');
+    this.occurrences = this.inMemoryDB.addCollection('occurrences');
+  };
+
+  private importAll(): Observable<boolean> {
+    let self = this;
+    return Observable.create((observer) => {
+      this.store.getItem('occurrences').then((value) => {
+        self.inMemoryDB.loadJSON(value);
+        self.occurrences = self.inMemoryDB.getCollection('occurrences');        // slight hack! we're manually reconnecting the collection variable :-)
+        this.cache_occurrences.invalidateCache();
+        observer.next(true);
+        observer.complete();
+      }).catch((err) => {
+        this.crashlytics.sendNonFatalCrashWithStacktraceCreation('error importing database: ' + err);
+        observer.next(false);
+        observer.complete();
+      });
+    });
+  };
+
+  private saveAll(): Observable<boolean> {
+    return Observable.create((observer) => {
+      this.store.setItem('occurrences', JSON.stringify(this.inMemoryDB)).then((value) => {
+        this.cache_occurrences.invalidateCache();
+        observer.next(true);
+        observer.complete();
+      }).catch((err) => {
+        this.crashlytics.sendNonFatalCrashWithStacktraceCreation('error saving database: ' + err);
+        observer.next(false);
+        observer.complete();
+      });
+    });
+  };
 }
