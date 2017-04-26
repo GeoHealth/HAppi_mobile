@@ -8,12 +8,13 @@ declare const ENV;
 
 @Injectable()
 export class RestService {
+  static headers: Headers;
+
   http: Http;
   protocol = ENV.protocol;
   apiDomainName = ENV.apiDomainName;
   apiPort = ENV.apiPort;
   apiVersion = ENV.apiVersion;
-  static headers: Headers;
 
   constructor(http: Http, private crashlytics: Crashlytics) {
     this.http = http;
