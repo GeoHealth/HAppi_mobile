@@ -10,10 +10,10 @@ let localForage = require('localforage');
 
 @Injectable()
 export class AuthStorage {
+  store: any;
 
   private inMemoryDBHeaders: any;
   private inMemoryDBUser: any;
-  store: any;
   private headers: any;
   private user: any;
 
@@ -22,23 +22,6 @@ export class AuthStorage {
     this.initinMemoryDBHeaders();
     this.initInMemoryDBUser();
   }
-
-  private initStore() {
-    this.store = localForage.createInstance({
-      name: 'auth happi'
-    });
-    this.store.setDriver([localForage.INDEXEDDB, localForage.WEBSQL, localForage.LOCALSTORAGE]);
-  }
-
-  private initinMemoryDBHeaders() {
-    this.inMemoryDBHeaders = new loki('headers');
-    this.headers = this.inMemoryDBHeaders.addCollection('headers');
-  };
-
-  private initInMemoryDBUser() {
-    this.inMemoryDBUser = new loki('user');
-    this.user = this.inMemoryDBUser.addCollection('user');
-  };
 
   getUser(): Promise<User> {
     return new Promise((resolve, reject) => {
@@ -89,7 +72,7 @@ export class AuthStorage {
         observer.next(false);
         observer.complete();
       }
-    })
+    });
   }
 
   saveHeaders(headers: Headers): Observable<boolean> {
@@ -119,4 +102,21 @@ export class AuthStorage {
   deleteHeaders(): Observable<boolean> {
     return this.saveHeaders(new Headers());
   }
+
+  private initStore() {
+    this.store = localForage.createInstance({
+      name: 'auth happi'
+    });
+    this.store.setDriver([localForage.INDEXEDDB, localForage.WEBSQL, localForage.LOCALSTORAGE]);
+  }
+
+  private initinMemoryDBHeaders() {
+    this.inMemoryDBHeaders = new loki('headers');
+    this.headers = this.inMemoryDBHeaders.addCollection('headers');
+  };
+
+  private initInMemoryDBUser() {
+    this.inMemoryDBUser = new loki('user');
+    this.user = this.inMemoryDBUser.addCollection('user');
+  };
 }
