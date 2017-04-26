@@ -26,12 +26,14 @@ export class OccurrencePage {
   }
 
   deleteOccurrence(occurrence: Occurrence) {
-    this.occurrences_rest_service.deleteOccurrence(occurrence).subscribe((result) => {
-      this.occurrences_storage.remove(occurrence).subscribe();
-    }, (err) => {
-      this.presentToastError();
-      this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err.message);
-    });
+    this.occurrences_rest_service.deleteOccurrence(occurrence).subscribe(
+      (result) => {
+        this.occurrences_storage.remove(occurrence).subscribe();
+      },
+      (err) => {
+        this.presentToastError();
+        this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err.message);
+      });
   }
 
   private presentToastError() {
