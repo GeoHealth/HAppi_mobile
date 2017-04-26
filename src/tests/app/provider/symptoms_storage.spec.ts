@@ -5,12 +5,16 @@ import { CrashlyticsMock } from "../../mocks";
 let symptomsStorage: SymptomsStorage;
 
 describe('SymptomsStorage', () => {
-  beforeAll((done) => {
-    symptomsStorage = new SymptomsStorage(new CrashlyticsMock() as any);
-    setTimeout(() => {
-      done();
-    }, 100);
-  }, 10000);
+  beforeAll(
+    (done) => {
+      symptomsStorage = new SymptomsStorage(new CrashlyticsMock() as any);
+      setTimeout(
+        () => {
+          done();
+        },
+        100);
+    },
+    10000);
 
   afterAll(() => {
     symptomsStorage = null;
