@@ -27,10 +27,8 @@ export class User {
 
 @Injectable()
 export class AuthService {
-  private currentUser: User;
-
   auth_rest_service: AuthRestService;
-
+  private currentUser: User;
 
   constructor(auth_rest_service: AuthRestService, private auth_storage: AuthStorage, private crashlytics: Crashlytics,
               private symptoms_storage: SymptomsStorage, private occurrence_storage: OccurrenceStorage) {
@@ -156,13 +154,17 @@ export class AuthService {
         },
         (err) => {
           this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
-        })
+        });
     });
   }
 
   public getUserInfo(): User {
-    if (!this.currentUser) return new User('loading', 'loading', 'loading', 'loading');
-    else return this.currentUser;
+    if (!this.currentUser) {
+      return new User('loading', 'loading', 'loading', 'loading');
+    }
+    else {
+      return this.currentUser;
+    }
   }
 
   private setCrashlyticsMetadata(uid: string, user_name: string, email: string, client: string) {
