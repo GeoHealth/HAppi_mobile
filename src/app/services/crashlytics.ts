@@ -9,15 +9,7 @@ export class Crashlytics {
   constructor(public platform: Platform) {
     platform.ready().then(
       () => this.setup()
-    )
-  }
-
-  protected setup() {
-    if (!(<any>window).fabric) {
-      return;
-    }
-
-    this.handler = (<any>window).fabric;
+    );
   }
 
   setUserIdentifier(id: string) {
@@ -123,5 +115,13 @@ export class Crashlytics {
     }
 
     this.handler.Answers.sendContentView(name, type, id, attributes);
+  }
+
+  protected setup() {
+    if (!(window as any).fabric) {
+      return;
+    }
+
+    this.handler = (window as any).fabric;
   }
 }
