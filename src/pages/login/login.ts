@@ -1,15 +1,15 @@
-import {Component} from "@angular/core";
-import {NavController, AlertController, LoadingController, Loading} from "ionic-angular";
-import {AuthService} from "../../app/provider/auth_service";
-import {RegisterPage} from "../register/register";
-import {TabsPage} from "../tabs/tabs";
-import {AuthStorage} from "../../app/provider/auth_storage";
-import {Headers} from "@angular/http";
-import {isNullOrUndefined} from "util";
-import {Crashlytics} from "../../app/services/crashlytics";
-import {Observable} from "rxjs";
-import {SymptomsUserRestService} from "../../app/services/symptoms_user_rest_service";
-import {OccurrenceRestService} from "../../app/services/occurrence_rest_service";
+import { Component } from "@angular/core";
+import { NavController, AlertController, LoadingController, Loading } from "ionic-angular";
+import { AuthService } from "../../app/provider/auth_service";
+import { RegisterPage } from "../register/register";
+import { TabsPage } from "../tabs/tabs";
+import { AuthStorage } from "../../app/provider/auth_storage";
+import { Headers } from "@angular/http";
+import { isNullOrUndefined } from "util";
+import { Crashlytics } from "../../app/services/crashlytics";
+import { Observable } from "rxjs";
+import { SymptomsUserRestService } from "../../app/services/symptoms_user_rest_service";
+import { OccurrenceRestService } from "../../app/services/occurrence_rest_service";
 
 @Component({
   selector: 'page-login',
@@ -32,23 +32,25 @@ export class LoginPage {
 
   public login() {
     this.showLoading();
-    this.auth.login(this.registerCredentials).subscribe((allowed) => {
-      if (allowed) {
-        this.retrieveSymptomsForUser().subscribe(() => {
-          this.retrieveOccurrencesForUser().subscribe(() => {
-            this.loading.dismiss();
-            this.nav.setRoot(TabsPage);
+    this.auth.login(this.registerCredentials).subscribe(
+      (allowed) => {
+        if (allowed) {
+          this.retrieveSymptomsForUser().subscribe(() => {
+            this.retrieveOccurrencesForUser().subscribe(() => {
+              this.loading.dismiss();
+              this.nav.setRoot(TabsPage);
+            });
           });
-        });
-      } else {
+        } else {
+          this.loading.dismiss();
+          this.showError("Invalid login credentials. Please try again.");
+        }
+      },
+      (err) => {
         this.loading.dismiss();
-        this.showError("Invalid login credentials. Please try again.");
-      }
-    }, (err) => {
-      this.loading.dismiss();
-      this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
-      this.showError(err);
-    });
+        this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
+        this.showError(err);
+      });
   }
 
   showLoading() {
@@ -78,7 +80,7 @@ export class LoginPage {
               this.auth.disconnection();
             }
           }
-        )
+        );
       }
       this.loading.dismiss();
     });
@@ -94,7 +96,7 @@ export class LoginPage {
   /**
    * Read the occurrences from the backend after the user logged in
    */
-   private retrieveOccurrencesForUser(): Observable<boolean> {
-     return this.occurrence_rest_service.persistAllOccurencesLocally();
-   }
+  private retrieveOccurrencesForUser(): Observable<boolean> {
+    return this.occurrence_rest_service.persistAllOccurencesLocally();
+  }
 }
