@@ -19,17 +19,19 @@ export class RegisterPage {
 
   public register() {
     if (this.registerCredentials.condition) {
-      this.auth.register(this.registerCredentials).subscribe((res) => {
-        if (res.success) {
-          this.createSuccess = true;
-          this.showPopup(this.translation.gettext("Success"), this.translation.gettext("Account created."));
-        } else {
-          this.showPopup(this.translation.gettext("Error"), res.msg);
-        }
-      }, (err) => {
-        this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
-        this.showPopup(this.translation.gettext("Error"), err);
-      });
+      this.auth.register(this.registerCredentials).subscribe(
+        (res) => {
+          if (res.success) {
+            this.createSuccess = true;
+            this.showPopup(this.translation.gettext("Success"), this.translation.gettext("Account created."));
+          } else {
+            this.showPopup(this.translation.gettext("Error"), res.msg);
+          }
+        },
+        (err) => {
+          this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
+          this.showPopup(this.translation.gettext("Error"), err);
+        });
     } else {
       this.showPopup(this.translation.gettext("Error"), this.translation.gettext("You must accept the conditions to use the application !"));
     }
