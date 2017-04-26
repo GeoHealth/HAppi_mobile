@@ -1,9 +1,10 @@
 // IONIC:
-import {SymptomWithFactor} from "../models/symptom_with_factors";
-import {Http} from "@angular/http";
-import {Crashlytics} from "../app/services/crashlytics";
-import {OccurrenceStorage} from "../app/provider/occurrence_storage";
-import {ToastController} from "ionic-angular";
+import { SymptomWithFactor } from "../models/symptom_with_factors";
+import { Http } from "@angular/http";
+import { Crashlytics } from "../app/services/crashlytics";
+import { OccurrenceStorage } from "../app/provider/occurrence_storage";
+import { ToastController } from "ionic-angular";
+
 export class ConfigMock {
 
   public get(): any {
@@ -115,21 +116,53 @@ export class CrashlyticsMock extends Crashlytics {
     super(new PlatformMock() as any);
   }
 
-  protected setup() {
+  public setUserIdentifier(id) {
     return;
   }
 
-  public setUserIdentifier(id) {return;}
-  public setUserName(name) {return;}
-  public setUserEmail(email) {return;}
-  public addLog(log) {return;}
-  public sendNonFatalCrash(msg, stacktrace) {return;}
-  public setStringValueForKey(key, value) {return;}
-  public sendSignUp (type, success, attributes) {return;}
-  public sendLogin (type, success, attributes) {return;}
-  public sendCustomEvent (name, attr) {return;}
-  public sendStartCheckout (totalPrice, currency, itemCount, attributes) {return;}
-  public sendContentView (name, type, id, attributes) {return;}
+  public setUserName(name) {
+    return;
+  }
+
+  public setUserEmail(email) {
+    return;
+  }
+
+  public addLog(log) {
+    return;
+  }
+
+  public sendNonFatalCrash(msg, stacktrace) {
+    return;
+  }
+
+  public setStringValueForKey(key, value) {
+    return;
+  }
+
+  public sendSignUp(type, success, attributes) {
+    return;
+  }
+
+  public sendLogin(type, success, attributes) {
+    return;
+  }
+
+  public sendCustomEvent(name, attr) {
+    return;
+  }
+
+  public sendStartCheckout(totalPrice, currency, itemCount, attributes) {
+    return;
+  }
+
+  public sendContentView(name, type, id, attributes) {
+    return;
+  }
+
+  protected setup() {
+    return;
+  }
 }
 
 export class OccurrenceStorageMock extends OccurrenceStorage {
@@ -139,7 +172,7 @@ export class OccurrenceStorageMock extends OccurrenceStorage {
 }
 
 export class ToastControllerMock extends ToastController {
-  constructor(){
+  constructor() {
     super(null);
   }
 }
