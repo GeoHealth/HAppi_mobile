@@ -13,6 +13,11 @@ declare let Gettext: any;
  */
 @Injectable()
 export class TranslationProvider {
+  static domain: string = "happi_mobile";
+  static default_locale: string = "en-US";
+  static loadingText = "loading...";
+  static locale_files_path = './assets/locales/';
+
   private gt: any;
   private locale_to_file = {
     "en-US": "en.json",
@@ -23,10 +28,6 @@ export class TranslationProvider {
   private _current_locale: string;
   private json_locale_data: any;
 
-  static domain: string = "happi_mobile";
-  static default_locale: string = "en-US";
-  static loadingText = "loading...";
-  static locale_files_path = './assets/locales/';
 
   /**
    * Create a new instance that will use the device preferred locale as translator.
