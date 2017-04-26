@@ -7,8 +7,10 @@
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
     "test": "ng test --code-coverage",
-    "test-travis": "ng test --single-run --code-coverage",
-    "build-translation": "po2json resources/locales/fr_BE/fr_BE.po src/assets/locales/fr_BE.json --pretty && po2json resources/locales/en/en.po src/assets/locales/en.json --pretty"
+    "test-travis": "npm run lint && ng test --single-run --code-coverage",
+    "build-translation": "po2json resources/locales/fr_BE/fr_BE.po src/assets/locales/fr_BE.json --pretty && po2json resources/locales/en/en.po src/assets/locales/en.json --pretty",
+    "lint": "npm run tslint \"src/**/*.ts\"",
+    "tslint": "tslint"
   },
   "config": {
     "ionic_webpack": "./config/webpack.config.js"
@@ -51,6 +53,8 @@
     "karma-mocha-reporter": "^2.2.1",
     "karma-remap-istanbul": "^0.2.1",
     "po2json": "^0.4.5",
+    "tslint": "~4.5.1",
+    "tslint-loader": "^3.3.0",
     "typescript": "2.0.9"
   },
   "cordovaPlugins": [
