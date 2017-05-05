@@ -77,7 +77,7 @@ export class TranslationProvider {
    * @param msgid a message id.
    * @returns {string} the string "loading..." if the module is not yet ready otherwise it returns the translation corresponding to the current_locale.
    */
-  gettext(msgid): string {
+  public gettext(msgid): string {
     if (isNullOrUndefined(this.gt)) {
       return TranslationProvider.loadingText;
     } else {
@@ -88,7 +88,7 @@ export class TranslationProvider {
   /**
    * Load the JSON file containing the translation corresponding to the current_locale and initialize a new instance of the translator.
    */
-  loadJSONLocale() {
+  public loadJSONLocale() {
     let translationFilePath = this.getTranslationFilePath();
 
     let xhttp = new XMLHttpRequest();
