@@ -49,7 +49,7 @@ export class HomePage {
   };
 
   ionViewDidEnter() {
-    this.vars.setTitle("Home");
+    this.vars.setTitle(this.translation.gettext("Home"));
   }
 
   addSymptom() {
@@ -117,7 +117,7 @@ export class HomePage {
 
   private presentToastError() {
     let toast = this.toastCtrl.create({
-      message: 'Error while adding the occurrence',
+      message: this.translation.gettext('Error while adding the occurrence'),
       duration: 10000,
       position: 'bottom'
     });

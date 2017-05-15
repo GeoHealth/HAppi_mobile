@@ -38,7 +38,7 @@ export class OccurrencePage {
 
   private presentToastError() {
     let toast = this.toastCtrl.create({
-      message: 'Error while deleting the occurrence',
+      message: this.translation.gettext('Error while deleting the occurrence'),
       duration: 10000,
       position: 'bottom'
     });

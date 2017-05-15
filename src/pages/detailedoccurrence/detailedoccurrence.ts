@@ -78,7 +78,7 @@ export class DetailedOccurrencePage {
 
   private presentToastError() {
     let toast = this.toastCtrl.create({
-      message: 'Error while adding the occurrence',
+      message: this.translation.gettext('Error while adding the occurrence'),
       duration: 10000,
       position: 'bottom'
     });

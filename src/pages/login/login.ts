@@ -10,6 +10,7 @@ import { Crashlytics } from "../../app/services/crashlytics";
 import { Observable } from "rxjs";
 import { SymptomsUserRestService } from "../../app/services/symptoms_user_rest_service";
 import { OccurrenceRestService } from "../../app/services/occurrence_rest_service";
+import { TranslationProvider } from "../../app/provider/translation_provider";
 
 @Component({
   selector: 'page-login',
@@ -22,7 +23,8 @@ export class LoginPage {
   constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController,
               private loadingCtrl: LoadingController, private auth_storage: AuthStorage,
               private crashlytics: Crashlytics, private symptoms_user_rest_service: SymptomsUserRestService,
-              private occurrence_rest_service: OccurrenceRestService) {
+              private occurrence_rest_service: OccurrenceRestService,
+              private translation: TranslationProvider) {
     this.autoLogin();
   }
 
@@ -43,7 +45,7 @@ export class LoginPage {
           });
         } else {
           this.loading.dismiss();
-          this.showError("Invalid login credentials. Please try again.");
+          this.showError(this.translation.gettext("Invalid login credentials. Please try again."));
         }
       },
       (err) => {
@@ -55,14 +57,14 @@ export class LoginPage {
 
   showLoading() {
     this.loading = this.loadingCtrl.create({
-      content: 'Please wait...'
+      content: this.translation.gettext('Please wait...')
     });
     this.loading.present();
   }
 
   showError(text) {
     let alert = this.alertCtrl.create({
-      title: 'Fail',
+      title: this.translation.gettext('Fail'),
       subTitle: text,
       buttons: ['OK']
     });

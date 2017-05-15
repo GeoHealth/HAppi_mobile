@@ -28,12 +28,12 @@
 
       <ion-row>
         <ion-col class="signup-col">
-          <button ion-button class="submit-btn" full type="submit" [disabled]="!registerForm.form.valid">Login</button>
+          <button ion-button class="submit-btn" full type="submit" [disabled]="!registerForm.form.valid">{{translation.gettext("Login")}}</button>
 
         </ion-col>
       </ion-row>
 
     </form>
-    <button ion-button class="register-btn" block clear (click)="createAccount()">Create New Account</button>
+    <button ion-button class="register-btn" block clear (click)="createAccount()">{{translation.gettext("Create New Account")}}</button>
   </div>
 </ion-content>

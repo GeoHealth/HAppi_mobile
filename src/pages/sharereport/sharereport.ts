@@ -4,6 +4,7 @@ import * as moment from "moment";
 import { ReportsRestService } from "../../app/services/reports_rest_service";
 import { AlertController } from "ionic-angular";
 import { Crashlytics } from "../../app/services/crashlytics";
+import { TranslationProvider } from "../../app/provider/translation_provider";
 
 @Component({
   selector: 'page-sharereport',
@@ -15,14 +16,15 @@ export class ShareReportPage {
   reportInformations = {doctor_email: '', start_date: '', end_date: '', expiration_date: ''};
   test: any;
 
-  constructor(public vars: GlobalVars, private reports_rest_service: ReportsRestService, private alertCtrl: AlertController, private crashlytics: Crashlytics) {
+  constructor(public vars: GlobalVars, private reports_rest_service: ReportsRestService, private alertCtrl: AlertController,
+              private crashlytics: Crashlytics, private translation: TranslationProvider) {
     this.reportInformations.end_date = moment().add(1, 'days').format('YYYY-MM-DD');
     this.reportInformations.expiration_date = moment().add(14, 'days').format('YYYY-MM-DD');
 
   }
 
   ionViewDidEnter() {
-    this.vars.setTitle("Share Report");
+    this.vars.setTitle(this.translation.gettext("Share Report"));
   }
 
   public sendReport() {
@@ -34,11 +36,11 @@ export class ShareReportPage {
     ).subscribe(
       (res) => {
         this.createSuccess = true;
-        this.showPopup("Success", "Symptoms correctly send");
+        this.showPopup(this.translation.gettext("Success"), this.translation.gettext("Symptoms correctly send"));
       },
       (err) => {
         this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
-        this.showPopup("Error", err);
+        this.showPopup(this.translation.gettext("Error"), err);
       });
   }
 
