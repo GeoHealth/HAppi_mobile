@@ -5,6 +5,9 @@ import { Crashlytics } from "../app/services/crashlytics";
 import { OccurrenceStorage } from "../app/provider/occurrence_storage";
 import { ToastController } from "ionic-angular";
 import { SymptomsStorage } from "../app/provider/symptoms_storage";
+import { AuthStorage } from "../app/provider/auth_storage";
+import { User } from "../app/provider/auth_service";
+import { AuthRestService } from "../app/services/auth_rest_service";
 
 export class ConfigMock {
 
@@ -181,5 +184,23 @@ export class ToastControllerMock extends ToastController {
 export class SymptomsStorageMock extends SymptomsStorage {
   constructor() {
     super(new CrashlyticsMock() as any);
+  }
+}
+
+export class AuthStorageMock extends AuthStorage {
+  constructor() {
+    super(new CrashlyticsMock() as any);
+  }
+
+  getUser() {
+    return new Promise((resolve, reject) => {
+      resolve(new User("user@mail.com", "Foo", "Bar", "male"));
+    });
+  }
+}
+
+export class AuthRestServiceMock extends AuthRestService {
+  constructor() {
+    super(new HttpMock() as Http, new CrashlyticsMock() as any);
   }
 }
