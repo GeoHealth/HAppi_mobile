@@ -68,7 +68,7 @@ describe('SymptomsStorage', () => {
     });
 
     it('refuses an object that is not a SymptomWithFactor by throwing a TypeError exception', () => {
-      this.wrong_occurrence = {
+      this.wrong_symptom = {
         id: 'id',
         name: 'name',
         short_description: 'short',
@@ -78,11 +78,11 @@ describe('SymptomsStorage', () => {
         factors: null
       };
       expect(() => {
-        symptomsStorage.add(this.wrong_occurrence);
+        symptomsStorage.add(this.wrong_symptom);
       }).toThrowError(TypeError);
       expect(symptomsStorage.size()).toEqual(0);
 
-      this.wrong_occurrence = null;
+      this.wrong_symptom = null;
     });
   });
 
@@ -94,7 +94,7 @@ describe('SymptomsStorage', () => {
     });
 
     it('throws a TypeError exception if any object is not a SymptomWithFactor', () => {
-      this.wrong_occurrence = {
+      this.wrong_symptom = {
         id: 'id',
         name: 'name',
         short_description: 'short',
@@ -104,11 +104,11 @@ describe('SymptomsStorage', () => {
         factors: null
       };
       expect(() => {
-        symptomsStorage.addAll([this.symptom1, this.wrong_occurrence]);
+        symptomsStorage.addAll([this.symptom1, this.wrong_symptom]);
       }).toThrowError(TypeError);
       expect(symptomsStorage.size()).toEqual(1);
 
-      this.wrong_occurrence = null;
+      this.wrong_symptom = null;
     });
   });
 
