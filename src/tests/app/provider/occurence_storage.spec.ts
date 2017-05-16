@@ -89,6 +89,32 @@ describe('OccurrenceStorage', () => {
     });
   });
 
+  describe('#addAll', () => {
+    it('stores all symptoms', () => {
+      expect(occurrenceStorage.size()).toEqual(0);
+      occurrenceStorage.addAll([this.buildOccurrence1(), this.buildOccurrence2()]);
+      expect(occurrenceStorage.size()).toEqual(2);
+    });
+
+    it('throws a TypeError exception if any object is not a Occurrence', () => {
+      this.wrong_occurrence = {
+        id: 'id',
+        name: 'name',
+        short_description: 'short',
+        long_description: 'long',
+        gender_filter: 'both',
+        category: null,
+        factors: null
+      };
+      expect(() => {
+        occurrenceStorage.addAll([this.buildOccurrence1(), this.wrong_occurrence]);
+      }).toThrowError(TypeError);
+      expect(occurrenceStorage.size()).toEqual(1);
+
+      this.wrong_occurrence = null;
+    });
+  });
+
   describe('#findById', () => {
     beforeEach(() => {
       this.addOccurrence(this.buildOccurrence1());
