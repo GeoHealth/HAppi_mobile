@@ -38,4 +38,19 @@ describe("SymptomsUserRestService", () => {
       expect(this.symptom_user.http.post).toHaveBeenCalledWith("http://test.com:80/v1/symptoms_user",JSON.stringify({'symptom_id': symptomToAdd.id}), this.symptom_user.getHeadersForJSON());
     });
   });
+
+  describe('deleteSymptom', () => {
+    beforeEach(() => {
+      spyOn(this.symptom_user.http, "delete").and.returnValue(Observable.of({
+        "status": 200
+      }));
+    });
+
+    it('performs a delete to /symptoms_user', () => {
+      let symptomToDelete = new Symptom("name");
+      symptomToDelete.id = "1";
+      this.symptom_user.deleteSymptom(symptomToDelete);
+      expect(this.symptom_user.http.delete).toHaveBeenCalledWith("http://test.com:80/v1/symptoms_user?symptom_id=1&", this.symptom_user.getHeaders());
+    });
+  });
 });
