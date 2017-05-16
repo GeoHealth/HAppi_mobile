@@ -4,6 +4,7 @@ import { Crashlytics } from "../../../app/services/crashlytics";
 import { Observable } from "rxjs/Observable";
 import { SymptomsUserRestService } from "../../../app/services/symptoms_user_rest_service";
 import { SymptomsStorage } from "../../../app/provider/symptoms_storage";
+import { Symptom } from "../../../models/symptom";
 
 describe("SymptomsUserRestService", () => {
   beforeEach(() => {
@@ -20,6 +21,21 @@ describe("SymptomsUserRestService", () => {
     it('performs a get to /symptoms_user', () => {
       this.symptom_user.getAllSymptoms();
       expect(this.symptom_user.http.get).toHaveBeenCalledWith("http://test.com:80/v1/symptoms_user", this.symptom_user.getHeaders());
+    });
+  });
+
+  describe('addSymptom', () => {
+    beforeEach(() => {
+      spyOn(this.symptom_user.http, "post").and.returnValue(Observable.of({
+        "status": 201
+      }));
+    });
+
+    it('performs a post to /symptoms_user', () => {
+      let symptomToAdd = new Symptom("name");
+      symptomToAdd.id = "1";
+      this.symptom_user.addSymptom(symptomToAdd);
+      expect(this.symptom_user.http.post).toHaveBeenCalledWith("http://test.com:80/v1/symptoms_user",JSON.stringify({'symptom_id': symptomToAdd.id}), this.symptom_user.getHeadersForJSON());
     });
   });
 });
