@@ -53,4 +53,19 @@ describe("SymptomsUserRestService", () => {
       expect(this.symptom_user.http.delete).toHaveBeenCalledWith("http://test.com:80/v1/symptoms_user?symptom_id=1&", this.symptom_user.getHeaders());
     });
   });
+
+  describe('persistAllSymptomsLocally', () => {
+    it('calls getAllSymptoms, removeAll and then addAll', (done) => {
+      spyOn(this.symptom_user, "getAllSymptoms").and.returnValue(Observable.of({symptoms: []}));
+      spyOn(this.symptom_user["symptoms_storage"], "removeAll").and.returnValue(Observable.of({}));
+      spyOn(this.symptom_user["symptoms_storage"], "addAll").and.returnValue(Observable.of({}));
+
+      this.symptom_user.persistAllSymptomsLocally().subscribe(() => {
+        expect(this.symptom_user.getAllSymptoms).toHaveBeenCalled();
+        expect(this.symptom_user["symptoms_storage"].removeAll).toHaveBeenCalled();
+        expect(this.symptom_user["symptoms_storage"].addAll).toHaveBeenCalled();
+        done();
+      });
+    });
+  });
 });
