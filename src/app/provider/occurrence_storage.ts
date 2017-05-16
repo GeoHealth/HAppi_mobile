@@ -59,7 +59,7 @@ export class OccurrenceStorage {
    * Find and return the occurrence matching the given id
    */
   findById(searchId): Occurrence {
-    return Occurrence.convertObjectToInstance(this.occurrences.find({occurrence_id: searchId})[0]);
+    return Occurrence.convertObjectToInstance(this.occurrences.find({id: searchId})[0]);
   };
 
   all(): Occurrence[] {

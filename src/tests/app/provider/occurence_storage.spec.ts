@@ -34,13 +34,11 @@ describe('OccurrenceStorage', () => {
       return new SymptomWithFactor(this.symptom_name2);
     };
 
-    this.buildOccurrence1 = (): Occurrence => {
-      return new Occurrence(this.buildSymptom1(), DateProvider.getCurrentISODateAsString(), null, null);
-    };
+    this.occurrence1 = new Occurrence(this.buildSymptom1(), DateProvider.getCurrentISODateAsString(), null, null);
+    this.occurrence1.id = "1";
 
-    this.buildOccurrence2 = (): Occurrence => {
-      return new Occurrence(this.buildSymptom2(), DateProvider.getCurrentISODateAsString(), null, null);
-    };
+    this.occurrence2 = new Occurrence(this.buildSymptom2(), DateProvider.getCurrentISODateAsString(), null, null);
+    this.occurrence2.id = "2";
 
     this.addOccurrence = (newOccurrence) => {
       occurrenceStorage.add(newOccurrence);
@@ -52,8 +50,8 @@ describe('OccurrenceStorage', () => {
     this.symptom_name2 = null;
     this.buildSymptom1 = null;
     this.buildSymptom2 = null;
-    this.buildOccurrence1 = null;
-    this.buildOccurrence2 = null;
+    this.occurrence1 = null;
+    this.occurrence2 = null;
     this.addOccurrence = null;
     occurrenceStorage.removeAll().subscribe(() => {
       done();
@@ -67,7 +65,7 @@ describe('OccurrenceStorage', () => {
   describe('#add', () => {
     it('stores an occurrence to the database', () => {
       expect(occurrenceStorage.size()).toEqual(0);
-      occurrenceStorage.add(this.buildOccurrence1());
+      occurrenceStorage.add(this.occurrence1);
       expect(occurrenceStorage.size()).toEqual(1);
     });
 
@@ -90,9 +88,9 @@ describe('OccurrenceStorage', () => {
   });
 
   describe('#addAll', () => {
-    it('stores all symptoms', () => {
+    it('stores all occurrences', () => {
       expect(occurrenceStorage.size()).toEqual(0);
-      occurrenceStorage.addAll([this.buildOccurrence1(), this.buildOccurrence2()]);
+      occurrenceStorage.addAll([this.occurrence1, this.occurrence2]);
       expect(occurrenceStorage.size()).toEqual(2);
     });
 
@@ -107,7 +105,7 @@ describe('OccurrenceStorage', () => {
         factors: null
       };
       expect(() => {
-        occurrenceStorage.addAll([this.buildOccurrence1(), this.wrong_occurrence]);
+        occurrenceStorage.addAll([this.occurrence1, this.wrong_occurrence]);
       }).toThrowError(TypeError);
       expect(occurrenceStorage.size()).toEqual(1);
 
@@ -117,15 +115,15 @@ describe('OccurrenceStorage', () => {
 
   describe('#findById', () => {
     beforeEach(() => {
-      this.addOccurrence(this.buildOccurrence1());
+      this.addOccurrence(this.occurrence1);
     });
 
     it('returns an instance of Occurrence', () => {
-      expect(occurrenceStorage.findById(this.buildOccurrence1().id) instanceof Occurrence).toBeTruthy();
+      expect(occurrenceStorage.findById(this.occurrence1.id) instanceof Occurrence).toBeTruthy();
     });
 
     it('finds an occurrence by id', () => {
-      this.occurrence1 = this.buildOccurrence1();
+      this.occurrence1 = this.occurrence1;
 
       this.occurrence = occurrenceStorage.findById(this.occurrence1.id);
       expect(this.occurrence.id).toEqual(this.occurrence1.id);
@@ -138,11 +136,11 @@ describe('OccurrenceStorage', () => {
 
   describe('#all', () => {
     beforeEach(() => {
-      this.addOccurrence(this.buildOccurrence1());
-      this.addOccurrence(this.buildOccurrence2());
+      this.addOccurrence(this.occurrence1);
+      this.addOccurrence(this.occurrence2);
     });
 
-    it('returns all symptoms', () => {
+    it('returns all occurrences', () => {
       this.occurrences = occurrenceStorage.all();
       expect(this.occurrences.length).toEqual(2);
       expect(this.occurrences[0].symptom.name).toEqual(this.symptom_name1);
@@ -156,6 +154,31 @@ describe('OccurrenceStorage', () => {
       for (let occurrence of this.occurrences) {
         expect(occurrence instanceof Occurrence).toBeTruthy();
       }
+    });
+  });
+
+  describe('#remove', () => {
+    it('deletes an existing occurrence', () => {
+      this.addOccurrence(this.occurrence1);
+      this.addOccurrence(this.occurrence2);
+      expect(occurrenceStorage.size()).toEqual(2);
+
+      this.occurrences = occurrenceStorage.all();
+      occurrenceStorage.remove(this.occurrences[0]);
+      expect(occurrenceStorage.size()).toEqual(1);
+
+      occurrenceStorage.remove(this.occurrences[1]);
+      expect(occurrenceStorage.size()).toEqual(0);
+
+      this.occurrences = null;
+    });
+
+    it('does nothing when the given occurrence does not exist', () => {
+      this.addOccurrence(this.occurrence1);
+      expect(occurrenceStorage.size()).toEqual(1);
+
+      occurrenceStorage.remove(this.occurrence2);
+      expect(occurrenceStorage.size()).toEqual(1);
     });
   });
 });
