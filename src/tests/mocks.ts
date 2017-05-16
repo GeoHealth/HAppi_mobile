@@ -4,6 +4,7 @@ import { Http } from "@angular/http";
 import { Crashlytics } from "../app/services/crashlytics";
 import { OccurrenceStorage } from "../app/provider/occurrence_storage";
 import { ToastController } from "ionic-angular";
+import { SymptomsStorage } from "../app/provider/symptoms_storage";
 
 export class ConfigMock {
 
@@ -174,5 +175,11 @@ export class OccurrenceStorageMock extends OccurrenceStorage {
 export class ToastControllerMock extends ToastController {
   constructor() {
     super(null);
+  }
+}
+
+export class SymptomsStorageMock extends SymptomsStorage {
+  constructor() {
+    super(new CrashlyticsMock() as any);
   }
 }
