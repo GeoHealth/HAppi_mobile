@@ -35,7 +35,10 @@ describe("SymptomsUserRestService", () => {
       let symptomToAdd = new Symptom("name");
       symptomToAdd.id = "1";
       this.symptom_user.addSymptom(symptomToAdd);
-      expect(this.symptom_user.http.post).toHaveBeenCalledWith("http://test.com:80/v1/symptoms_user",JSON.stringify({'symptom_id': symptomToAdd.id}), this.symptom_user.getHeadersForJSON());
+      expect(this.symptom_user.http.post).toHaveBeenCalledWith(
+        "http://test.com:80/v1/symptoms_user",
+        JSON.stringify({'symptom_id': symptomToAdd.id}),
+        this.symptom_user.getHeadersForJSON());
     });
   });
 
