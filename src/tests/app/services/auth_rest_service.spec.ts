@@ -1,6 +1,6 @@
 import { AuthRestService } from "../../../app/services/auth_rest_service";
 import { CrashlyticsMock, HttpMock } from "../../mocks";
-import { Http } from "@angular/http";
+import { Http, Headers, RequestOptions } from "@angular/http";
 import { Crashlytics } from "../../../app/services/crashlytics";
 import { Observable } from "rxjs/Observable";
 
@@ -47,7 +47,7 @@ let check_response_data = function (context: any) {
 };
 
 describe('AuthRestService', () => {
-  let auth_rest_service;
+  let auth_rest_service: AuthRestService;
   beforeAll(() => {
     auth_rest_service = new AuthRestService(new HttpMock() as Http, new CrashlyticsMock() as Crashlytics);
   });
@@ -159,6 +159,33 @@ describe('AuthRestService', () => {
           });
 
           check_response_data(this);
+        });
+      });
+    });
+  });
+
+  describe('#validate', () => {
+    describe('when the response is 200', () => {
+      beforeEach(() => {
+        spyOn(auth_rest_service.http, "get").and.returnValue(Observable.of({
+          "status": 200,
+          "_body": "{\"success\": true}"
+        }));
+      });
+
+      it('performs a get to /auth/validate_token', () => {
+        let headers: Headers = new Headers();
+        auth_rest_service.validate(headers);
+        expect(auth_rest_service.http.get).toHaveBeenCalledWith(
+          "http://test.com:80/auth/validate_token",
+          new RequestOptions({headers: headers}));
+      });
+
+      it('has success = true', (done) => {
+        let headers: Headers = new Headers();
+        auth_rest_service.validate(headers).subscribe((res: any) => {
+          expect(JSON.parse(res._body).success).toBeTruthy();
+          done();
         });
       });
     });
