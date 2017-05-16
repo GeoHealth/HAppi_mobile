@@ -86,6 +86,32 @@ describe('SymptomsStorage', () => {
     });
   });
 
+  describe('#addAll', () => {
+    it('stores all symptoms', () => {
+      expect(symptomsStorage.size()).toEqual(0);
+      symptomsStorage.addAll([this.symptom1, this.symptom2]);
+      expect(symptomsStorage.size()).toEqual(2);
+    });
+
+    it('throws a TypeError exception if any object is not a SymptomWithFactor', () => {
+      this.wrong_occurrence = {
+        id: 'id',
+        name: 'name',
+        short_description: 'short',
+        long_description: 'long',
+        gender_filter: 'both',
+        category: null,
+        factors: null
+      };
+      expect(() => {
+        symptomsStorage.addAll([this.symptom1, this.wrong_occurrence]);
+      }).toThrowError(TypeError);
+      expect(symptomsStorage.size()).toEqual(1);
+
+      this.wrong_occurrence = null;
+    });
+  });
+
   describe('#findByName', () => {
     beforeEach(() => {
       this.addSymptom(this.symptom1);
