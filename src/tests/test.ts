@@ -18,10 +18,10 @@ __karma__.loaded = (): any => { /* no op */
 // For the tests, we cannot read those value from a configuration file.
 declare const global;
 declare const ENV;
-global['ENV'] = {protocol: 'http', apiDomainName: 'test.com', apiPort: '80', apiVersion: 'v1'};
-ENV.protocol = "http";
-ENV.apiDomainName = "localhost";
-ENV.apiPort = "3000";
+global['ENV'] = {protocol: 'http://', apiDomainName: 'test.com', apiPort: '80', apiVersion: 'v1'};
+ENV.protocol = "http://";
+ENV.apiDomainName = "test.com";
+ENV.apiPort = "80";
 ENV.apiVersion = "v1";
 
 Promise.all([
