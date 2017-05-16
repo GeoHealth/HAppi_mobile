@@ -191,4 +191,21 @@ describe('AuthRestService', () => {
     });
   });
 
+  describe('#disconnection', () => {
+    describe('when the response is 200', () => {
+      beforeEach(() => {
+        spyOn(auth_rest_service.http, "delete").and.returnValue(Observable.of({
+          "status": 200
+        }));
+      });
+
+      it('performs a delete to /auth/sign_out', () => {
+        auth_rest_service.disconnection();
+        expect(auth_rest_service.http.delete).toHaveBeenCalledWith(
+          "http://test.com:80/auth/sign_out",
+          auth_rest_service.getHeadersForJSON());
+      });
+    });
+  });
+
 });
