@@ -51,11 +51,26 @@ describe('AuthService', () => {
       this.auth_service.extractAndSaveHeaders(this.response as any);
 
       let received_headers = this.auth_service["auth_storage"].saveHeaders.calls.mostRecent().args[0];
-      console.warn(received_headers);
       expect(received_headers.keys().length).toEqual(5);
-      for(let i = 0; i < this.expected_headers.keys().length; i++){
+      for (let i = 0; i < this.expected_headers.keys().length; i++) {
         expect(received_headers.has(this.expected_headers.keys()[i])).toBeTruthy();
       }
+    });
+  });
+
+  describe('#login', () => {
+    describe('when credentials.email or credentials.password are null', () => {
+      it('throw an error from Observable', (done) => {
+        this.auth_service.login({}).subscribe(
+          (res) => {
+            fail("expected error but got " + res);
+            done();
+          },
+          (err) => {
+            expect(err).toBe("Please insert credentials");
+            done();
+          });
+      });
     });
   });
 });
