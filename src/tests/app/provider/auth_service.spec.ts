@@ -75,19 +75,108 @@ describe('AuthService', () => {
 
     describe('when credentials are given with a mail and password', () => {
       beforeEach(() => {
-        spyOn(this.auth_service["auth_rest_service"], "auth").and.returnValue(Observable.of({_body: "{\"data\":{}}", headers: new Headers()}));
         spyOn(this.auth_service, "extractAndSaveHeaders").and.returnValue(Observable.of({}));
         spyOn(this.auth_service["auth_storage"], "saveUser").and.returnValue(Observable.of({}));
+
+        this.credentials = {email: "test@mail.com", password: "azerty"};
       });
 
-      it('returns an Observable', () => {
-        expect(this.auth_service.login({email: "test@mail.com", password: "azerty"})).toEqual(jasmine.any(Observable));
+      describe('when authentication succeed', () => {
+        beforeEach(() => {
+          spyOn(this.auth_service["auth_rest_service"], "auth").and.returnValue(Observable.of({_body: "{\"data\":{}}", headers: new Headers()}));
+        });
+
+        it('returns an Observable', () => {
+          expect(this.auth_service.login(this.credentials)).toEqual(jasmine.any(Observable));
+        });
+
+        it('calls auth_rest_service.auth with the given email and password', (done) => {
+          this.auth_service.login(this.credentials).subscribe(() => {
+            expect(this.auth_service["auth_rest_service"].auth).toHaveBeenCalledWith(this.credentials.email, this.credentials.password);
+            done();
+          });
+        });
+
+        it('returns true', (done) => {
+          this.auth_service.login(this.credentials).subscribe((res) => {
+            expect(res).toBeTruthy();
+            done();
+          });
+        });
       });
 
-      it('calls auth_rest_service.auth with the given email and password', (done) => {
-        this.auth_service.login({email: "test@mail.com", password: "azerty"}).subscribe(() => {
-          expect(this.auth_service["auth_rest_service"].auth).toHaveBeenCalledWith("test@mail.com", "azerty");
-          done();
+      describe('when authentication fails', () => {
+        beforeEach(() => {
+          spyOn(this.auth_service["auth_rest_service"], "auth").and.returnValue(Observable.throw({}));
+        });
+
+        it('returns false', (done) => {
+          this.auth_service.login(this.credentials).subscribe((res) => {
+            expect(res).toBeFalsy();
+            done();
+          });
+        });
+      });
+    });
+  });
+
+  describe('#register', () => {
+    describe('when email or password or password_confirmation or firstName or lastName or gender are null', () => {
+      it('throw an error from Observable', (done) => {
+        this.auth_service.register({}).subscribe(
+          (res) => {
+            fail("expected error but got " + res);
+            done();
+          },
+          (err) => {
+            expect(err).toBe("Please insert credentials");
+            done();
+          });
+      });
+    });
+
+    describe('when credentials are given with an email, password, password_confirmation, firstName, lastName and gender', () => {
+      beforeEach(() => {
+        spyOn(this.auth_service, "extractAndSaveHeaders").and.returnValue(Observable.of({}));
+        spyOn(this.auth_service["auth_storage"], "saveUser").and.returnValue(Observable.of({}));
+
+        this.credentials = {email: "test@mail.com", password: "azerty", password_confirmation: "azerty", firstName: "Foo", lastName: "Bar", gender: "male"};
+      });
+
+      describe('when authentication succeed', () => {
+        beforeEach(() => {
+          spyOn(this.auth_service["auth_rest_service"], "create").and.returnValue(Observable.of({_body: "{\"data\":{}}", headers: new Headers()}));
+        });
+
+        it('returns an Observable', () => {
+          expect(this.auth_service.register(this.credentials)).toEqual(jasmine.any(Observable));
+        });
+
+        it('calls auth_rest_service.create with the given credentials', (done) => {
+          this.auth_service.register(this.credentials).subscribe(() => {
+            expect(this.auth_service["auth_rest_service"].create).toHaveBeenCalledWith(this.credentials.email, this.credentials.password, this.credentials.password_confirmation, this.credentials.firstName, this.credentials.lastName, this.credentials.gender);
+            done();
+          });
+        });
+
+        it('returns true', (done) => {
+          this.auth_service.register(this.credentials).subscribe((res) => {
+            expect(res.success).toBeTruthy();
+            done();
+          });
+        });
+      });
+
+      describe('when authentication fails', () => {
+        beforeEach(() => {
+          spyOn(this.auth_service["auth_rest_service"], "create").and.returnValue(Observable.throw({_body: "{\"errors\": {\"full_messages\": []}}"}));
+        });
+
+        it('returns false', (done) => {
+          this.auth_service.register(this.credentials).subscribe((res) => {
+            expect(res.success).toBeFalsy();
+            done();
+          });
         });
       });
     });

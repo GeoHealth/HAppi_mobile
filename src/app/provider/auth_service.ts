@@ -83,7 +83,7 @@ export class AuthService {
   }
 
   public register(credentials) {
-    if (credentials.email === null || credentials.password === null) {
+    if (isNullOrUndefined(credentials.email) || isNullOrUndefined(credentials.password)) {
       return Observable.throw("Please insert credentials");
     } else {
       return Observable.create((observer) => {
