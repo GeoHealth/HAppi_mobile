@@ -47,37 +47,36 @@ let check_response_data = function (context: any) {
 };
 
 describe('AuthRestService', () => {
-  let auth_rest_service: AuthRestService;
   beforeAll(() => {
-    auth_rest_service = new AuthRestService(new HttpMock() as Http, new CrashlyticsMock() as Crashlytics);
+    this.auth_rest_service = new AuthRestService(new HttpMock() as Http, new CrashlyticsMock() as Crashlytics);
   });
 
   afterAll(() => {
-    auth_rest_service = null;
+    this.auth_rest_service = null;
   });
 
   describe('#auth', () => {
     describe('when the response is 200', () => {
       beforeEach(() => {
-        spyOn(auth_rest_service.http, "post").and.returnValue(Observable.of({
+        spyOn(this.auth_rest_service.http, "post").and.returnValue(Observable.of({
           "status": 200,
           "_body": "{\"data\":{\"id\":2,\"provider\":\"email\",\"uid\":\"test@mail.com\",\"name\":null,\"nickname\":null,\"image\":null,\"email\":\"test@mail.com\",\"first_name\":\"Foo\",\"last_name\":\"Bar\",\"gender\":\"male\"}}"
         }));
       });
 
       it('performs a post to /auth/sign_in', () => {
-        auth_rest_service.auth("email", "password");
-        expect(auth_rest_service.http.post).toHaveBeenCalledWith(
+        this.auth_rest_service.auth("email", "password");
+        expect(this.auth_rest_service.http.post).toHaveBeenCalledWith(
           "http://test.com:80/auth/sign_in",
           {
             'email': "email",
             'password': "password"
           },
-          auth_rest_service.getHeadersForJSON());
+          this.auth_rest_service.getHeadersForJSON());
       });
 
       it('returns an Observable containing a key "_body" which is a JSON', (done) => {
-        let response = auth_rest_service.auth("email", "password");
+        let response = this.auth_rest_service.auth("email", "password");
         response.subscribe((value: any) => {
           expect(value["_body"]).not.toBeUndefined();
           expect(value["_body"]).toEqual(jasmine.any(String));
@@ -87,7 +86,7 @@ describe('AuthRestService', () => {
 
       describe('the response', () => {
         beforeEach((done) => {
-          auth_rest_service.auth("email", "password").subscribe((json: any) => {
+          this.auth_rest_service.auth("email", "password").subscribe((json: any) => {
             this.response = JSON.parse(json["_body"]);
             done();
           });
@@ -111,15 +110,15 @@ describe('AuthRestService', () => {
   describe('#create', () => {
     describe('when the response is 200', () => {
       beforeEach(() => {
-        spyOn(auth_rest_service.http, "post").and.returnValue(Observable.of({
+        spyOn(this.auth_rest_service.http, "post").and.returnValue(Observable.of({
           "status": 200,
           "_body": "{\"data\":{\"id\":2,\"provider\":\"email\",\"uid\":\"test@mail.com\",\"name\":null,\"nickname\":null,\"image\":null,\"email\":\"test@mail.com\",\"first_name\":\"Foo\",\"last_name\":\"Bar\",\"gender\":\"male\"}}"
         }));
       });
 
       it('performs a post to /auth', () => {
-        auth_rest_service.create("email", "password", "password", "Foo", "Bar", "male");
-        expect(auth_rest_service.http.post).toHaveBeenCalledWith(
+        this.auth_rest_service.create("email", "password", "password", "Foo", "Bar", "male");
+        expect(this.auth_rest_service.http.post).toHaveBeenCalledWith(
           "http://test.com:80/auth",
           {
             'email': "email",
@@ -129,11 +128,11 @@ describe('AuthRestService', () => {
             'last_name': "Bar",
             'gender': "male"
           },
-          auth_rest_service.getHeadersForJSON());
+          this.auth_rest_service.getHeadersForJSON());
       });
 
       it('returns an Observable containing a key "_body" which is a JSON', (done) => {
-        let response = auth_rest_service.create("email", "password", "password", "Foo", "Bar", "male");
+        let response = this.auth_rest_service.create("email", "password", "password", "Foo", "Bar", "male");
         response.subscribe((value: any) => {
           expect(value["_body"]).not.toBeUndefined();
           expect(value["_body"]).toEqual(jasmine.any(String));
@@ -143,7 +142,7 @@ describe('AuthRestService', () => {
 
       describe('the response', () => {
         beforeEach((done) => {
-          auth_rest_service.create("email", "password", "password", "Foo", "Bar", "male").subscribe((json: any) => {
+          this.auth_rest_service.create("email", "password", "password", "Foo", "Bar", "male").subscribe((json: any) => {
             this.response = JSON.parse(json["_body"]);
             done();
           });
@@ -167,7 +166,7 @@ describe('AuthRestService', () => {
   describe('#validate', () => {
     describe('when the response is 200', () => {
       beforeEach(() => {
-        spyOn(auth_rest_service.http, "get").and.returnValue(Observable.of({
+        spyOn(this.auth_rest_service.http, "get").and.returnValue(Observable.of({
           "status": 200,
           "_body": "{\"success\": true}"
         }));
@@ -175,15 +174,15 @@ describe('AuthRestService', () => {
 
       it('performs a get to /auth/validate_token', () => {
         let headers: Headers = new Headers();
-        auth_rest_service.validate(headers);
-        expect(auth_rest_service.http.get).toHaveBeenCalledWith(
+        this.auth_rest_service.validate(headers);
+        expect(this.auth_rest_service.http.get).toHaveBeenCalledWith(
           "http://test.com:80/auth/validate_token",
           new RequestOptions({headers: headers}));
       });
 
       it('has success = true', (done) => {
         let headers: Headers = new Headers();
-        auth_rest_service.validate(headers).subscribe((res: any) => {
+        this.auth_rest_service.validate(headers).subscribe((res: any) => {
           expect(JSON.parse(res._body).success).toBeTruthy();
           done();
         });
@@ -194,16 +193,16 @@ describe('AuthRestService', () => {
   describe('#disconnection', () => {
     describe('when the response is 200', () => {
       beforeEach(() => {
-        spyOn(auth_rest_service.http, "delete").and.returnValue(Observable.of({
+        spyOn(this.auth_rest_service.http, "delete").and.returnValue(Observable.of({
           "status": 200
         }));
       });
 
       it('performs a delete to /auth/sign_out', () => {
-        auth_rest_service.disconnection();
-        expect(auth_rest_service.http.delete).toHaveBeenCalledWith(
+        this.auth_rest_service.disconnection();
+        expect(this.auth_rest_service.http.delete).toHaveBeenCalledWith(
           "http://test.com:80/auth/sign_out",
-          auth_rest_service.getHeadersForJSON());
+          this.auth_rest_service.getHeadersForJSON());
       });
     });
   });
