@@ -8,6 +8,7 @@ import { AuthStorage } from "./auth_storage";
 import { Crashlytics } from "../services/crashlytics";
 import { SymptomsStorage } from "./symptoms_storage";
 import { OccurrenceStorage } from "./occurrence_storage";
+import { isNullOrUndefined } from "util";
 
 export class User {
   email: string;
@@ -53,7 +54,7 @@ export class AuthService {
   }
 
   public login(credentials): Observable<boolean> {
-    if (credentials.email === null || credentials.password === null) {
+    if (isNullOrUndefined(credentials.email) || isNullOrUndefined(credentials.password)) {
       return Observable.throw("Please insert credentials");
     } else {
       return Observable.create((observer) => {

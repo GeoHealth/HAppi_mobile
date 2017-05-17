@@ -49,7 +49,13 @@ describe('AuthService', () => {
       });
       this.response = {headers: this.full_headers};
       this.auth_service.extractAndSaveHeaders(this.response as any);
-      expect(this.auth_service["auth_storage"].saveHeaders).toHaveBeenCalledWith(this.expected_headers);
+
+      let received_headers = this.auth_service["auth_storage"].saveHeaders.calls.mostRecent().args[0];
+      console.warn(received_headers);
+      expect(received_headers.keys().length).toEqual(5);
+      for(let i = 0; i < this.expected_headers.keys().length; i++){
+        expect(received_headers.has(this.expected_headers.keys()[i])).toBeTruthy();
+      }
     });
   });
 });
