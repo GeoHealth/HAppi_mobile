@@ -72,5 +72,24 @@ describe('AuthService', () => {
           });
       });
     });
+
+    describe('when credentials are given with a mail and password', () => {
+      beforeEach(() => {
+        spyOn(this.auth_service["auth_rest_service"], "auth").and.returnValue(Observable.of({_body: "{\"data\":{}}", headers: new Headers()}));
+        spyOn(this.auth_service, "extractAndSaveHeaders").and.returnValue(Observable.of({}));
+        spyOn(this.auth_service["auth_storage"], "saveUser").and.returnValue(Observable.of({}));
+      });
+
+      it('returns an Observable', () => {
+        expect(this.auth_service.login({email: "test@mail.com", password: "azerty"})).toEqual(jasmine.any(Observable));
+      });
+
+      it('calls auth_rest_service.auth with the given email and password', (done) => {
+        this.auth_service.login({email: "test@mail.com", password: "azerty"}).subscribe(() => {
+          expect(this.auth_service["auth_rest_service"].auth).toHaveBeenCalledWith("test@mail.com", "azerty");
+          done();
+        });
+      });
+    });
   });
 });
