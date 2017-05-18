@@ -43,6 +43,8 @@ describe('OccurrenceStorage', () => {
     this.addOccurrence = (newOccurrence) => {
       occurrenceStorage.add(newOccurrence);
     };
+
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
   });
 
   afterEach((done) => {
