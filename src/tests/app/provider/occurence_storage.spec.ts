@@ -71,9 +71,12 @@ describe('OccurrenceStorage', () => {
       'stores an occurrence to the database',
       (done) => {
         expect(occurrenceStorage.size()).toEqual(0);
+        console.warn("let's add an occurrence");
         occurrenceStorage.add(this.occurrence1).subscribe(
           () => {
+            console.warn("the occurrence is added");
             expect(occurrenceStorage.size()).toEqual(1);
+            console.warn("the expectation is done");
             done();
           },
           () => {
