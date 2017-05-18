@@ -123,8 +123,6 @@ describe('OccurrenceStorage', () => {
     });
 
     it('finds an occurrence by id', () => {
-      this.occurrence1 = this.occurrence1;
-
       this.occurrence = occurrenceStorage.findById(this.occurrence1.id);
       expect(this.occurrence.id).toEqual(this.occurrence1.id);
       expect(this.occurrence.symptom.name).toEqual(this.occurrence1.symptom.name);

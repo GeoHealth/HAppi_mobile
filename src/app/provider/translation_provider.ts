@@ -32,6 +32,7 @@ export class TranslationProvider {
   /**
    * Create a new instance that will use the device preferred locale as translator.
    * @param platform
+   * @param crashlytics
    */
   constructor(public platform: Platform, private crashlytics: Crashlytics) {
     platform.ready().then(() => {
