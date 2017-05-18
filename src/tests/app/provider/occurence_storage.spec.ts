@@ -16,7 +16,7 @@ describe('OccurrenceStorage', () => {
         },
         100);
     },
-    10000);
+    20000);
 
   afterAll(() => {
     occurrenceStorage = null;
@@ -58,7 +58,7 @@ describe('OccurrenceStorage', () => {
     occurrenceStorage.removeAll().subscribe(() => {
       done();
     });
-  });
+  }, 20000);
 
   it('starts with an empty database', () => {
     expect(occurrenceStorage.size()).toEqual(0);
@@ -68,6 +68,7 @@ describe('OccurrenceStorage', () => {
     it('stores an occurrence to the database', () => {
       expect(occurrenceStorage.size()).toEqual(0);
       occurrenceStorage.add(this.occurrence1);
+      expect(occurrenceStorage.size()).toEqual(1);
       expect(occurrenceStorage.size()).toEqual(1);
     });
 
