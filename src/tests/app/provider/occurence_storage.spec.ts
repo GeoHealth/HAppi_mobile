@@ -47,18 +47,20 @@ describe('OccurrenceStorage', () => {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
   });
 
-  afterEach((done) => {
-    this.symptom_name1 = null;
-    this.symptom_name2 = null;
-    this.buildSymptom1 = null;
-    this.buildSymptom2 = null;
-    this.occurrence1 = null;
-    this.occurrence2 = null;
-    this.addOccurrence = null;
-    occurrenceStorage.removeAll().subscribe(() => {
-      done();
-    });
-  }, 20000);
+  afterEach(
+    (done) => {
+      this.symptom_name1 = null;
+      this.symptom_name2 = null;
+      this.buildSymptom1 = null;
+      this.buildSymptom2 = null;
+      this.occurrence1 = null;
+      this.occurrence2 = null;
+      this.addOccurrence = null;
+      occurrenceStorage.removeAll().subscribe(() => {
+        done();
+      });
+    },
+    20000);
 
   it('starts with an empty database', () => {
     expect(occurrenceStorage.size()).toEqual(0);
