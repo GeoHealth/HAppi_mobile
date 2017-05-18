@@ -27,7 +27,6 @@ export class OccurrenceStorage {
    */
   add(occurrence: Occurrence): Observable<boolean> {
     if (occurrence instanceof Occurrence) {
-      console.warn("instance is valid");
       this.occurrences.insert(occurrence);
       return this.saveAll();
     } else {
@@ -110,14 +109,10 @@ export class OccurrenceStorage {
   };
 
   private saveAll(): Observable<boolean> {
-    console.warn("saveAll called");
     return Observable.create((observer) => {
-      console.warn("let's save the item");
       this.store.setItem('occurrences', JSON.stringify(this.inMemoryDB)).then((value) => {
-        console.warn("item is saved");
         this.cache_occurrences.invalidateCache();
         observer.next(true);
-        console.warn("let's complete this observable");
         observer.complete();
       }).catch((err) => {
         this.crashlytics.sendNonFatalCrashWithStacktraceCreation('error saving database: ' + err);
