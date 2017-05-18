@@ -67,13 +67,21 @@ describe('OccurrenceStorage', () => {
   });
 
   describe('#add', () => {
-    it('stores an occurrence to the database', (done) => {
-      expect(occurrenceStorage.size()).toEqual(0);
-      occurrenceStorage.add(this.occurrence1).subscribe(() => {
-        expect(occurrenceStorage.size()).toEqual(1);
-        done();
-      });
-    });
+    it(
+      'stores an occurrence to the database',
+      (done) => {
+        expect(occurrenceStorage.size()).toEqual(0);
+        occurrenceStorage.add(this.occurrence1).subscribe(
+          () => {
+            expect(occurrenceStorage.size()).toEqual(1);
+            done();
+          },
+          () => {
+            fail("no error expected");
+            done();
+          });
+      },
+      20000);
 
     it('refuses an object that is not an Occurrence by throwing a TypeError exception', () => {
       this.wrong_occurrence = {
