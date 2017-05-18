@@ -20,7 +20,7 @@ describe('OccurrenceStorage', () => {
         },
         100);
     },
-    20000);
+    100000);
 
   afterAll(() => {
     this.occurrenceStorage = null;
@@ -60,7 +60,7 @@ describe('OccurrenceStorage', () => {
         done();
       });
     },
-    20000);
+    100000);
 
   it('starts with an empty database', () => {
     expect(this.occurrenceStorage.size()).toEqual(0);
