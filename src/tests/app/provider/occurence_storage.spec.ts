@@ -27,26 +27,26 @@ describe('OccurrenceStorage', () => {
     this.addOccurrence = null;
   });
 
-  beforeEach(() => {
-    this.symptom_name1 = "Abdominal Pain";
-    this.symptom_name2 = "Abnormal Facial Expressions";
+  beforeEach(
+    () => {
+      this.symptom_name1 = "Abdominal Pain";
+      this.symptom_name2 = "Abnormal Facial Expressions";
 
-    this.buildSymptom1 = (): SymptomWithFactor => {
-      return new SymptomWithFactor(this.symptom_name1);
-    };
+      this.buildSymptom1 = (): SymptomWithFactor => {
+        return new SymptomWithFactor(this.symptom_name1);
+      };
 
-    this.buildSymptom2 = (): SymptomWithFactor => {
-      return new SymptomWithFactor(this.symptom_name2);
-    };
+      this.buildSymptom2 = (): SymptomWithFactor => {
+        return new SymptomWithFactor(this.symptom_name2);
+      };
 
-    this.occurrence1 = new Occurrence(this.buildSymptom1(), DateProvider.getCurrentISODateAsString(), null, null);
-    this.occurrence1.id = "1";
+      this.occurrence1 = new Occurrence(this.buildSymptom1(), DateProvider.getCurrentISODateAsString(), null, null);
+      this.occurrence1.id = "1";
 
-    this.occurrence2 = new Occurrence(this.buildSymptom2(), DateProvider.getCurrentISODateAsString(), null, null);
-    this.occurrence2.id = "2";
-
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
-  });
+      this.occurrence2 = new Occurrence(this.buildSymptom2(), DateProvider.getCurrentISODateAsString(), null, null);
+      this.occurrence2.id = "2";
+    },
+    100000);
 
   afterEach(
     (done) => {
