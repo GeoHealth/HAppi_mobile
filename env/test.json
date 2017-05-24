@@ -1,0 +1,6 @@
+{
+   "protocol":"\"https://\"",
+   "apiDomainName":"\"dev-api.happi-doctor.be\"",
+   "apiPort":"\"443\"",
+   "apiVersion":"\"v1\""
+}

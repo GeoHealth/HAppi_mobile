@@ -32,6 +32,9 @@ install:
 before_script:
 script:
   - npm run-script test-travis
+  - cp env/test.json env/dev.json
+  - ionic build browser
+  - npm run-script e2e-test-travis
 after_success:
   - sed -i 's/^SF:.*\/\(src.*\)/SF:\1/g' coverage/coverage.lcov
   - codeclimate-test-reporter < coverage/lcov.info
