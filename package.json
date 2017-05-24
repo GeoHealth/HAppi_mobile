@@ -8,7 +8,8 @@
     "ionic:serve": "ionic-app-scripts serve",
     "test": "ng test --code-coverage",
     "test-travis": "ng test --single-run --code-coverage",
-    "build-translation": "po2json resources/locales/fr_BE/fr_BE.po src/assets/locales/fr_BE.json --pretty && po2json resources/locales/en/en.po src/assets/locales/en.json --pretty"
+    "build-translation": "po2json resources/locales/fr_BE/fr_BE.po src/assets/locales/fr_BE.json --pretty && po2json resources/locales/en/en.po src/assets/locales/en.json --pretty",
+    "protractor": "webdriver-manager update && protractor"
   },
   "config": {
     "ionic_webpack": "./config/webpack.config.js"
@@ -40,10 +41,13 @@
   "devDependencies": {
     "@ionic/app-scripts": "1.1.4",
     "@types/jasmine": "2.5.41",
-    "@types/node": "^6.0.50",
+    "@types/node": "^6.0.73",
     "angular-cli": "1.0.0-beta.21",
     "codelyzer": "^1.0.0-beta.4",
+    "connect": "^3.6.2",
+    "jasmine": "^2.6.0",
     "jasmine-core": "^2.5.2",
+    "jasmine-spec-reporter": "^4.1.0",
     "karma": "^1.3.0",
     "karma-chrome-launcher": "^2.0.0",
     "karma-cli": "^1.0.1",
@@ -51,6 +55,8 @@
     "karma-mocha-reporter": "^2.2.1",
     "karma-remap-istanbul": "^0.2.1",
     "po2json": "^0.4.5",
+    "protractor": "^5.1.2",
+    "ts-node": "^3.0.4",
     "typescript": "2.0.9"
   },
   "cordovaPlugins": [
