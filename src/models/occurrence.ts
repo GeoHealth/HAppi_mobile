@@ -1,7 +1,7 @@
-import {isNullOrUndefined} from "util";
-import {GPSCoordinates} from "./coordinate";
-import {FactorInstance} from "./factor_instance";
-import {SymptomWithFactor} from "./symptom_with_factors";
+import { isNullOrUndefined } from "util";
+import { GPSCoordinates } from "./coordinate";
+import { FactorInstance } from "./factor_instance";
+import { SymptomWithFactor } from "./symptom_with_factors";
 
 
 export class Occurrence {
@@ -11,9 +11,10 @@ export class Occurrence {
   date: string;
   gps_coordinate: GPSCoordinates;
   factors: FactorInstance[];
-  // photos: Photo[];
 
-  constructor(symptom: SymptomWithFactor, date: string, gps_location: GPSCoordinates, factors: FactorInstance[]) {
+  constructor(symptom: SymptomWithFactor,
+              date: string, gps_location: GPSCoordinates,
+              factors: FactorInstance[]) {
     this.symptom = symptom;
     this.date = date;
     this.gps_coordinate = gps_location;
@@ -25,9 +26,10 @@ export class Occurrence {
 
 
   static convertObjectToInstance(object: any): Occurrence {
-    let instance = new Occurrence(object.symptom ? SymptomWithFactor.convertObjectToInstance(object.symptom): null,
-     object.date,
-     object.gps_coordinate ? object.gps_coordinate : null,
+    let instance = new Occurrence(
+      object.symptom ? SymptomWithFactor.convertObjectToInstance(object.symptom) : null,
+      object.date,
+      object.gps_coordinate ? object.gps_coordinate : null,
       object.factors ? object.factors : null);
     instance.id = object.id;
     instance.symptom_id = object.symptom_id;

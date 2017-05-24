@@ -1,4 +1,4 @@
-import { Injectable, Optional } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { Occurrence } from "../../models/occurrence";
 import { CachedArray } from "./cached_array";
 import { Crashlytics } from "../services/crashlytics";
@@ -10,8 +10,8 @@ let localForage = require('localforage');
 
 @Injectable()
 export class OccurrenceStorage {
-  private inMemoryDB: any;
   store: any;
+  private inMemoryDB: any;
   private occurrences: any;
   private cache_occurrences: CachedArray<Occurrence>;
 
@@ -21,6 +21,63 @@ export class OccurrenceStorage {
     this.cache_occurrences = new CachedArray<Occurrence>();
     this.importAll().subscribe();
   };
+
+  /**
+   * Add the given occurrence to the database
+   */
+  add(occurrence: Occurrence): Observable<boolean> {
+    if (occurrence instanceof Occurrence) {
+      this.occurrences.insert(occurrence);
+      return this.saveAll();
+    } else {
+      throw new TypeError("Wrong type adding to occurrences_storage");
+    }
+  };
+
+  /**
+   * Add the given occurencces to the database
+   */
+  addAll(occurrences: Array<Occurrence>): Observable<boolean> {
+    occurrences.forEach((occurrence) => {
+      if (occurrence instanceof Occurrence) {
+        this.occurrences.insert(occurrence);
+      } else {
+        throw new TypeError("Wrong type adding to occurrences_storage");
+      }
+    });
+    return this.saveAll();
+  }
+
+  /**
+   * Returns the number of occurrences storred in the database
+   */
+  size(): number {
+    return this.occurrences.count();
+  };
+
+  /**
+   * Find and return the occurrence matching the given id
+   */
+  findById(searchId): Occurrence {
+    return Occurrence.convertObjectToInstance(this.occurrences.find({id: searchId})[0]);
+  };
+
+  all(): Occurrence[] {
+    return this.cache_occurrences.getCache((): Occurrence[] => {
+      return Occurrence.convertObjectsToInstancesArray(this.occurrences.data);
+    });
+  }
+
+  removeAll(): Observable<boolean> {
+    this.occurrences.clear();
+    return this.saveAll();
+  }
+
+  remove(occurrence: Occurrence): Observable<boolean> {
+    let o = this.occurrences.find({'id': occurrence.id});
+    this.occurrences.remove(o);
+    return this.saveAll();
+  }
 
   private initStore() {
     this.store = localForage.createInstance({
@@ -64,61 +121,4 @@ export class OccurrenceStorage {
       });
     });
   };
-
-  /**
-   * Add the given occurrence to the database
-   */
-  add(occurrence: Occurrence): Observable<boolean> {
-    if (occurrence instanceof Occurrence) {
-      this.occurrences.insert(occurrence);
-      return this.saveAll();
-    } else {
-      throw new TypeError("Wrong type adding to occurrences_storage");
-    }
-  };
-
-  /**
-   * Add the given occurencces to the database
-   */
-  addAll(occurrences: Array<Occurrence>): Observable<boolean> {
-    occurrences.forEach((occurrence) => {
-      if (occurrence instanceof Occurrence) {
-        this.occurrences.insert(occurrence);
-      } else {
-        throw new TypeError("Wrong type adding to occurrences_storage");
-      }
-    });
-    return this.saveAll();
-  }
-
-  /**
-   * Returns the number of occurrences storred in the database
-   */
-  size(): number {
-    return this.occurrences.count();
-  };
-
-  /**
-   * Find and return the occurrence matching the given id
-   */
-  findById(searchId): Occurrence {
-    return Occurrence.convertObjectToInstance(this.occurrences.find({occurrence_id: searchId})[0]);
-  };
-
-  all(): Occurrence[] {
-    return this.cache_occurrences.getCache((): Occurrence[] => {
-      return Occurrence.convertObjectsToInstancesArray(this.occurrences.data);
-    });
-  }
-
-  removeAll(): Observable<boolean> {
-    this.occurrences.clear();
-    return this.saveAll();
-  }
-
-  remove(occurrence: Occurrence): Observable<boolean> {
-    let o = this.occurrences.find({'id': occurrence.id});
-    this.occurrences.remove(o);
-    return this.saveAll();
-  }
 }

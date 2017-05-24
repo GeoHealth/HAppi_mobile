@@ -19,24 +19,26 @@ export class RegisterPage {
 
   public register() {
     if (this.registerCredentials.condition) {
-      this.auth.register(this.registerCredentials).subscribe((res) => {
-        if (res.success) {
-          this.createSuccess = true;
-          this.showPopup(this.translation.gettext("Success"), this.translation.gettext("Account created."));
-        } else {
-          this.showPopup(this.translation.gettext("Error"), res.msg);
-        }
-      }, (err) => {
-        this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
-        this.showPopup(this.translation.gettext("Error"), err);
-      });
+      this.auth.register(this.registerCredentials).subscribe(
+        (res) => {
+          if (res.success) {
+            this.createSuccess = true;
+            this.showPopup(this.translation.gettext("Success"), this.translation.gettext("Account created."));
+          } else {
+            this.showPopup(this.translation.gettext("Error"), res.msg);
+          }
+        },
+        (err) => {
+          this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
+          this.showPopup(this.translation.gettext("Error"), err);
+        });
     } else {
       this.showPopup(this.translation.gettext("Error"), this.translation.gettext("You must accept the conditions to use the application !"));
     }
   }
 
   showCondition() {
-    this.showPopup(this.translation.gettext("Conditions"), this.translation.gettext("By registering to this product, I agree that my personal information will be stored and used for an undefined time. I am aware that this service is not yet finished and my data might be lost at any time, without any warning."));
+    this.showPopup(this.translation.gettext("Conditions"), this.translation.gettext("By registering to this product, I agree that my personal information will be stored and used for an undefined time. I am aware that this service is not yet finished and my data might be lost at any time, without any warning. I'm aware that no computer system is totally secure and that my data might be accessed by unauthorized people."));
   }
 
   showPopup(title, text) {

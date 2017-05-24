@@ -1,6 +1,6 @@
-import {RestService} from "./rest_service";
-import {Injectable} from "@angular/core";
-import {Http} from "@angular/http";
+import { RestService } from "./rest_service";
+import { Injectable } from "@angular/core";
+import { Http } from "@angular/http";
 import { Crashlytics } from "./crashlytics";
 
 @Injectable()

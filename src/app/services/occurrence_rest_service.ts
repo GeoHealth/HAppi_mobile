@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { Occurrence } from "../../models/occurrence";
 import { Observable } from "rxjs/Observable";
 import { Http } from "@angular/http";
-import { OccurrenceStorage } from "../provider/occurrence_storage"
+import { OccurrenceStorage } from "../provider/occurrence_storage";
 import { Crashlytics } from "./crashlytics";
 
 @Injectable()
@@ -42,8 +42,8 @@ export class OccurrenceRestService extends RestService {
             observer.complete();
           });
         });
-      })
-    })
+      });
+    });
   }
 
   deleteOccurrence(occurrence: Occurrence): Observable<{}> {

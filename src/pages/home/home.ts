@@ -27,12 +27,12 @@ import { GPSAnonymizer } from "../../app/services/gps_anonymizer";
   templateUrl: 'home.html'
 })
 export class HomePage {
-
   symptom_storage: SymptomsStorage;
   occurrences_storage: OccurrenceStorage;
+  occurrence_rest_service: OccurrenceRestService;
+
   private actionSheetCtrl: ActionSheetController;
   private platform: Platform;
-  occurrence_rest_service: OccurrenceRestService;
 
   constructor(public navCtrl: NavController, occurrence_storage: OccurrenceStorage, symptoms_storage: SymptomsStorage,
               actionSheetCtrl: ActionSheetController, platform: Platform, occurrence_rest_service: OccurrenceRestService,
@@ -49,7 +49,7 @@ export class HomePage {
   };
 
   ionViewDidEnter() {
-    this.vars.setTitle("Home");
+    this.vars.setTitle(this.translation.gettext("Home"));
   }
 
   addSymptom() {
@@ -117,7 +117,7 @@ export class HomePage {
 
   private presentToastError() {
     let toast = this.toastCtrl.create({
-      message: 'Error while adding the occurrence',
+      message: this.translation.gettext('Error while adding the occurrence'),
       duration: 10000,
       position: 'bottom'
     });

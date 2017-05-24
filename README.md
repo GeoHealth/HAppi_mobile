@@ -4,3 +4,8 @@
 [![Issue Count](https://codeclimate.com/github/GeoHealth/HAppi_mobile/badges/issue_count.svg)](https://codeclimate.com/github/GeoHealth/HAppi_mobile)
 
 # Health application that help keeping track of your symptoms.
+
+## Cloc report
+
+- Count the src with `cloc src --exclude-dir="tests"`
+- Count the tests with `cloc src\tests`

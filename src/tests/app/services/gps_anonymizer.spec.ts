@@ -1,4 +1,3 @@
-import {} from "jasmine";
 import { GPSAnonymizer } from "../../../app/services/gps_anonymizer";
 import { GPSCoordinates } from "../../../models/coordinate";
 
@@ -65,5 +64,5 @@ describe('GPSAnonymizer', () => {
       expect(this.actual.latitude).not.toEqual(this.latitude);
       expect(this.actual.longitude).not.toEqual(this.longitude);
     });
-  })
+  });
 });

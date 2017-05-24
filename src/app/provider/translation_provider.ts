@@ -13,6 +13,11 @@ declare let Gettext: any;
  */
 @Injectable()
 export class TranslationProvider {
+  static domain: string = "happi_mobile";
+  static default_locale: string = "en-US";
+  static loadingText = "loading...";
+  static locale_files_path = './assets/locales/';
+
   private gt: any;
   private locale_to_file = {
     "en-US": "en.json",
@@ -23,14 +28,11 @@ export class TranslationProvider {
   private _current_locale: string;
   private json_locale_data: any;
 
-  static domain: string = "happi_mobile";
-  static default_locale: string = "en-US";
-  static loadingText = "loading...";
-  static locale_files_path = './assets/locales/';
 
   /**
    * Create a new instance that will use the device preferred locale as translator.
    * @param platform
+   * @param crashlytics
    */
   constructor(public platform: Platform, private crashlytics: Crashlytics) {
     platform.ready().then(() => {
@@ -76,7 +78,7 @@ export class TranslationProvider {
    * @param msgid a message id.
    * @returns {string} the string "loading..." if the module is not yet ready otherwise it returns the translation corresponding to the current_locale.
    */
-  gettext(msgid): string {
+  public gettext(msgid): string {
     if (isNullOrUndefined(this.gt)) {
       return TranslationProvider.loadingText;
     } else {
@@ -87,7 +89,7 @@ export class TranslationProvider {
   /**
    * Load the JSON file containing the translation corresponding to the current_locale and initialize a new instance of the translator.
    */
-  loadJSONLocale() {
+  public loadJSONLocale() {
     let translationFilePath = this.getTranslationFilePath();
 
     let xhttp = new XMLHttpRequest();

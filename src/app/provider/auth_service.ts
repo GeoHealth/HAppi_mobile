@@ -8,6 +8,7 @@ import { AuthStorage } from "./auth_storage";
 import { Crashlytics } from "../services/crashlytics";
 import { SymptomsStorage } from "./symptoms_storage";
 import { OccurrenceStorage } from "./occurrence_storage";
+import { isNullOrUndefined } from "util";
 
 export class User {
   email: string;
@@ -27,10 +28,8 @@ export class User {
 
 @Injectable()
 export class AuthService {
-  private currentUser: User;
-
   auth_rest_service: AuthRestService;
-
+  private currentUser: User;
 
   constructor(auth_rest_service: AuthRestService, private auth_storage: AuthStorage, private crashlytics: Crashlytics,
               private symptoms_storage: SymptomsStorage, private occurrence_storage: OccurrenceStorage) {
@@ -55,7 +54,7 @@ export class AuthService {
   }
 
   public login(credentials): Observable<boolean> {
-    if (credentials.email === null || credentials.password === null) {
+    if (isNullOrUndefined(credentials.email) || isNullOrUndefined(credentials.password)) {
       return Observable.throw("Please insert credentials");
     } else {
       return Observable.create((observer) => {
@@ -80,12 +79,11 @@ export class AuthService {
           }
         );
       });
-
     }
   }
 
   public register(credentials) {
-    if (credentials.email === null || credentials.password === null) {
+    if (isNullOrUndefined(credentials.email) || isNullOrUndefined(credentials.password)) {
       return Observable.throw("Please insert credentials");
     } else {
       return Observable.create((observer) => {
@@ -156,13 +154,17 @@ export class AuthService {
         },
         (err) => {
           this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
-        })
+        });
     });
   }
 
   public getUserInfo(): User {
-    if (!this.currentUser) return new User('loading', 'loading', 'loading', 'loading');
-    else return this.currentUser;
+    if (!this.currentUser) {
+      return new User('loading', 'loading', 'loading', 'loading');
+    }
+    else {
+      return this.currentUser;
+    }
   }
 
   private setCrashlyticsMetadata(uid: string, user_name: string, email: string, client: string) {

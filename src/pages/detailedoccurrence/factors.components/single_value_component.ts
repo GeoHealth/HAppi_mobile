@@ -1,4 +1,4 @@
-import {ControlValueAccessor} from "@angular/forms";
+import { ControlValueAccessor } from "@angular/forms";
 
 /**
  * Extends this class to create a component containing a single value supporting two-way binding.
@@ -31,20 +31,6 @@ export abstract class SingleValueComponent implements ControlValueAccessor {
       this._onChangeCallback(v);
     }
   }
-
-  /**
-   * Placeholder for onChangeCallback. It will be replace by Angular later.
-   * @private
-   */
-  private _onChangeCallback: (_: any) => void = () => {
-  };
-
-  /**
-   * Placeholder for onChangeCallback. It will be replace by Angular later.
-   * @private
-   */
-  private _onTouchedCallback: () => void = () => {
-  };
 
   /**
    * Set touched on blur
@@ -83,4 +69,18 @@ export abstract class SingleValueComponent implements ControlValueAccessor {
    * Provide the initial value of the component
    */
   protected abstract initialValue(): any;
+
+  /**
+   * Placeholder for onChangeCallback. It will be replace by Angular later.
+   * @private
+   */
+  private _onChangeCallback: (_: any) => void = () => {
+  };
+
+  /**
+   * Placeholder for onChangeCallback. It will be replace by Angular later.
+   * @private
+   */
+  private _onTouchedCallback: () => void = () => {
+  };
 }

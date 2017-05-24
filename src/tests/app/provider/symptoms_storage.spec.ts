@@ -5,12 +5,16 @@ import { CrashlyticsMock } from "../../mocks";
 let symptomsStorage: SymptomsStorage;
 
 describe('SymptomsStorage', () => {
-  beforeAll((done) => {
-    symptomsStorage = new SymptomsStorage(new CrashlyticsMock() as any);
-    setTimeout(() => {
-      done();
-    }, 100);
-  }, 10000);
+  beforeAll(
+    (done) => {
+      symptomsStorage = new SymptomsStorage(new CrashlyticsMock() as any);
+      setTimeout(
+        () => {
+          done();
+        },
+        100);
+    },
+    10000);
 
   afterAll(() => {
     symptomsStorage = null;
@@ -64,7 +68,7 @@ describe('SymptomsStorage', () => {
     });
 
     it('refuses an object that is not a SymptomWithFactor by throwing a TypeError exception', () => {
-      this.wrong_occurrence = {
+      this.wrong_symptom = {
         id: 'id',
         name: 'name',
         short_description: 'short',
@@ -74,11 +78,37 @@ describe('SymptomsStorage', () => {
         factors: null
       };
       expect(() => {
-        symptomsStorage.add(this.wrong_occurrence);
+        symptomsStorage.add(this.wrong_symptom);
       }).toThrowError(TypeError);
       expect(symptomsStorage.size()).toEqual(0);
 
-      this.wrong_occurrence = null;
+      this.wrong_symptom = null;
+    });
+  });
+
+  describe('#addAll', () => {
+    it('stores all symptoms', () => {
+      expect(symptomsStorage.size()).toEqual(0);
+      symptomsStorage.addAll([this.symptom1, this.symptom2]);
+      expect(symptomsStorage.size()).toEqual(2);
+    });
+
+    it('throws a TypeError exception if any object is not a SymptomWithFactor', () => {
+      this.wrong_symptom = {
+        id: 'id',
+        name: 'name',
+        short_description: 'short',
+        long_description: 'long',
+        gender_filter: 'both',
+        category: null,
+        factors: null
+      };
+      expect(() => {
+        symptomsStorage.addAll([this.symptom1, this.wrong_symptom]);
+      }).toThrowError(TypeError);
+      expect(symptomsStorage.size()).toEqual(1);
+
+      this.wrong_symptom = null;
     });
   });
 

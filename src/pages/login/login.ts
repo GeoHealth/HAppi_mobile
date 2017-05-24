@@ -1,15 +1,16 @@
-import {Component} from "@angular/core";
-import {NavController, AlertController, LoadingController, Loading} from "ionic-angular";
-import {AuthService} from "../../app/provider/auth_service";
-import {RegisterPage} from "../register/register";
-import {TabsPage} from "../tabs/tabs";
-import {AuthStorage} from "../../app/provider/auth_storage";
-import {Headers} from "@angular/http";
-import {isNullOrUndefined} from "util";
-import {Crashlytics} from "../../app/services/crashlytics";
-import {Observable} from "rxjs";
-import {SymptomsUserRestService} from "../../app/services/symptoms_user_rest_service";
-import {OccurrenceRestService} from "../../app/services/occurrence_rest_service";
+import { Component } from "@angular/core";
+import { NavController, AlertController, LoadingController, Loading } from "ionic-angular";
+import { AuthService } from "../../app/provider/auth_service";
+import { RegisterPage } from "../register/register";
+import { TabsPage } from "../tabs/tabs";
+import { AuthStorage } from "../../app/provider/auth_storage";
+import { Headers } from "@angular/http";
+import { isNullOrUndefined } from "util";
+import { Crashlytics } from "../../app/services/crashlytics";
+import { Observable } from "rxjs";
+import { SymptomsUserRestService } from "../../app/services/symptoms_user_rest_service";
+import { OccurrenceRestService } from "../../app/services/occurrence_rest_service";
+import { TranslationProvider } from "../../app/provider/translation_provider";
 
 @Component({
   selector: 'page-login',
@@ -22,7 +23,8 @@ export class LoginPage {
   constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController,
               private loadingCtrl: LoadingController, private auth_storage: AuthStorage,
               private crashlytics: Crashlytics, private symptoms_user_rest_service: SymptomsUserRestService,
-              private occurrence_rest_service: OccurrenceRestService) {
+              private occurrence_rest_service: OccurrenceRestService,
+              private translation: TranslationProvider) {
     this.autoLogin();
   }
 
@@ -32,35 +34,37 @@ export class LoginPage {
 
   public login() {
     this.showLoading();
-    this.auth.login(this.registerCredentials).subscribe((allowed) => {
-      if (allowed) {
-        this.retrieveSymptomsForUser().subscribe(() => {
-          this.retrieveOccurrencesForUser().subscribe(() => {
-            this.loading.dismiss();
-            this.nav.setRoot(TabsPage);
+    this.auth.login(this.registerCredentials).subscribe(
+      (allowed) => {
+        if (allowed) {
+          this.retrieveSymptomsForUser().subscribe(() => {
+            this.retrieveOccurrencesForUser().subscribe(() => {
+              this.loading.dismiss();
+              this.nav.setRoot(TabsPage);
+            });
           });
-        });
-      } else {
+        } else {
+          this.loading.dismiss();
+          this.showError(this.translation.gettext("Invalid login credentials. Please try again."));
+        }
+      },
+      (err) => {
         this.loading.dismiss();
-        this.showError("Invalid login credentials. Please try again.");
-      }
-    }, (err) => {
-      this.loading.dismiss();
-      this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
-      this.showError(err);
-    });
+        this.crashlytics.sendNonFatalCrashWithStacktraceCreation(err);
+        this.showError(err);
+      });
   }
 
   showLoading() {
     this.loading = this.loadingCtrl.create({
-      content: 'Please wait...'
+      content: this.translation.gettext('Please wait...')
     });
     this.loading.present();
   }
 
   showError(text) {
     let alert = this.alertCtrl.create({
-      title: 'Fail',
+      title: this.translation.gettext('Fail'),
       subTitle: text,
       buttons: ['OK']
     });
@@ -78,7 +82,7 @@ export class LoginPage {
               this.auth.disconnection();
             }
           }
-        )
+        );
       }
       this.loading.dismiss();
     });
@@ -94,7 +98,7 @@ export class LoginPage {
   /**
    * Read the occurrences from the backend after the user logged in
    */
-   private retrieveOccurrencesForUser(): Observable<boolean> {
-     return this.occurrence_rest_service.persistAllOccurencesLocally();
-   }
+  private retrieveOccurrencesForUser(): Observable<boolean> {
+    return this.occurrence_rest_service.persistAllOccurencesLocally();
+  }
 }

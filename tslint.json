@@ -5,7 +5,7 @@
       true
     ],
     "member-ordering": [true, { "order": "fields-first" }],
-    "only-arrow-functions": [true, "allow-declarations"],
+    "only-arrow-functions": [false, "allow-declarations"],
     "typedef-whitespace":
       [
         true,

@@ -4,7 +4,7 @@
   <div class="share-box" >
 
     <ion-row class="share-text" padding>
-      Share the historic of your symptoms with your doctor. Select a date range during which you want to show your symptoms to your doctor.
+      {{translation.gettext("Share the historic of your symptoms with your doctor. Select a date range during which you want to show your symptoms to your doctor.")}}
     </ion-row>
 
     <ion-label class="share-text" stacked>Email Doctor</ion-label>
@@ -13,26 +13,26 @@
         <ion-input type="email" placeholder="doctor@mail.com" name="email" [(ngModel)]="reportInformations.doctor_email" required></ion-input>
       </ion-item>
 
-      <ion-label class="share-text" stacked>Start Date</ion-label>
+      <ion-label class="share-text" stacked>{{translation.gettext("Start Date")}}</ion-label>
 
       <ion-item>
         <ion-input type="date" name="start_date" [(ngModel)]="reportInformations.start_date" required></ion-input>
 
       </ion-item>
 
-      <ion-label class="share-text" stacked>End Date</ion-label>
+      <ion-label class="share-text" stacked>{{translation.gettext("End Date")}}</ion-label>
       <ion-item>
         <ion-input type="date" name="end_date" [(ngModel)]="reportInformations.end_date" required></ion-input>
       </ion-item>
 
-      <ion-label class="share-text" stacked>Expiration Date</ion-label>
+      <ion-label class="share-text" stacked>{{translation.gettext("Expiration Date")}}</ion-label>
       <ion-item>
         <ion-input type="date" name="expiration_date" [(ngModel)]="reportInformations.expiration_date" required></ion-input>
       </ion-item>
 
       <ion-row>
         <ion-col class="share-col">
-          <button ion-button class="submit-btn" full type="submit" >Send</button>
+          <button ion-button class="submit-btn" full type="submit" >{{translation.gettext("Send")}}</button>
         </ion-col>
       </ion-row>
     </form>

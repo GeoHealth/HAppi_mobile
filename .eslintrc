@@ -11,7 +11,7 @@ env:
 
 extends: "eslint:recommended"
 # http://eslint.org/docs/rules/
-# rules:
+rules:
 #   # Possible Errors
 #   comma-dangle: [2, never]
 #   no-cond-assign: 2
@@ -68,7 +68,7 @@ extends: "eslint:recommended"
 #   no-floating-decimal: 0
 #   no-implicit-coercion: 0
 #   no-implied-eval: 2
-   no-invalid-this: 0
+  no-invalid-this: 0
 #   no-iterator: 2
 #   no-labels: 0
 #   no-lone-blocks: 2
