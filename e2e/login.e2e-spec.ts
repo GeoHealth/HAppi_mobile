@@ -22,6 +22,7 @@ describe('Login E2E Test', () => {
     loginPageObject.getLoginButton().click();
     browser.driver.sleep(2000);
     expect(loginPageObject.getTitlePage()).toEqual('Home');
+
     loginPageObject.logOut();
   });
 });

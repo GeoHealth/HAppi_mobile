@@ -5,12 +5,12 @@ import { LoginPageObject } from "./login.page-objects";
 export class RegisterPageObject extends PageObject {
   loginPage: LoginPageObject = new LoginPageObject();
 
-  browseToPage(): void{
-    browser.get('');
+  browseToPage(): void {
+    this.loginPage.browseToPage();
+    browser.driver.sleep(2000);
     this.loginPage.getRegisterButton().click();
-    browser.driver.sleep(500);
+    browser.driver.sleep(2000);
   }
-
 
   getFirstNameValue() {
     return element(by.name('first_name')).getText();

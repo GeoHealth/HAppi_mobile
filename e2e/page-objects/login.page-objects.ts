@@ -1,10 +1,11 @@
-import { browser, element, by, ElementFinder } from 'protractor';
+import { browser, element, by, ElementFinder, protractor, $ } from 'protractor';
 import { PageObject } from "./page-object";
 
 export class LoginPageObject extends PageObject {
   browseToPage(): void{
     browser.get('');
-    browser.driver.sleep(500);
+    let EC = protractor.ExpectedConditions;
+    browser.wait( EC.invisibilityOf( $('.loading-md') ), 15000 );
   }
 
   logOut() {
@@ -13,6 +14,7 @@ export class LoginPageObject extends PageObject {
     browser.driver.sleep(2000);
     let disconnectionButton = element(by.css('#disconnection'));
     disconnectionButton.click();
+    browser.driver.sleep(2000);
   }
 
   getRegisterButton(): ElementFinder {
