@@ -1,4 +1,4 @@
-import { browser, element, by, ElementFinder } from 'protractor';
+import { browser } from 'protractor';
 import { LoginPageObject } from './page-objects/login.page-objects';
 
 let loginPageObject: LoginPageObject = new LoginPageObject();
