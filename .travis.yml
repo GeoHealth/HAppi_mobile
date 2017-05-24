@@ -4,9 +4,11 @@ node_js:
 addons:
   apt:
     sources:
-    - ubuntu-toolchain-r-test
+      - ubuntu-toolchain-r-test
+      - google-chrome
     packages:
-    - g++-4.8
+      - g++-4.8
+      - google-chrome-stable
 sudo: required
 services:
 branches:
