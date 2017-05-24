@@ -4,35 +4,33 @@
 module.exports = function (config) {
   config.set({
     basePath: '',
-    frameworks: ['jasmine', 'angular-cli'],
+    frameworks: ['jasmine', '@angular/cli'],
     plugins: [
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
-      require('karma-remap-istanbul'),
       require('karma-mocha-reporter'),
-      require('angular-cli/plugins/karma')
+      require('@angular/cli/plugins/karma'),
+      require('karma-jasmine-html-reporter'),
+      require('karma-coverage-istanbul-reporter')
     ],
     mime: {
       'text/x-typescript': ['ts', 'tsx']
+    },
+    client:{
+      clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
     files: [
       {pattern: './src/tests/test.ts', watched: false}
     ],
     preprocessors: {
-      './src/tests/test.ts': ['angular-cli']
+      './src/tests/test.ts': ['@angular/cli']
     },
-    remapIstanbulReporter: {
-      reports: {
-        html: 'coverage',
-        lcovonly: './coverage/coverage.lcov'
-      }
-    },
-    angularCli: {
-      config: './angular-cli.json',
-      environment: 'dev'
+    coverageIstanbulReporter: {
+      reports: ['html', 'lcovonly'],
+      fixWebpackSourcePaths: true
     },
     reporters: [
-      'mocha', 'karma-remap-istanbul'
+      'mocha', 'coverage-istanbul', 'kjhtml'
     ],
     port: 9876,
     colors: true,
