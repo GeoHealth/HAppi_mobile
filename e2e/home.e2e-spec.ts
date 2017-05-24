@@ -1,4 +1,4 @@
-import { browser, element, by, ElementFinder } from 'protractor';
+import { browser } from 'protractor';
 
 describe('Home E2E Test', () => {
 
