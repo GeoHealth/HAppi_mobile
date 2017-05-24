@@ -9,17 +9,18 @@
       "outDir": "dist",
       "assets": "assets",
       "index": "index.html",
-      "main": "main.ts",
+      "main": "app/main.ts",
+      "polyfills": "polyfills.ts",
       "test": "tests/test.ts",
-      "tsconfig": "tsconfig.test.json",
+      "tsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "mobile": false,
       "styles": [
         "styles.css"
       ],
       "scripts": [],
+      "environmentSource": "environments/environment.ts",
       "environments": {
-        "source": "environments/environment.ts",
         "dev": "environments/environment.ts",
         "prod": "environments/environment.prod.ts"
       }
@@ -32,6 +33,17 @@
       "config": "./protractor.conf.js"
     }
   },
+  "lint": [
+    {
+      "project": "src/tsconfig.app.json"
+    },
+    {
+      "project": "src/tsconfig.spec.json"
+    },
+    {
+      "project": "e2e/tsconfig.e2e.json"
+    }
+  ],
   "test": {
     "karma": {
       "config": "./karma.conf.js"
