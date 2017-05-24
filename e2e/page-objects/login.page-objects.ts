@@ -1,4 +1,4 @@
-import { browser, element, by, ElementFinder } from 'protractor';
+import { browser } from 'protractor';
 import { PageObject } from "./page-object";
 
 export class LoginPageObject extends PageObject {
