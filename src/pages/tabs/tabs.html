@@ -1,12 +1,12 @@
 <ion-header>
     <ion-navbar>
         <ion-buttons left>
-            <button #content ion-button menuToggle>
+            <button id="main-menu" #content ion-button menuToggle>
                 <ion-icon name="menu"></ion-icon>
             </button>
         </ion-buttons>
 
-        <ion-title>{{translation.gettext(vars.title)}}</ion-title>
+        <ion-title id="title-page">{{translation.gettext(vars.title)}}</ion-title>
 
     </ion-navbar>
 </ion-header>
@@ -21,7 +21,7 @@
             <button menuClose ion-item (click)="showShareReport()">
               {{translation.gettext("Share Report")}}
             </button>
-            <button ion-item (click)="log_out()">
+            <button ion-item id="disconnection" (click)="log_out()">
                 {{translation.gettext("Disconnection")}}
             </button>
             <ion-item menuClose detail-none>{{translation.gettext("Close Menu")}}</ion-item>
