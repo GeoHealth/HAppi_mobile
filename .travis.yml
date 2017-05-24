@@ -29,6 +29,7 @@ before_install:
 install:
   - npm install
   - npm install -g codeclimate-test-reporter
+  - npm install -g ionic cordova
 before_script:
 script:
   - npm run-script test-travis
